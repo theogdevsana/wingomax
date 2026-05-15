@@ -1,0 +1,437 @@
+.main {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  background: #F5F5F7;
+  font-family: var(--font-nunito), sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.backgroundSvg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #007AFF, #AF52DE);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: #8b93a7;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.blogCard {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 24px;
+  padding: 0; /* Remove padding to let image be flush */
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, background 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Ensure image doesn't bleed out of rounded corners */
+}
+
+.blogCard:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: translateY(-4px);
+}
+
+.cardImageWrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.blogCard:hover .cardImage {
+  transform: scale(1.05);
+}
+
+.cardContent {
+  padding: 20px 24px 24px 24px;
+}
+
+.blogDate {
+  font-size: 12px;
+  color: #AF52DE;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.blogTitle {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 10px 0;
+  color: #172032;
+}
+
+.blogDesc {
+  font-size: 14px;
+  color: #5c6270;
+  line-height: 1.6;
+}
+
+/* Individual Post Styles */
+.postContainer {
+  padding: 0;
+  margin-bottom: 50px;
+}
+
+.postHeader {
+  margin-bottom: 30px;
+}
+
+.postTitle {
+  font-size: 36px;
+  font-weight: 800;
+  color: #172032;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+
+.postContent {
+  color: #3a3f4b;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.postContent h2 {
+  font-size: 22px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #172032;
+}
+
+.postContent h3 {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #007AFF;
+}
+
+.postContent p {
+  margin-bottom: 15px;
+}
+
+.postContent ul, .postContent ol {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.postContent li {
+  margin-bottom: 8px;
+}
+
+.postContent :global(.warningBox) {
+  background: #FFF9C4;
+  border-left: 4px solid #FBC02D;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  color: #5D4037;
+}
+
+.postContent :global(.warningBox) h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #F57F17;
+}
+
+.postContent :global(.warningBox) a {
+  color: #D32F2F;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.featuredImageWrapper {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.featuredImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #007AFF;
+  text-decoration: none;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* Author Info */
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.authorAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007AFF, #AF52DE);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.authorMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.authorName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #172032;
+}
+
+.readingTime {
+  font-size: 12px;
+  color: #8b93a7;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #8b93a7;
+  margin-bottom: 20px;
+}
+
+.breadcrumbs a {
+  color: #007AFF;
+  text-decoration: none;
+}
+
+.breadcrumbs span {
+  opacity: 0.5;
+}
+
+/* Table of Contents */
+.toc {
+  background: white;
+  border-radius: 16px;
+  padding: 15px;
+  margin: 20px 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.tocTitle {
+  font-weight: 800;
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.tocList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tocList li {
+  font-size: 14px;
+}
+
+.tocList a {
+  color: #5c6270;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.tocList a:hover {
+  color: #007AFF;
+}
+
+/* FAQ Section */
+.faqSection {
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.faqTitle {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #172032;
+}
+
+.faqItem {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.faqQuestion {
+  padding: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fdfdfd;
+}
+
+.faqAnswer {
+  padding: 0 15px 15px;
+  font-size: 14px;
+  color: #5c6270;
+  line-height: 1.6;
+}
+
+/* Social Share */
+.socialShare {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.shareTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #172032;
+}
+
+.shareBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5c6270;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.shareBtn:hover {
+  background: #007AFF;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Floating TG Button */
+.floatingTgBtn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background: #0088cc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+  z-index: 1000;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floatingTgBtn:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.floatingTgBtn svg {
+  width: 28px;
+  height: 28px;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 28px;
+  }
+  .postContainer {
+    padding: 0;
+  }
+  .postTitle {
+    font-size: 26px;
+  }
+  .floatingTgBtn {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+}

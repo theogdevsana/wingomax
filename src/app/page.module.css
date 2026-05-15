@@ -1,0 +1,335 @@
+/* Login Page Styles */
+.main {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--font-nunito), system-ui, sans-serif;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #172032;
+  margin: 0 0 4px 0;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #8b93a7;
+  margin: 0 0 28px 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Form */
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #172032;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+
+.required {
+  color: #FF3B30;
+  margin-left: 2px;
+}
+
+/* Input */
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputInner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 122, 255, 0.15);
+  padding: 0 16px;
+  gap: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.inputInner:focus-within {
+  border-color: rgba(0, 122, 255, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.08);
+}
+
+.lockIcon {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: #172032;
+  padding: 14px 0;
+  font-family: inherit;
+  letter-spacing: 0.1px;
+}
+
+.input::placeholder {
+  color: #c0c5d0;
+  font-weight: 400;
+}
+
+.gradientBar {
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #007AFF, #AF52DE);
+  margin-top: -1px;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.inputInner:focus-within ~ .gradientBar {
+  opacity: 1;
+}
+
+/* Login Button */
+.loginButton {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 14px;
+  background: #007AFF;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s, transform 0.15s;
+  box-shadow: 0 6px 20px rgba(0, 122, 255, 0.3);
+}
+
+.loginButton:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.loginButton:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.loginButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.spinner {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.dividerText {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8b93a7;
+  white-space: nowrap;
+}
+
+/* Purchase Button */
+.purchaseButton {
+  width: 100%;
+  padding: 15px;
+  border: 1.5px solid rgba(0, 122, 255, 0.3);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  color: #007AFF;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  font-family: inherit;
+}
+
+.purchaseButton:hover {
+  background: rgba(0, 122, 255, 0.06);
+  border-color: rgba(0, 122, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.purchaseButton:active {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .content {
+    padding: 32px 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+}
+
+/* ===== TOAST NOTIFICATIONS ===== */
+.toastContainer {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 330px;
+}
+
+.toast {
+  width: 330px;
+  height: 80px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+/* Side wave — rotated on left */
+.toastWave {
+  position: absolute;
+  transform: rotate(90deg);
+  left: -31px;
+  top: 32px;
+  width: 80px;
+  pointer-events: none;
+}
+
+/* Type-specific wave + icon colors */
+.toastSuccess .toastWave { fill: #22c55e3a; }
+.toastError   .toastWave { fill: #ef44443a; }
+.toastWarning .toastWave { fill: #f59e0b3a; }
+
+.toastIconContainer {
+  flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.toastSuccess .toastIconContainer { background-color: #22c55e20; }
+.toastError   .toastIconContainer { background-color: #ef444420; }
+.toastWarning .toastIconContainer { background-color: #f59e0b20; }
+
+.toastIcon {
+  width: 17px;
+  height: 17px;
+}
+
+.toastSuccess .toastIcon { color: #16a34a; }
+.toastError   .toastIcon { color: #dc2626; }
+.toastWarning .toastIcon { color: #d97706; }
+
+.toastMessageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.toastMessage {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: default;
+  line-height: 1.2;
+}
+
+.toastSuccess .toastMessage { color: #16a34a; }
+.toastError   .toastMessage { color: #dc2626; }
+.toastWarning .toastMessage { color: #d97706; }
+
+.toastSubText {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+  cursor: default;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.toastCrossIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.15s, transform 0.15s;
+}
+
+.toastCrossIcon:hover {
+  color: #374151;
+  transform: scale(1.15);
+}
