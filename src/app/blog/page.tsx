@@ -40,7 +40,7 @@ export default function BlogListing() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight mb-2 ">Wingo Signal Blog</h1>
-          <p className="text-xs md:text-sm text-slate-500 font-medium tracking-wide">Expert insights, strategies, and tutorials</p>
+          <p className="text-xs md:text-sm text-slate-600 font-medium tracking-wide">Expert insights, strategies, and tutorials</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -78,7 +78,7 @@ export default function BlogListing() {
                 <h3 className="text-base font-bold mb-2 text-[#4a6ef2] leading-tight transition-colors line-clamp-2">
                   {post.title}
                 </h3>
-                <p className="mb-0 text-xs text-slate-400 leading-relaxed grow line-clamp-2">
+                <p className="mb-0 text-xs text-slate-500 leading-relaxed grow line-clamp-2">
                   {post.description}
                 </p>
               </div>

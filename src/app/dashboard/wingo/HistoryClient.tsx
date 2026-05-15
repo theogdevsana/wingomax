@@ -308,10 +308,10 @@ export default function HistoryClient({ slug }: { slug: string }) {
         </div>
 
         <div style={{ display: 'none' }}>
-          <img src="/svg/png/what_is_result.png" alt="" />
-          <img src="/svg/png/what_is_result_v2.png" alt="" />
-          <img src="/svg/png/result_small.png" alt="" />
-          <img src="/svg/png/result_big.png" alt="" />
+          <Image src="/svg/png/what_is_result.png" alt="" width={36} height={36} priority />
+          <Image src="/svg/png/what_is_result_v2.png" alt="" width={36} height={36} priority />
+          <Image src="/svg/png/result_small.png" alt="" width={36} height={36} priority />
+          <Image src="/svg/png/result_big.png" alt="" width={36} height={36} priority />
         </div>
 
         <div className={styles.drawResultSection}>

@@ -39,7 +39,7 @@ export function TableOfContents({ content }: { content: string }) {
         className="font-bold text-slate-800 flex items-center justify-between cursor-pointer select-none" 
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="text-sm font-bold tracking-widest text-slate-400">Table of Contents</span>
+        <span className="text-sm font-bold tracking-widest text-slate-500">Table of Contents</span>
         <ChevronDown 
           size={20} 
           className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
@@ -94,13 +94,14 @@ export function SocialShare({ title, url }: { title: string; url: string }) {
 
   return (
     <div className="flex items-center gap-4 py-8 border-t border-slate-100 mt-12">
-      <span className="text-sm font-bold text-slate-400 tracking-widest">Share Article</span>
+      <span className="text-sm font-bold text-slate-500 tracking-widest">Share Article</span>
       <div className="flex gap-2">
         <a 
           href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all hover:scale-110"
+          aria-label="Share on X (formerly Twitter)"
         >
           <X size={18} />
         </a>
@@ -109,6 +110,7 @@ export function SocialShare({ title, url }: { title: string; url: string }) {
           target="_blank" 
           rel="noopener noreferrer" 
           className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#229ED9] hover:text-white transition-all hover:scale-110"
+          aria-label="Share on Telegram"
         >
           <Send size={18} />
         </a>
@@ -117,6 +119,7 @@ export function SocialShare({ title, url }: { title: string; url: string }) {
           target="_blank" 
           rel="noopener noreferrer" 
           className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#25D366] hover:text-white transition-all hover:scale-110"
+          aria-label="Share on WhatsApp"
         >
           <WhatsApp size={18} />
         </a>

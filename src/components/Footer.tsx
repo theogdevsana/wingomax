@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer({ className = "" }: { className?: string }) {
   return (
@@ -9,8 +10,14 @@ export default function Footer({ className = "" }: { className?: string }) {
       <div className="max-w-4xl mx-auto px-6 flex flex-col items-center gap-6">
         {/* Logo & Name */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 transition-all duration-300 group-hover:scale-110">
-            <img src="/logo/official-logo.png" alt="Wingo Signal" className="w-full h-full object-contain rounded-lg" />
+          <div className="w-10 h-10 transition-all duration-300 group-hover:scale-110 relative">
+            <Image 
+              src="/logo/official-logo.png" 
+              alt="Wingo Signal" 
+              width={40} 
+              height={40} 
+              className="w-full h-full object-contain rounded-lg" 
+            />
           </div>
           <span className="font-bold tracking-tighter text-lg md:text-xl text-white">Wingo Signal</span>
         </Link>

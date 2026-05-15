@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Send, LayoutGrid, FileText, ShieldCheck, X, Home, BookOpen, Clock, Timer } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 const PREDICTION_PAGES = [
   { label: 'Wingo 30s', href: '/wingo-30-seconds-prediction', icon: Clock },
@@ -31,7 +32,8 @@ export default function BlogLayoutClient({
           {/* Hamburger Menu Toggle - NOW ON LEFT */}
           <button 
             onClick={() => setIsMenuOpen(true)}
-            className="text-slate-800 p-2 hover:bg-slate-100 rounded-xl transition-colors z-10"
+            className="text-slate-800 p-2.5 hover:bg-slate-100 rounded-xl transition-colors z-10 flex items-center justify-center min-w-[44px] min-h-[44px]"
+            aria-label="Open navigation menu"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" strokeWidth="1.5" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"></path>
@@ -39,7 +41,14 @@ export default function BlogLayoutClient({
           </button>
 
           <Link href="/blog" className="absolute left-1/2 -translate-x-1/2">
-            <img src="/duner/wingo-blog.png" alt="Wingo Blog" className="h-8 md:h-12 object-contain" />
+            <Image 
+              src="/duner/wingo-blog.png" 
+              alt="Wingo Blog" 
+              width={160} 
+              height={48} 
+              priority 
+              className="h-8 md:h-12 w-auto object-contain" 
+            />
           </Link>
         </div>
       </header>
@@ -66,8 +75,18 @@ export default function BlogLayoutClient({
               className="fixed top-0 left-0 bottom-0 w-[280px] md:w-[320px] bg-white z-[70] shadow-2xl flex flex-col p-6"
             >
               <div className="flex justify-between items-center mb-8">
-                <img src="/duner/wingo-blog.png" alt="Wingo Blog" className="h-8 md:h-10 object-contain" />
-                <button onClick={() => setIsMenuOpen(false)} className="p-2 text-slate-400 hover:text-slate-900 transition-colors">
+                <Image 
+                  src="/duner/wingo-blog.png" 
+                  alt="Wingo Blog Logo" 
+                  width={140} 
+                  height={40} 
+                  className="h-8 md:h-10 w-auto object-contain" 
+                />
+                <button 
+                  onClick={() => setIsMenuOpen(false)} 
+                  className="p-2.5 text-slate-500 hover:text-slate-900 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  aria-label="Close navigation menu"
+                >
                   <X size={24} />
                 </button>
               </div>
@@ -95,8 +114,8 @@ export default function BlogLayoutClient({
                   <span className="font-bold text-slate-700 text-xs md:text-sm">Wingo Blog</span>
                 </Link>
 
-                <div className="my-4 h-px bg-slate-100 mx-4" />
-                <span className="px-4 text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Prediction Tools</span>
+                <div className="my-4 h-px bg-slate-100 mx-4" aria-hidden="true" />
+                <span className="px-4 text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Prediction Tools</span>
 
                 {PREDICTION_PAGES.map((page) => (
                   <Link 
@@ -105,7 +124,7 @@ export default function BlogLayoutClient({
                     onClick={() => setIsMenuOpen(false)}
                     className="flex items-center gap-3 p-3 md:p-4 rounded-2xl hover:bg-slate-50 transition-colors group"
                   >
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-500 group-hover:bg-indigo-600 group-hover:text-white transition-all">
                       <page.icon size={18} />
                     </div>
                     <span className="font-bold text-slate-700 text-xs md:text-sm">{page.label}</span>

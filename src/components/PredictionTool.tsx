@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import Footer from '@/components/Footer';
 
 // --- Logic Helpers ---
@@ -329,7 +330,14 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
               whileHover={{ scale: 1.05 }}
               className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden"
             >
-              <img src="/logo/official-logo.png" alt="Wingo Signal" className="w-full h-full object-contain" />
+              <Image 
+                src="/logo/official-logo.png" 
+                alt="Wingo Signal Logo" 
+                width={64} 
+                height={64} 
+                priority 
+                className="w-full h-full object-contain" 
+              />
             </motion.div>
             <h2 className="text-xl font-black text-slate-800 leading-tight mt-1">{mode} Prediction</h2>
             <p className="text-xs font-bold text-slate-400 tracking-widest">Neural Pattern Detection</p>
