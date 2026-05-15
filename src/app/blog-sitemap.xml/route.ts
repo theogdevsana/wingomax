@@ -9,15 +9,15 @@ export async function GET() {
   <url>
     <loc>${baseUrl}/blog/${post.slug}</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>`).join('')}
+  </url>`).join('').trim()}
 </urlset>`.trim();
 
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
     },
   });
 }

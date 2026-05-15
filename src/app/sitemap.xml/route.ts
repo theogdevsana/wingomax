@@ -1,26 +1,28 @@
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
-
-  const sitemaps = [
-    `${baseUrl}/page-sitemap.xml`,
-    `${baseUrl}/blog-sitemap.xml`,
-    `${baseUrl}/img-sitemap.xml`,
-    `${baseUrl}/rss.xml`,
-  ];
-
+  
+  // Create a clean XML sitemap index
+  // Note: Only <sitemap> tags are allowed in a sitemap index.
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${sitemaps.map(url => `
   <sitemap>
-    <loc>${url}</loc>
+    <loc>${baseUrl}/page-sitemap.xml</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
-  </sitemap>`).join('')}
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/blog-sitemap.xml</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/img-sitemap.xml</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+  </sitemap>
 </sitemapindex>`.trim();
 
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
     },
   });
 }

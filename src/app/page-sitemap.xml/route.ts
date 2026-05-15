@@ -1,5 +1,6 @@
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
+  
   const pages = [
     { url: '/', priority: 1.0, changefreq: 'daily' },
     { url: '/blog', priority: 0.8, changefreq: 'weekly' },
@@ -21,13 +22,13 @@ export async function GET() {
     <lastmod>${new Date().toISOString()}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority.toFixed(1)}</priority>
-  </url>`).join('')}
+  </url>`).join('').trim()}
 </urlset>`.trim();
 
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
     },
   });
 }
