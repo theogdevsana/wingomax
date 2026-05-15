@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: post.title,
       description: post.description,
       type: "article",
-      url: `https://wingosignal.com/blog/${slug}`,
+      url: `https://wingosignals.xyz/blog/${slug}`,
       images: [
         {
           url: post.image,
@@ -57,11 +57,59 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const contentWithDynamicLinks = post.content.replace(/https:\/\/t\.me\/enzosrs/g, telegramLink);
 
   const readingTime = calculateReadingTime(post.content);
-  const fullUrl = `https://wingosignal.com/blog/${slug}`;
+  const fullUrl = `https://wingosignals.xyz/blog/${slug}`;
   const otherPosts = BLOG_POSTS.filter(p => p.slug !== slug).slice(0, 3);
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.description,
+    "image": post.image.startsWith('http') ? post.image : `https://wingosignals.xyz${post.image}`,
+    "author": {
+      "@type": "Person",
+      "name": post.author
+    },
+    "datePublished": new Date(post.date).toISOString(),
+    "publisher": {
+      "@type": "Organization",
+      "name": "Wingo Signal",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://wingosignals.xyz/logo/main_logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": fullUrl
+    }
+  };
+
+  const faqSchema = post.faqs && post.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": post.faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  } : null;
 
   return (
     <main className="min-h-screen bg-slate-50 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       {/* Article Header & Image - Blended with Background */}
       <div className="max-w-4xl mx-auto px-4 pt-8 md:pt-12">
         {/* Breadcrumbs - Fixed to Single Line with Truncation */}
@@ -115,7 +163,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <div className="rounded-3xl overflow-hidden shadow-2xl shadow-indigo-100 mb-10 border border-white">
               <Image 
                 src={post.image} 
-                alt={post.title} 
+                alt={post.imageAlt || post.title} 
                 className="w-full h-auto object-cover"
                 width={800}
                 height={450}

@@ -12,8 +12,31 @@ export const metadata = {
 };
 
 export default function BlogListing() {
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://wingosignals.xyz"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Wingo Blog",
+        "item": "https://wingosignals.xyz/blog"
+      }
+    ]
+  };
+
   return (
     <main className="min-h-screen bg-slate-50 py-12 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      />
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight mb-2 ">Wingo Signal Blog</h1>

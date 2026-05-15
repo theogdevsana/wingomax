@@ -4,10 +4,11 @@ import Settings from '@/lib/models/Settings';
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Wingo 5 Minutes Prediction Tool - Free AI Analyst",
-  description: "Get real-time Wingo 5 Minutes results with our AI-powered free prediction tool. Accurate patterns for big, small, and color analysis.",
+  title: "Wingo 5 Minute Prediction - WinGo 5 Min Predictor & Patterns",
+  description: "Official Wingo 5 minute prediction signals. Master the 5 min WinGo game with our AI predictor app and real-time big small patterns.",
+  keywords: ["wingo 5 minute prediction", "wingo predictor app download", "wingo 5 min pattern", "wingo signal telegram"],
   alternates: {
-    canonical: "https://wingosignal.com/wingo-5-minute-prediction",
+    canonical: "https://wingosignals.xyz/wingo-5-minute-prediction",
   }
 };
 

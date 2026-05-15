@@ -4,10 +4,11 @@ import Settings from '@/lib/models/Settings';
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Wingo 1 Minute Prediction Tool - Free AI Analyst",
-  description: "Get real-time Wingo 1 Minute results with our AI-powered free prediction tool. Accurate patterns for big, small, and color analysis.",
+  title: "Wingo 1 Min Prediction - WinGo 1 Minute Formula & Signals",
+  description: "Get the latest Wingo 1 min prediction signals and color prediction formula. Accurate WinGo 1 minute patterns for big small games and number predictions.",
+  keywords: ["wingo 1 min prediction", "wingo color prediction formula", "wingo 1 min prediction app", "wingo signal software", "91club wingo prediction", "wingo mod apk"],
   alternates: {
-    canonical: "https://wingosignal.com/wingo-1-minute-prediction",
+    canonical: "https://wingosignals.xyz/wingo-1-minute-prediction",
   }
 };
 

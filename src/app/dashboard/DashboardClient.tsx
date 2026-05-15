@@ -103,8 +103,8 @@ export default function DashboardPage() {
               Fresh applications and tools
             </div>
           </div>
-          <a
-            href="#"
+          <Link
+            href="/dashboard"
             style={{
               display: "flex",
               alignItems: "center",

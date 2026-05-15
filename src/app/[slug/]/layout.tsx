@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `Wingo ${gameLabel} Prediction Tool - Free AI Analyst`,
     description: `Get real-time Wingo ${gameLabel} results with our AI-powered free prediction tool.`,
     alternates: {
-      canonical: `https://wingosignal.com/${slug}`,
+      canonical: `https://wingosignals.xyz/${slug}`,
     }
   };
 }

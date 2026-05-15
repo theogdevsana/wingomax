@@ -1,10 +1,11 @@
 export async function GET() {
-  const baseUrl = 'https://wingosignal.com';
+  const baseUrl = 'https://wingosignals.xyz';
 
   const sitemaps = [
     `${baseUrl}/page-sitemap.xml`,
     `${baseUrl}/blog-sitemap.xml`,
-    `${baseUrl}/sitemap-image.xml`,
+    `${baseUrl}/img-sitemap.xml`,
+    `${baseUrl}/rss.xml`,
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -14,11 +15,12 @@ export async function GET() {
     <loc>${url}</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
   </sitemap>`).join('')}
-</sitemapindex>`;
+</sitemapindex>`.trim();
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/xml',
+      'Content-Type': 'application/xml; charset=utf-8',
+      'X-Content-Type-Options': 'nosniff',
     },
   });
 }

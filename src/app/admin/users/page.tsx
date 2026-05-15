@@ -103,11 +103,15 @@ export default function UsersPage() {
               return (
                 <div key={user._id} className={`rounded-3xl border flex flex-col justify-between shadow-sm transition-all hover:shadow-md hover:-translate-y-1 min-h-[220px] relative overflow-hidden ${bgClass}`}>
                   
-                  {/* Abstract Papercut Background Blob */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none" viewBox="0 0 400 300">
-                    <path d="M-40 60 C20 0 100 30 160 10 C220 -10 280 40 340 20 C400 0 440 50 420 80 L420 0 L0 0 Z" fill={blobFill} />
-                    <path d="M0 280 C60 240 120 270 180 250 C260 220 320 260 380 240 C420 230 450 270 440 300 L0 300 Z" fill={blobFill2} />
-                  </svg>
+                  {/* Decorative Blobs - Subscription Style */}
+                  <div 
+                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full pointer-events-none transition-transform group-hover:scale-110" 
+                    style={{ background: blobFill }}
+                  />
+                  <div 
+                    className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full pointer-events-none transition-transform group-hover:scale-110" 
+                    style={{ background: blobFill2 }}
+                  />
 
                   {/* Status Badge */}
                   <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-black tracking-wide uppercase shadow-sm z-10 ${badgeClass}`}>

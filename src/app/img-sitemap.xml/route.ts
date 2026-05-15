@@ -64,14 +64,15 @@ export async function GET() {
     <loc>${baseUrl}/blog/${post.slug}</loc>
     <image:image>
       <image:loc>${baseUrl}${post.image}</image:loc>
-      <image:title>${post.title.replace(/&/g, '&amp;')}</image:title>
+      <image:title>${(post.imageAlt || post.title).replace(/&/g, '&amp;')}</image:title>
     </image:image>
   </url>`).join('')}
-</urlset>`;
+</urlset>`.trim();
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/xml',
+      'Content-Type': 'application/xml; charset=utf-8',
+      'X-Content-Type-Options': 'nosniff',
     },
   });
 }

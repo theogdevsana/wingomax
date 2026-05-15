@@ -24,11 +24,12 @@ export async function GET() {
     <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
     ${items}
   </channel>
-</rss>`;
+</rss>`.trim();
 
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
+      'X-Content-Type-Options': 'nosniff',
     },
   });
 }

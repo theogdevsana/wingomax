@@ -6,19 +6,20 @@ import { nunito } from "@/lib/fonts";
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://wingosignal.com'),
+  metadataBase: new URL('https://wingosignals.xyz'),
   title: {
-    default: "Wingo Signal - Professional Game Predictor & Tools",
+    default: "Wingo Signal - #1 WinGo Prediction & Color Prediction Tool 2024",
     template: "%s | Wingo Signal"
   },
-  description: "Advanced Wingo Signal platform providing premium prediction tools, Wingo mod APKs, big small mod, and real-time winning signals for all major platforms.",
+  description: "Official Wingo Signal tool for 1-minute, 3-minute, and 5-minute prediction. Get accurate color and number predictions for Wingo with 95% accuracy.",
   keywords: [
-    "wingo tools", "wingo tool", "wingo predictor", "wingo signal", 
-    "wingo mod", "big small mod", "number mod", "wingo hack", 
-    "color prediction tool", "wingo premium signal"
+    "wingo signal", "wingo prediction", "color prediction tool", 
+    "91club prediction", "tiranga prediction tool", "wingo signals telegram",
+    "wingo mod apk", "wingo color prediction formula", "wingo big small pattern",
+    "wingo predictor app download"
   ],
-  authors: [{ name: "Codersrs" }],
-  creator: "Codersrs",
+  authors: [{ name: "Wingo Signal Team" }],
+  creator: "Wingo Signal",
   publisher: "Wingo Signal",
   formatDetection: {
     email: false,
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://wingosignal.com',
+    url: 'https://wingosignals.xyz',
     siteName: 'Wingo Signal',
     title: 'Wingo Signal - Professional Game Predictor',
     description: 'Advanced Wingo Signal platform providing premium prediction tools and real-time signals.',

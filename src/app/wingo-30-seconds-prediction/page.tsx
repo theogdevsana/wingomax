@@ -4,10 +4,11 @@ import Settings from '@/lib/models/Settings';
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Wingo 30 Seconds Prediction Tool - Free AI Analyst",
-  description: "Get real-time Wingo 30 Seconds results with our AI-powered free prediction tool. Accurate patterns for big, small, and color analysis.",
+  title: "Wingo 30 Seconds Prediction - Official AI Pattern Analyst",
+  description: "Get the most accurate Wingo 30 seconds prediction signals. Our AI tool provides real-time WinGo 30s color and number patterns for Tiranga and 91Club.",
+  keywords: ["wingo 30s prediction", "wingo prediction telegram link", "wingo mod apk", "wingo 30s signal app"],
   alternates: {
-    canonical: "https://wingosignal.com/wingo-30-seconds-prediction",
+    canonical: "https://wingosignals.xyz/wingo-30-seconds-prediction",
   }
 };
 
