@@ -77,25 +77,20 @@ export const metadata: Metadata = {
 };
 
 import JsonLd from "@/components/JsonLd";
-import connectMongo from '@/lib/mongodb';
-import Settings from '@/lib/models/Settings';
+import { Analytics } from "@vercel/analytics/next";
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await connectMongo();
-  const settings = await Settings.findOne({});
-  const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
-
   return (
     <html
       lang="en"
       className={`${nunito.variable} h-full antialiased`}
     >
       <head>
-        <JsonLd telegramLink={telegramLink} />
+        <JsonLd telegramLink="https://t.me/enzosrs" />
         {/* Preload critical assets */}
         <link rel="preload" href="/duner/main_logo.png" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -104,6 +99,7 @@ export default async function RootLayout({
 
       <body className="h-full flex flex-col font-sans">
         {children}
+        <Analytics />
       </body>
     </html>
   );

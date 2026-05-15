@@ -337,8 +337,8 @@ export default function HistoryClient({ slug }: { slug: string }) {
                         className={styles.resultImg} 
                         src={`/svg/png/what_is_result${(shuffleTick + i) % 2 === 0 ? "" : "_v2"}.png`} 
                         alt="Shuffling" 
-                        width={32}
-                        height={32}
+                        width={36}
+                        height={36}
                       />
                     </motion.div>
                   </div>
@@ -352,8 +352,8 @@ export default function HistoryClient({ slug }: { slug: string }) {
                           className={styles.resultImg} 
                           src={`/svg/png/what_is_result${idx % 2 === 0 ? "" : "_v2"}.png`} 
                           alt="Mystery Result Placeholder" 
-                          width={32}
-                          height={32}
+                          width={36}
+                          height={36}
                         />
                       </div>
                     ))}
@@ -389,8 +389,8 @@ export default function HistoryClient({ slug }: { slug: string }) {
                           className={styles.resultImg} 
                           src={`/svg/png/what_is_result${idx % 2 === 0 ? "_v2" : ""}.png`} 
                           alt="Mystery Result Placeholder" 
-                          width={32}
-                          height={32}
+                          width={36}
+                          height={36}
                         />
                       </div>
                     ))}
@@ -403,8 +403,8 @@ export default function HistoryClient({ slug }: { slug: string }) {
                           className={styles.resultImg} 
                           src={`/svg/png/what_is_result${i % 2 === 0 ? "" : "_v2"}.png`} 
                           alt="Loading" 
-                          width={32}
-                          height={32}
+                          width={36}
+                          height={36}
                           style={{ opacity: 0.5 }}
                         />
                       </div>

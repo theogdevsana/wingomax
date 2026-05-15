@@ -74,13 +74,20 @@
 }
 
 .gameIconWrapper {
-  position: relative;
   width: 36px;
   height: 36px;
+  background: linear-gradient(135deg, #ff2d55, #d00036);
   border-radius: 10px;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(255, 45, 85, 0.3);
   flex-shrink: 0;
-  background: #f1f5f9;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
 }
 
 .gameNameGroup {

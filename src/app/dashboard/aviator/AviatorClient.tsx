@@ -108,14 +108,18 @@ export default function AviatorClient() {
           </Link>
           <div className={styles.gameInfo}>
             <div className={styles.gameIconWrapper}>
-              <div style={{ padding: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Plane size={20} color="#ff2d55" />
-              </div>
+              <Plane size={20} color="#fff" />
             </div>
             <div className={styles.gameNameGroup}>
-              <span className={styles.gameTitle}>Aviator</span>
-              <span className={styles.gameSubtitle}>Aviator AI</span>
+              <span className={styles.gameTitle}>Aviator Predictor</span>
+              <span className={styles.gameSubtitle}>AI Multiplier Analysis</span>
             </div>
+          </div>
+        </div>
+        <div className={styles.headerRight}>
+          <div style={{ background: '#f1f5f9', padding: '4px 10px', borderRadius: '12px', fontSize: '12px', fontWeight: '800', color: '#64748b', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            <span>97% Accuracy</span>
           </div>
         </div>
       </div>
