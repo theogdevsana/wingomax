@@ -4,7 +4,10 @@ import RefundPage from "./RefundClient";
 export const metadata: Metadata = {
   title: "Refund Policy | Wingo Signal - Cancellation & Returns",
   description: "Review our refund and cancellation policies. Learn about the terms for premium signal subscriptions and feature activation refunds.",
-  keywords: ["wingo refund", "cancellation policy", "refund terms", "subscription refund"],
+  keywords: ["wingo refund policy", "money back guarantee", "wingo subscription refund"],
+  alternates: {
+    canonical: '/refund',
+  },
 };
 
 import connectMongo from '@/lib/mongodb';

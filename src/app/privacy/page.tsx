@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Privacy Policy | Wingo Signal - Your Data Security",
   description: "Learn how Wingo Signal protects your privacy and manages your data. Our commitment to securing your personal information and prediction history.",
   keywords: ["wingo privacy", "data protection", "wingo signal terms", "privacy policy"],
+  alternates: {
+    canonical: '/privacy',
+  },
 };
 
 import connectMongo from '@/lib/mongodb';

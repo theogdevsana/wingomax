@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: '/',
+    canonical: 'https://wingosignals.xyz',
   },
   other: {
     'theme-color': '#007AFF',

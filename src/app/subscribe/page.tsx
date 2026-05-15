@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Pricing & Subscription | Wingo Signal Premium",
   description: "Get premium access to Wingo Signal AI tools. Choose from Starter, Elite, and Max Pro plans for maximum accuracy in game predictions.",
   keywords: ["wingo subscription", "wingo premium access", "wingo vip signals", "wingo tool pricing"],
+  alternates: {
+    canonical: '/subscribe',
+  },
 };
 
 const PLANS = [
