@@ -162,7 +162,7 @@ export default function CreateLicense() {
                 className="p-4 bg-white border border-slate-200 rounded-xl text-slate-600 hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50 transition-all active:scale-95"
                 title="Copy to clipboard"
               >
-                {copied ? <CheckCircle2 className="text-green-500" /> : <Copy />}
+                {copied ? <CheckCircle2 className="text-blue-500" /> : <Copy />}
               </button>
             </div>
 
@@ -247,9 +247,9 @@ export default function CreateLicense() {
                     </td>
                     <td className="px-6 py-4">
                       <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${
-                        lic.status === 'active' ? 'bg-green-50 text-green-600 border border-green-100' :
-                        lic.status === 'expired' ? 'bg-orange-50 text-orange-600 border border-orange-100' :
-                        'bg-red-50 text-red-600 border border-red-100'
+                        lic.status === 'active' ? 'bg-indigo-50 text-indigo-600 border border-indigo-100' :
+                        lic.status === 'expired' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
+                        'bg-amber-50 text-amber-600 border border-amber-100'
                       }`}>
                         {lic.status === 'active' ? <ShieldCheck size={12} /> : <ShieldBan size={12} />}
                         {lic.status}
@@ -326,10 +326,10 @@ export default function CreateLicense() {
           days={30} 
           price="1,999" 
           title="Monthly Premium" 
-          icon={<Clock className="text-emerald-600" size={24} />}
+          icon={<Clock className="text-indigo-600" size={24} />}
           bg="bg-white" 
-          border="border-emerald-100" 
-          accent="bg-emerald-600"
+          border="border-indigo-100" 
+          accent="bg-indigo-600"
         />
       </div>
     </div>

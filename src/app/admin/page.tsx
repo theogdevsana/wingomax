@@ -54,7 +54,7 @@ export default async function AdminDashboard() {
         <StatCard title="Total Keys" value={stats.totalKeys.toString()} icon={<Key className="text-blue-600" size={24} />} color="#007AFF" />
         <StatCard title="Used Devices" value={stats.totalUsed.toString()} icon={<Users className="text-purple-600" size={24} />} color="#AF52DE" />
         <StatCard title="Banned Keys" value={stats.totalBanned.toString()} icon={<AlertOctagon className="text-red-600" size={24} />} negative={stats.totalBanned > 0} color="#FF3B30" />
-        <StatCard title="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} icon={<DollarSign className="text-emerald-600" size={24} />} color="#34C759" />
+        <StatCard title="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} icon={<DollarSign className="text-purple-600" size={24} />} color="#AF52DE" />
       </div>
 
       <div className="grid grid-cols-1 gap-6">

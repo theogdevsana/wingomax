@@ -129,6 +129,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState(12456);
+  const [isSEOExpanded, setIsSEOExpanded] = useState(false);
 
   const prevPeriodRef = useRef('');
 
@@ -522,6 +523,57 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
           </div>
 
         </section>
+
+        {/* --- Collapsible SEO Section --- */}
+        <section className="mt-8 mb-4 px-1">
+          <button 
+            onClick={() => setIsSEOExpanded(!isSEOExpanded)}
+            className="w-full flex items-center justify-between p-5 bg-white border border-slate-200 rounded-3xl shadow-sm hover:border-indigo-500 transition-all text-left"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-indigo-50 rounded-xl">
+                <Info size={18} className="text-indigo-600" />
+              </div>
+              <div>
+                <h2 className="text-sm font-black text-slate-800">About Wingo Prediction</h2>
+                <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Expert Analysis & Guide</p>
+              </div>
+            </div>
+            <motion.div
+              animate={{ rotate: isSEOExpanded ? 180 : 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <ChevronDown size={18} className="text-slate-400" />
+            </motion.div>
+          </button>
+
+          <AnimatePresence>
+            {isSEOExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                className="overflow-hidden"
+              >
+                <div className="pt-4 pb-2 space-y-4 text-[11px] text-slate-500 leading-relaxed font-medium px-2">
+                  <p>
+                    Welcome to the official <strong>Wingo {mode} prediction tool</strong>. Our platform uses advanced AI neural networks to analyze real-time patterns for the {mode === '30s' ? 'fastest 30-second' : mode === '1m' ? 'high-speed 1-minute' : mode === '3m' ? 'balanced 3-minute' : 'stable 5-minute'} games. Whether you are looking for <strong>wingo 1 min prediction</strong> or <strong>wingo 1 minute signal</strong>, our tool provides the most accurate data-driven insights.
+                  </p>
+                  <p>
+                    Many players search for <strong>wingo prediction telegram link</strong> or <strong>wingo predictor app download</strong> to improve their success rates on platforms like Tiranga and 91Club. Our AI pattern monitor scans millions of historical outcomes to give you an edge. Many also look for the <strong>wingo color prediction formula</strong> to understand the math behind the game.
+                  </p>
+                  <p>
+                    Stay updated with the latest <strong>wingo signals telegram</strong> group for more tips and community discussions. Our goal is to provide a premium <strong>wingo prediction</strong> experience that helps you understand the <strong>wingo big small pattern</strong> strategy better.
+                  </p>
+                  <p>
+                    By leveraging high-frequency data ingestion and <strong>wingo mod apk</strong> analysis techniques, Wingo Signal remains the #1 choice for players looking for <strong>wingo 1 min prediction</strong>, <strong>wingo 3 min signal</strong>, and <strong>wingo 5 min accurate results</strong>. Our system is continuously updated to stay ahead of the latest game algorithms.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
       </div>
 
       <Footer className="!mt-12 -mx-3 w-[calc(100%+1.5rem)] md:mx-auto md:max-w-[420px] rounded-none shadow-2xl shadow-indigo-100/50 overflow-hidden border-t border-white/5 !mb-0" />
@@ -580,24 +632,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
         )}
       </AnimatePresence>
 
-      {/* SEO Content Section */}
-      <section className="mt-12 mb-8 px-6 max-w-4xl mx-auto border-t border-slate-100 pt-10 pb-10">
-        <h2 className="text-xl font-black text-slate-800 mb-6">About WinGo {mode === '30s' ? '30 Seconds' : mode === '1m' ? '1 Minute' : mode === '3m' ? '3 Minutes' : '5 Minutes'} Prediction</h2>
-        <div className="space-y-4 text-sm text-slate-500 leading-relaxed font-medium">
-          <p>
-            Welcome to the official <strong>Wingo {mode} prediction tool</strong>. Our platform uses advanced AI neural networks to analyze real-time patterns for the {mode === '30s' ? 'fastest 30-second' : mode === '1m' ? 'high-speed 1-minute' : mode === '3m' ? 'balanced 3-minute' : 'stable 5-minute'} games. Whether you are looking for <strong>wingo 1 min prediction</strong> or <strong>wingo 1 minute signal</strong>, our tool provides the most accurate data-driven insights.
-          </p>
-          <p>
-            Many players search for <strong>wingo prediction telegram link</strong> or <strong>wingo predictor app download</strong> to improve their success rates on platforms like Tiranga and 91Club. Our AI pattern monitor scans millions of historical outcomes to give you an edge. Many also look for the <strong>wingo color prediction formula</strong> to understand the math behind the game.
-          </p>
-          <p>
-            Stay updated with the latest <strong>wingo signals telegram</strong> group for more tips and community discussions. Our goal is to provide a premium <strong>wingo prediction</strong> experience that helps you understand the <strong>wingo big small pattern</strong> strategy better.
-          </p>
-          <p>
-            By leveraging high-frequency data ingestion and <strong>wingo mod apk</strong> analysis techniques, Wingo Signal remains the #1 choice for players looking for <strong>wingo 1 min prediction</strong>, <strong>wingo 3 min signal</strong>, and <strong>wingo 5 min accurate results</strong>. Our system is continuously updated to stay ahead of the latest game algorithms.
-          </p>
-        </div>
-      </section>
+
 
       <style jsx global>{`
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }

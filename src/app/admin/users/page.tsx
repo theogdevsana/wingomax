@@ -76,28 +76,28 @@ export default function UsersPage() {
               const isBanned = user.status === 'banned';
               const isUsed = !!user.deviceId;
 
-              // iOS soft colors with blobs
-              let bgClass = "bg-[#E8F5E9] border-[#34C759]"; // iOS Green light (Active)
-              let badgeClass = "bg-[#34C759] text-white";
+              // Soft Premium Palette (iOS Inspired)
+              let bgClass = "bg-[#F5F7FF] border-[#E0E7FF]"; // Soft Indigo (Active)
+              let badgeClass = "bg-indigo-600 text-white shadow-indigo-100";
               let badgeText = "Active";
-              let blobFill = "rgba(52, 199, 89, 0.1)";
-              let blobFill2 = "rgba(52, 199, 89, 0.15)";
-              let iconColor = "text-[#34C759]";
+              let blobFill = "rgba(79, 70, 229, 0.08)";
+              let blobFill2 = "rgba(79, 70, 229, 0.12)";
+              let iconColor = "text-indigo-600";
 
               if (isBanned) {
-                bgClass = "bg-[#FFF4E5] border-[#FF9500]"; // iOS Orange light
-                badgeClass = "bg-[#FF9500] text-white";
+                bgClass = "bg-[#FFF9F2] border-[#FFE4CC]"; // Soft Amber (Banned)
+                badgeClass = "bg-amber-500 text-white shadow-amber-100";
                 badgeText = "Banned";
-                blobFill = "rgba(255, 149, 0, 0.1)";
-                blobFill2 = "rgba(255, 149, 0, 0.15)";
-                iconColor = "text-[#FF9500]";
+                blobFill = "rgba(245, 158, 11, 0.08)";
+                blobFill2 = "rgba(245, 158, 11, 0.12)";
+                iconColor = "text-amber-600";
               } else if (isExpired) {
-                bgClass = "bg-[#FFEBEB] border-[#FF3B30]"; // iOS Red light
-                badgeClass = "bg-[#FF3B30] text-white";
+                bgClass = "bg-[#FFF5F5] border-[#FEE2E2]"; // Soft Rose (Expired)
+                badgeClass = "bg-rose-500 text-white shadow-rose-100";
                 badgeText = "Expired";
-                blobFill = "rgba(255, 59, 48, 0.1)";
-                blobFill2 = "rgba(255, 59, 48, 0.15)";
-                iconColor = "text-[#FF3B30]";
+                blobFill = "rgba(244, 63, 94, 0.08)";
+                blobFill2 = "rgba(244, 63, 94, 0.12)";
+                iconColor = "text-rose-600";
               }
 
               return (
