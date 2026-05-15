@@ -1,11 +1,5 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI!;
-
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
-
 let cached = (global as any).mongoose;
 
 if (!cached) {
@@ -13,6 +7,12 @@ if (!cached) {
 }
 
 async function connectToDatabase() {
+  const MONGODB_URI = process.env.MONGODB_URI;
+
+  if (!MONGODB_URI) {
+    throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -20,7 +20,7 @@ async function connectToDatabase() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      serverSelectionTimeoutMS: 10000, // Increased to 10 seconds to avoid timeout on slow connections
+      serverSelectionTimeoutMS: 10000,
     };
 
     console.log('Connecting to MongoDB...');
@@ -29,6 +29,7 @@ async function connectToDatabase() {
       return mongoose;
     }).catch((err) => {
       console.error('MongoDB connection error:', err);
+      cached.promise = null;
       throw err;
     });
   }
@@ -37,3 +38,4 @@ async function connectToDatabase() {
 }
 
 export default connectToDatabase;
+
