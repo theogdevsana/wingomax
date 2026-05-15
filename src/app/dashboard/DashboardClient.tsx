@@ -137,7 +137,7 @@ export default function DashboardPage() {
               <path d="M19 3v4" />
               <path d="M21 5h-4" />
             </svg>
-          </a>
+          </Link>
         </div>
 
         {/* Section: Search Bar */}
