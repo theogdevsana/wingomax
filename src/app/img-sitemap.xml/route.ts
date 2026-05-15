@@ -3,7 +3,6 @@ import { BLOG_POSTS } from '@/lib/blogs';
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
   
-  // Collect critical UI and game images
   const games = [
     '82_lottery', '91club', 'bdg_win', 'bgd_game', 'goa_game', 
     'jai_club', 'jalwa', 'raja_game', 'sikkim', 'tashan_win', 
@@ -17,8 +16,8 @@ export async function GET() {
   ];
 
   const gameImages = games.flatMap(game => [
-    { url: `${baseUrl}/duner/${game}.png`, title: `${game.replace(/_/g, ' ')} Prediction App` },
-    { url: `${baseUrl}/logo/${game}.png`, title: `${game.replace(/_/g, ' ')} Platform Logo` }
+    { url: `${baseUrl}/duner/${game}.png`, title: `${game.replace(/_/g, ' ')} Prediction Tool` },
+    { url: `${baseUrl}/logo/${game}.png`, title: `${game.replace(/_/g, ' ')} Platform` }
   ]);
 
   const uiImages = svgPngs.map(img => ({
@@ -51,7 +50,8 @@ export async function GET() {
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/xml; charset=utf-8',
+      'Content-Type': 'application/xml',
+      'X-Content-Type-Options': 'nosniff',
       'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
     },
   });

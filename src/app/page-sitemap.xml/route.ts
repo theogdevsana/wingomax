@@ -27,7 +27,8 @@ export async function GET() {
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/xml; charset=utf-8',
+      'Content-Type': 'application/xml',
+      'X-Content-Type-Options': 'nosniff',
       'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
     },
   });
