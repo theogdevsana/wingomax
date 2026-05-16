@@ -10,8 +10,10 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ['/admin/', '/api/', '/dashboard/'],
     },
     sitemap: [
-      `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/wingo-sitemap.xml`,
+      `${baseUrl}/blog-sitemap.xml`,
       `${baseUrl}/img-sitemap.xml`,
+      `${baseUrl}/sitemap-static.xml`,
       `${baseUrl}/rss.xml`,
     ],
   };
