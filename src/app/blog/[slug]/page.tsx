@@ -77,7 +77,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       "name": "Wingo Signal",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://wingosignals.xyz/logo/main_logo.png"
+        "url": "https://wingosignals.xyz/logo/official-logo.png"
       }
     },
     "mainEntityOfPage": {

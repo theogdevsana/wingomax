@@ -16,7 +16,7 @@ export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { 
     "@type": "Organization",
     "name": "Wingo Signal",
     "url": "https://wingosignals.xyz",
-    "logo": "https://wingosignals.xyz/logo/main_logo.png",
+    "logo": "https://wingosignals.xyz/logo/official-logo.png",
     "sameAs": [telegramLink],
     "description": "Professional Wingo prediction tools and AI-driven signals for gaming platforms."
   };

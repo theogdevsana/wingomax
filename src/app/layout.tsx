@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     description: 'Advanced Wingo Signal platform providing premium prediction tools and real-time signals.',
     images: [
       {
-        url: '/duner/main_logo.png',
+        url: '/logo/official-logo.png',
         width: 1200,
         height: 630,
         alt: 'Wingo Signal Preview',
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Wingo Signal - Professional Game Predictor',
     description: 'Advanced Wingo Signal platform providing premium prediction tools and real-time signals.',
-    images: ['/duner/main_logo.png'],
+    images: ['/logo/official-logo.png'],
     creator: '@enzosrs',
   },
   robots: {
@@ -93,7 +93,7 @@ export default function RootLayout({
       <head>
         <OrganizationSchema telegramLink="https://t.me/enzosrs" />
         {/* Preload critical assets */}
-        <link rel="preload" href="/duner/main_logo.png" as="image" />
+        <link rel="preload" href="/logo/official-logo.png" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
