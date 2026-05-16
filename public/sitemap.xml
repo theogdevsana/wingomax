@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <sitemap>
+    <loc>https://wingosignals.xyz/sitemap-static.xml</loc>
+    <lastmod>2026-05-16T10:53:41.081Z</lastmod>
+  </sitemap>
+
+  <sitemap>
+    <loc>https://wingosignals.xyz/blog-sitemap.xml</loc>
+    <lastmod>2026-05-16T10:53:41.082Z</lastmod>
+  </sitemap>
+
+  <sitemap>
+    <loc>https://wingosignals.xyz/wingo-sitemap.xml</loc>
+    <lastmod>2026-05-16T10:53:41.082Z</lastmod>
+  </sitemap>
+
+  <sitemap>
+    <loc>https://wingosignals.xyz/img-sitemap.xml</loc>
+    <lastmod>2026-05-16T10:53:41.082Z</lastmod>
+  </sitemap>
+
+</sitemapindex>
