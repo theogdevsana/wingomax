@@ -6,6 +6,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Clock, User, ArrowLeft, TrendingUp, Zap, Shield } from "lucide-react";
 import { TableOfContents, FAQItem, SocialShare, ContentRenderer } from "./BlogClient";
+import JsonLd from "@/components/JsonLd";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -98,8 +99,15 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     }))
   } : null;
 
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Blog", item: "/blog" },
+    { name: post.title, item: `/blog/${slug}` }
+  ];
+
   return (
     <main className="min-h-screen bg-slate-50 pb-20">
+      <JsonLd breadcrumbs={breadcrumbs} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
@@ -271,8 +279,4 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   );
 }
 
-export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({
-    slug: post.slug,
-  }));
-}
+export const dynamic = 'force-dynamic';

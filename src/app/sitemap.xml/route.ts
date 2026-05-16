@@ -1,14 +1,19 @@
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
   
+  // Sitemap Index structure
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>${baseUrl}/page-sitemap.xml</loc>
+    <loc>${baseUrl}/sitemap-static.xml</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/blog-sitemap.xml</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/wingo-sitemap.xml</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
   </sitemap>
   <sitemap>
@@ -20,8 +25,7 @@ export async function GET() {
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml',
-      'X-Content-Type-Options': 'nosniff',
-      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate',
     },
   });
 }

@@ -77,7 +77,7 @@ export const metadata: Metadata = {
   },
 };
 
-import JsonLd from "@/components/JsonLd";
+import { OrganizationSchema } from "@/components/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({
@@ -91,7 +91,7 @@ export default function RootLayout({
       className={`${nunito.variable} h-full antialiased`}
     >
       <head>
-        <JsonLd telegramLink="https://t.me/enzosrs" />
+        <OrganizationSchema telegramLink="https://t.me/enzosrs" />
         {/* Preload critical assets */}
         <link rel="preload" href="/duner/main_logo.png" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

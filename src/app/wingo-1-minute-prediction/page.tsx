@@ -3,6 +3,8 @@ import connectMongo from '@/lib/mongodb';
 import Settings from '@/lib/models/Settings';
 import { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Wingo 1 Min Prediction - WinGo 1 Minute Formula & Signals",
   description: "Get the latest Wingo 1 min prediction signals and color prediction formula. Accurate WinGo 1 minute patterns for big small games and number predictions.",
@@ -12,10 +14,22 @@ export const metadata: Metadata = {
   }
 };
 
+import JsonLd from "@/components/JsonLd";
+
 export default async function Wingo1mPage() {
   await connectMongo();
   const settings = await Settings.findOne({});
   const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
 
-  return <PredictionTool mode="1m" telegramLink={telegramLink} />;
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Wingo 1 Min Prediction", item: "/wingo-1-minute-prediction" }
+  ];
+
+  return (
+    <>
+      <JsonLd breadcrumbs={breadcrumbs} />
+      <PredictionTool mode="1m" telegramLink={telegramLink} />
+    </>
+  );
 }

@@ -6,8 +6,8 @@ import { edgeVerifyToken } from './lib/jwt';
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // PERFORMANCE FIX: Only run proxy for admin paths
-  if (!pathname.startsWith('/admin') && !pathname.startsWith('/api/admin')) {
+  // PERFORMANCE FIX: Only run proxy for admin and dashboard paths
+  if (!pathname.startsWith('/admin') && !pathname.startsWith('/api/admin') && !pathname.startsWith('/dashboard')) {
     return NextResponse.next();
   }
 
@@ -43,9 +43,25 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/admin', request.url));
   }
 
+  // --- Dashboard Protection ---
+  if (pathname.startsWith('/dashboard')) {
+    const userToken = request.cookies.get('auth_token')?.value;
+
+    if (!userToken) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+
+    const userPayload = await edgeVerifyToken(userToken);
+    if (!userPayload) {
+      const response = NextResponse.redirect(new URL('/', request.url));
+      response.cookies.delete('auth_token');
+      return response;
+    }
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: ['/admin/:path*', '/api/admin/:path*', '/dashboard/:path*'],
 };

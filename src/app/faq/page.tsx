@@ -13,10 +13,22 @@ export const metadata: Metadata = {
 import connectMongo from '@/lib/mongodb';
 import Settings from '@/lib/models/Settings';
 
+import JsonLd from "@/components/JsonLd";
+
 export default async function Page() {
   await connectMongo();
   const settings = await Settings.findOne({});
   const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
 
-  return <FAQPage telegramLink={telegramLink} />;
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "FAQ", item: "/faq" }
+  ];
+
+  return (
+    <>
+      <JsonLd breadcrumbs={breadcrumbs} />
+      <FAQPage telegramLink={telegramLink} />
+    </>
+  );
 }

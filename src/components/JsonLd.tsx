@@ -1,15 +1,23 @@
 import React from 'react';
 
-export default function JsonLd({ telegramLink = "https://t.me/enzosrs" }: { telegramLink?: string }) {
+interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { telegramLink?: string }) {
   const organizationData = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Wingo Signal",
     "url": "https://wingosignals.xyz",
     "logo": "https://wingosignals.xyz/logo/main_logo.png",
-    "sameAs": [
-      telegramLink
-    ],
+    "sameAs": [telegramLink],
     "description": "Professional Wingo prediction tools and AI-driven signals for gaming platforms."
   };
 
@@ -25,31 +33,6 @@ export default function JsonLd({ telegramLink = "https://t.me/enzosrs" }: { tele
     }
   };
 
-  const breadcrumbData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://wingosignals.xyz"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Wingo Blog",
-        "item": "https://wingosignals.xyz/blog"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "Wingo Predictions",
-        "item": "https://wingosignals.xyz/wingo-1-minute-prediction"
-      }
-    ]
-  };
-
   return (
     <>
       <script
@@ -60,10 +43,55 @@ export default function JsonLd({ telegramLink = "https://t.me/enzosrs" }: { tele
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
-      />
+    </>
+  );
+}
+
+export default function JsonLd({ 
+  breadcrumbs, 
+  faq 
+}: { 
+  breadcrumbs?: BreadcrumbItem[]; 
+  faq?: FAQItem[];
+}) {
+  const breadcrumbData = breadcrumbs ? {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": crumb.name,
+      "item": crumb.item.startsWith('http') ? crumb.item : `https://wingosignals.xyz${crumb.item}`
+    }))
+  } : null;
+
+  const faqData = faq ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(item => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
+      }
+    }))
+  } : null;
+
+  return (
+    <>
+      {breadcrumbData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+        />
+      )}
+      {faqData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
+        />
+      )}
     </>
   );
 }
