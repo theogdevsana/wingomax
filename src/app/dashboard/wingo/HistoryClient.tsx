@@ -73,6 +73,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
   const [shuffleNumbers, setShuffleNumbers] = useState<number[]>([]);
   const [shuffleTick, setShuffleTick] = useState(0);
   const [isAuthChecking, setIsAuthChecking] = useState(true);
+  const [lastPredictedPeriod, setLastPredictedPeriod] = useState<string>("");
 
   useEffect(() => {
     const key = localStorage.getItem("login_key");
@@ -118,7 +119,14 @@ export default function HistoryClient({ slug }: { slug: string }) {
     const updateTimer = () => {
       const data = getTimerData(selectedGame);
       setTimeLeft(data.remainingSeconds);
-      setCurrentPeriod(data.periodNumber);
+      setCurrentPeriod(prev => {
+        if (prev !== data.periodNumber) {
+          // New period started — reset prediction & lock
+          setPrediction(null);
+          setLastPredictedPeriod("");
+        }
+        return data.periodNumber;
+      });
       
       if (data.remainingSeconds === PERIODS_MAP[selectedGame] - 1) {
         fetchHistory();
@@ -141,44 +149,52 @@ export default function HistoryClient({ slug }: { slug: string }) {
   }, [isAnimating]);
 
   const handlePredict = async () => {
-    if (isAnimating) return;
-    
+    if (isAnimating || lastPredictedPeriod === currentPeriod) return;
+
     setIsAnimating(true);
+    setLastPredictedPeriod(currentPeriod);
     setPrediction(null);
-    
+
+    const ANIMATION_MS = 3000;
+    const startTime = Date.now();
+
+    let finalVal: number | null = null;
+
+    // 2.8s client timeout — safety net if server is slow
+    const controller = new AbortController();
+    const clientTimeout = setTimeout(() => controller.abort(), 2800);
+
     try {
-      const res = await fetch("/api/predict");
+      const res = await fetch("/api/predict", { signal: controller.signal });
+      clearTimeout(clientTimeout);
       const data = await res.json();
-      
+
       if (data?.predictionResult) {
         const { gameType, period, prediction: apiPred } = data.predictionResult;
-        
-        // Define expected game type based on selection
         const expectedGameType = selectedGame === "1 Min" ? "Wingo 1 Min" : "Wingo 30 Sec";
-        
-        // Match both gameType and currentPeriod
+
         if (gameType === expectedGameType && period === currentPeriod) {
-          // If match, use the API result
-          const finalVal = apiPred.toUpperCase() === "BIG" ? 7 : 2; // 7 >= 5 (Big), 2 < 5 (Small)
-          
-          setTimeout(() => {
-            setIsAnimating(false);
-            setPrediction(finalVal);
-          }, 3000);
-          return;
+          finalVal = apiPred.toUpperCase() === "BIG" ? 7 : 2;
         } else {
-          console.log("Period or GameType mismatch. API Period:", period, "Local Period:", currentPeriod);
+          console.log("Mismatch. API Period:", period, "Local:", currentPeriod);
         }
       }
     } catch (err) {
+      clearTimeout(clientTimeout);
       console.error("Prediction API Fetch Error:", err);
     }
 
-    // Fallback to random if API fails or doesn't match
+    if (finalVal === null) {
+      finalVal = Math.floor(Math.random() * 10);
+    }
+
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, ANIMATION_MS - elapsed);
+
     setTimeout(() => {
       setIsAnimating(false);
-      setPrediction(Math.floor(Math.random() * 10));
-    }, 3000);
+      setPrediction(finalVal);
+    }, remaining);
   };
 
   if (isAuthChecking || !game) return null;
@@ -290,6 +306,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
               alt="Wingo Countdown Timer Background"
               width={200}
               height={100}
+              priority
             />
             <div className={styles.timeContent}>
               <div className={isLoading ? styles.skeletonPeriod : styles.issueNumber}>{isLoading ? "" : currentPeriod}</div>
@@ -321,6 +338,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
             alt="Wingo Game History Draw Result Background"
             width={400}
             height={100}
+            priority
           />
           <div className={styles.resultNumbers}>
             <div className={styles.historyRow}>
@@ -349,7 +367,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
                     {[1, 2].map((_, idx) => (
                       <div key={`mystery-pre-${idx}`} className={styles.resultItem}>
                         <Image 
-                          className={styles.resultImg} 
+                          className={`${styles.resultImg} ${prediction !== null ? styles.grayscale : ""}`} 
                           src={`/svg/png/what_is_result${idx % 2 === 0 ? "" : "_v2"}.png`} 
                           alt="Mystery Result Placeholder" 
                           width={36}
@@ -386,7 +404,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
                     {[1, 2, 3].map((_, idx) => (
                       <div key={`mystery-post-${idx}`} className={styles.resultItem}>
                         <Image 
-                          className={styles.resultImg} 
+                          className={`${styles.resultImg} ${prediction !== null ? styles.grayscale : ""}`} 
                           src={`/svg/png/what_is_result${idx % 2 === 0 ? "_v2" : ""}.png`} 
                           alt="Mystery Result Placeholder" 
                           width={36}
@@ -420,9 +438,9 @@ export default function HistoryClient({ slug }: { slug: string }) {
           <button 
             className={styles.predictBtn} 
             onClick={handlePredict}
-            disabled={isAnimating}
+            disabled={isAnimating || lastPredictedPeriod === currentPeriod}
           >
-            Predict
+            {lastPredictedPeriod === currentPeriod && !isAnimating ? "Predicted" : "Predict"}
           </button>
         </div>
 

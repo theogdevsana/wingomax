@@ -73,6 +73,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
   const [shuffleNumbers, setShuffleNumbers] = useState<number[]>([]);
   const [shuffleTick, setShuffleTick] = useState(0);
   const [isAuthChecking, setIsAuthChecking] = useState(true);
+  const [lastPredictedPeriod, setLastPredictedPeriod] = useState<string>("");
 
   useEffect(() => {
     const key = localStorage.getItem("login_key");
@@ -118,7 +119,14 @@ export default function HistoryClient({ slug }: { slug: string }) {
     const updateTimer = () => {
       const data = getTimerData(selectedGame);
       setTimeLeft(data.remainingSeconds);
-      setCurrentPeriod(data.periodNumber);
+      setCurrentPeriod(prev => {
+        if (prev !== data.periodNumber) {
+          // New period started — reset prediction & lock
+          setPrediction(null);
+          setLastPredictedPeriod("");
+        }
+        return data.periodNumber;
+      });
       
       if (data.remainingSeconds === PERIODS_MAP[selectedGame] - 1) {
         fetchHistory();
@@ -141,9 +149,11 @@ export default function HistoryClient({ slug }: { slug: string }) {
   }, [isAnimating]);
 
   const handlePredict = () => {
-    if (isAnimating) return;
+    // Block if already animating OR already predicted for this period
+    if (isAnimating || lastPredictedPeriod === currentPeriod) return;
     
     setIsAnimating(true);
+    setLastPredictedPeriod(currentPeriod); // Lock this period immediately
     setPrediction(null);
     
     const newShuffle = Array.from({ length: 12 }, () => Math.floor(Math.random() * 10));
@@ -398,9 +408,9 @@ export default function HistoryClient({ slug }: { slug: string }) {
           <button 
             className={styles.predictBtn} 
             onClick={handlePredict}
-            disabled={isAnimating}
+            disabled={isAnimating || lastPredictedPeriod === currentPeriod}
           >
-            Predict
+            {lastPredictedPeriod === currentPeriod && !isAnimating ? "Predicted" : "Predict"}
           </button>
         </div>
 

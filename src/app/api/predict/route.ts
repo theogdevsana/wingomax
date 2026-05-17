@@ -12,11 +12,20 @@ export async function GET() {
       return NextResponse.json({ status: 'error', msg: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. Fetch Prediction from External API
+    // 2. Fetch Prediction from External API with 2.5s timeout
     const externalApiUrl = 'https://api.nexapk.in/myapp/user/api.php?action=getPrediction&key=enzo';
-    const response = await fetch(externalApiUrl, {
-      cache: 'no-store', // Ensure we always get fresh data
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+    let response: Response;
+    try {
+      response = await fetch(externalApiUrl, {
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     if (!response.ok) {
       return NextResponse.json({ status: 'error', msg: 'External API Error' }, { status: 502 });
@@ -27,8 +36,7 @@ export async function GET() {
     // 3. Extract and Clean the Response
     if (data && data.predictionResult) {
       const { predictionResult } = data;
-      
-      // Filter out unwanted fields like lossRecovery
+
       const cleanResult = {
         gameType: predictionResult.gameType,
         period: predictionResult.period,
@@ -36,17 +44,18 @@ export async function GET() {
         status: predictionResult.status,
         confidence: predictionResult.confidence,
         skipped: predictionResult.skipped,
-        skipReason: predictionResult.skipReason
+        skipReason: predictionResult.skipReason,
       };
 
-      return NextResponse.json({
-        predictionResult: cleanResult
-      });
+      return NextResponse.json({ predictionResult: cleanResult });
     }
 
     return NextResponse.json({ status: 'error', msg: 'Invalid Data Format' }, { status: 500 });
 
-  } catch (error) {
+  } catch (error: unknown) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      return NextResponse.json({ status: 'error', msg: 'Prediction API Timeout' }, { status: 504 });
+    }
     console.error('Prediction API Error:', error);
     return NextResponse.json({ status: 'error', msg: 'Internal Server Error' }, { status: 500 });
   }
