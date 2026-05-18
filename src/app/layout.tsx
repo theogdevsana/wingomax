@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     shortcut: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
-  manifest: '/manifest.webmanifest',
+  manifest: '/manifest.json',
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -100,6 +100,12 @@ export default function RootLayout({
         <link rel="preload" href="/logo/official-logo.png" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* PWA Manifest & Meta Tags */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Wingo Signal" />
         {/* PWA Service Worker Registration */}
         <script
           dangerouslySetInnerHTML={{
