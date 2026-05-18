@@ -309,11 +309,12 @@ export default function HistoryClient({ slug }: { slug: string }) {
             alt="Wingo Game History Draw Result Background"
             width={400}
             height={100}
+            priority
           />
           <div className={styles.resultNumbers}>
             <div className={styles.historyRow}>
               {isAnimating ? (
-                [...Array(6)].map((_, i) => (
+                [...Array(7)].map((_, i) => (
                   <div key={i} className={styles.resultItem}>
                     <motion.div
                       key={shuffleTick + i}
@@ -325,8 +326,8 @@ export default function HistoryClient({ slug }: { slug: string }) {
                         className={styles.resultImg} 
                         src={`/svg/gray/${(shuffleTick + i) % 10}_gray.svg`} 
                         alt="Shuffling" 
-                        width={32}
-                        height={32}
+                        width={36}
+                        height={36}
                       />
                     </motion.div>
                   </div>
@@ -334,14 +335,14 @@ export default function HistoryClient({ slug }: { slug: string }) {
               ) : (
                 historyData.length > 0 && !isLoading ? (
                   <>
-                    {[1, 2].map((_, idx) => (
+                    {[1, 2, 3].map((_, idx) => (
                       <div key={`mystery-pre-${idx}`} className={styles.resultItem}>
                         <Image 
                           className={styles.resultImg} 
                           src={`/svg/gray/${(idx + 3) % 10}_gray.svg`} 
                           alt="Mystery Result Placeholder" 
-                          width={32}
-                          height={32}
+                          width={36}
+                          height={36}
                         />
                       </div>
                     ))}
@@ -377,22 +378,22 @@ export default function HistoryClient({ slug }: { slug: string }) {
                           className={styles.resultImg} 
                           src={`/svg/gray/${(idx + 7) % 10}_gray.svg`} 
                           alt="Mystery Result Placeholder" 
-                          width={32}
-                          height={32}
+                          width={36}
+                          height={36}
                         />
                       </div>
                     ))}
                   </>
                 ) : (
                   <div style={{ display: 'flex', gap: '4px', width: '100%', justifyContent: 'center' }}>
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                    {[1, 2, 3, 4, 5, 6, 7].map((i) => (
                       <div key={i} className={styles.resultItem}>
                         <Image 
                           className={styles.resultImg} 
                           src={`/svg/gray/${i % 10}_gray.svg`} 
                           alt="Loading" 
-                          width={32}
-                          height={32}
+                          width={36}
+                          height={36}
                           style={{ opacity: 0.5 }}
                         />
                       </div>

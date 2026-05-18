@@ -330,7 +330,6 @@ export default function HistoryClient({ slug }: { slug: string }) {
           <Image src="/svg/png/result_small.png" alt="" width={36} height={36} priority />
           <Image src="/svg/png/result_big.png" alt="" width={36} height={36} priority />
         </div>
-
         <div className={styles.drawResultSection}>
           <Image 
             className={styles.resultBg} 
@@ -343,7 +342,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
           <div className={styles.resultNumbers}>
             <div className={styles.historyRow}>
               {isAnimating ? (
-                [...Array(6)].map((_, i) => (
+                [...Array(7)].map((_, i) => (
                   <div key={i} className={styles.resultItem}>
                     <motion.div
                       key={shuffleTick + i}
@@ -364,7 +363,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
               ) : (
                 historyData.length > 0 && !isLoading ? (
                   <>
-                    {[1, 2].map((_, idx) => (
+                    {[1, 2, 3].map((_, idx) => (
                       <div key={`mystery-pre-${idx}`} className={styles.resultItem}>
                         <Image 
                           className={`${styles.resultImg} ${prediction !== null ? styles.grayscale : ""}`} 
@@ -415,7 +414,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
                   </>
                 ) : (
                   <div style={{ display: 'flex', gap: '4px', width: '100%', justifyContent: 'center' }}>
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                    {[1, 2, 3, 4, 5, 6, 7].map((i) => (
                       <div key={i} className={styles.resultItem}>
                         <Image 
                           className={styles.resultImg} 
