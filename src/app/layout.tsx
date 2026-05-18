@@ -100,6 +100,22 @@ export default function RootLayout({
         <link rel="preload" href="/logo/official-logo.png" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* PWA Service Worker Registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/pwabuilder-sw.js').then(function(res) {
+                    console.log('PWA Service Worker registered successfully: ', res.scope);
+                  }).catch(function(err) {
+                    console.log('PWA Service Worker registration failed: ', err);
+                  });
+                });
+              }
+            `
+          }}
+        />
       </head>
 
       <body className="h-full flex flex-col font-sans">
