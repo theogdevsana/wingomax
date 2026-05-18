@@ -71,6 +71,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://wingosignals.xyz',
+    types: {
+      'application/rss+xml': 'https://wingosignals.xyz/rss.xml',
+    },
   },
   other: {
     'theme-color': '#007AFF',
