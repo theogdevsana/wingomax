@@ -28,11 +28,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
     ],
-    shortcut: '/favicon/favicon.ico',
-    apple: '/favicon/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
   manifest: '/manifest.webmanifest',
   openGraph: {
@@ -89,6 +89,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${nunito.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
     >
       <head>
         <OrganizationSchema telegramLink="https://t.me/enzosrs" />

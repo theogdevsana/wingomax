@@ -132,15 +132,22 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
   const [showHelp, setShowHelp] = useState(false);
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [onlineUsers, setOnlineUsers] = useState(12456);
+  const [onlineUsers, setOnlineUsers] = useState(11432);
   const [isSEOExpanded, setIsSEOExpanded] = useState(false);
 
   const prevPeriodRef = useRef('');
 
   useEffect(() => {
+    setOnlineUsers(Math.floor(Math.random() * (12900 - 8000 + 1)) + 8000);
     const interval = setInterval(() => {
-      setOnlineUsers(prev => prev + Math.floor(Math.random() * 10) - 5);
-    }, 3000);
+      setOnlineUsers(prev => {
+        const change = Math.floor(Math.random() * 120) - 40;
+        let next = prev + change;
+        if (next < 8000) next = 8000 + Math.floor(Math.random() * 50);
+        if (next > 12900) next = 12900 - Math.floor(Math.random() * 50);
+        return next;
+      });
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -325,7 +332,21 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
         >
           <div className="flex justify-between items-center border-b border-slate-100 pb-2">
             <span className="text-xs font-bold text-slate-400 tracking-tighter">AI Signal Analyst</span>
-            <span className="text-xs font-black text-green-500">Live: {onlineUsers.toLocaleString()}</span>
+            <div className="text-xs font-black text-green-500 flex items-center gap-1 relative overflow-hidden h-4">
+              <span>Live:</span>
+              <AnimatePresence mode="popLayout">
+                <motion.span
+                  key={onlineUsers}
+                  initial={{ y: 15, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -15, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="inline-block"
+                >
+                  {onlineUsers.toLocaleString()}
+                </motion.span>
+              </AnimatePresence>
+            </div>
           </div>
 
           <div className="flex flex-col items-center gap-1 text-center py-1">
@@ -538,19 +559,19 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
           {/* Market Analysis Content for Indexing */}
           <div className="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm">
              <h2 className="text-sm font-black text-slate-800 flex items-center gap-2 mb-4">
-                <Target size={16} className="text-emerald-500" /> Professional Wingo Signals & AI Tool
+                <Target size={16} className="text-emerald-500" /> Why We Built This Analyzer
              </h2>
              <p className="text-[10px] text-slate-500 leading-relaxed font-medium mb-4">
-                Looking for the most accurate <strong>wingo signals</strong>? Our <strong>wingo prediction</strong> system is powered by a neural engine that analyzes <strong>wingo 1 min predictions</strong>, 3 min, and 5 min patterns in real-time. This <strong>wingo tool</strong> helps you identify the trend before it happens, giving you a professional edge in every round.
+                Let's be honest—relying entirely on gut feelings or guessing is a quick way to empty your balance. I built this dashboard because I was tired of treating the game like a coin flip. By continuously tracking and logging past results, we can spot repeating sequences and trends before they become obvious to everyone else. It's not magic; it's simply math and probability doing the heavy lifting for you.
              </p>
              <div className="grid grid-cols-2 gap-3">
                 <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                   <span className="text-[10px] font-black text-indigo-600 block mb-1">Wingo 1 Min Signal</span>
-                   <p className="text-[8px] text-slate-400">High-speed pattern recognition for the 1-minute wingo game mode.</p>
+                   <span className="text-[10px] font-black text-indigo-600 block mb-1">Pattern Tracking</span>
+                   <p className="text-[8px] text-slate-400">We log every single outcome to identify recurring sequences on the fly.</p>
                 </div>
                 <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                   <span className="text-[10px] font-black text-indigo-600 block mb-1">WinGo Prediction AI</span>
-                   <p className="text-[8px] text-slate-400">Advanced AI logic trained on millions of historical wingo draws.</p>
+                   <span className="text-[10px] font-black text-indigo-600 block mb-1">Data-Driven Choices</span>
+                   <p className="text-[8px] text-slate-400">The system calculates the highest probability for the next draw based on history.</p>
                 </div>
              </div>
           </div>
@@ -585,23 +606,6 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
              </div>
           </div>
 
-          {/* Technical FAQ Section */}
-          <div>
-             <h2 className="text-sm font-black text-slate-400 tracking-[3px] text-center mb-4">Wingo Signals FAQ</h2>
-             <div className="flex flex-col gap-2">
-                {[
-                  { q: "What are the most accurate wingo signals?", a: "The most accurate wingo signals are generated using AI-driven pattern analysis that looks at historical data trends." },
-                  { q: "How to use wingo 1 min predictions?", a: "Simply open our tool, select the 1 min mode, and follow the generated signal for the current period." },
-                  { q: "Is this wingo tool free?", a: "Yes, we provide free public signals. Premium signals for 100% patterns are also available for advanced players." },
-                  { q: "Can I get wingo 30 sec signals?", a: "Our tool supports high-speed 30-second Wingo games with real-time neural updates." }
-                ].map((faq, i) => (
-                  <div key={i} className="bg-white border border-slate-100 p-4 rounded-2xl">
-                    <span className="text-xs font-black text-indigo-600 block mb-1.5">Q: {faq.q}</span>
-                    <p className="text-xs text-slate-500 leading-relaxed">{faq.a}</p>
-                  </div>
-                ))}
-             </div>
-          </div>
         </section>
 
         {/* --- Collapsible SEO Section --- */}
@@ -650,6 +654,26 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
               </motion.div>
             )}
           </AnimatePresence>
+        </section>
+
+        {/* Technical FAQ Section */}
+        <section className="mt-8 mb-10 px-1">
+          <div>
+             <h2 className="text-sm font-black text-slate-400 tracking-[3px] text-center mb-4">Wingo Signals FAQ</h2>
+             <div className="flex flex-col gap-2">
+                {[
+                  { q: "What are the most accurate wingo signals?", a: "The most accurate wingo signals are generated using AI-driven pattern analysis that looks at historical data trends." },
+                  { q: "How to use wingo 1 min predictions?", a: "Simply open our tool, select the 1 min mode, and follow the generated signal for the current period." },
+                  { q: "Is this wingo tool free?", a: "Yes, we provide free public signals. Premium signals for 100% patterns are also available for advanced players." },
+                  { q: "Can I get wingo 30 sec signals?", a: "Our tool supports high-speed 30-second Wingo games with real-time neural updates." }
+                ].map((faq, i) => (
+                  <div key={i} className="bg-white border border-slate-100 p-4 rounded-2xl">
+                    <span className="text-xs font-black text-indigo-600 block mb-1.5">Q: {faq.q}</span>
+                    <p className="text-xs text-slate-500 leading-relaxed">{faq.a}</p>
+                  </div>
+                ))}
+             </div>
+          </div>
         </section>
       </div>
 

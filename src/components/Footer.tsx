@@ -22,19 +22,14 @@ export default function Footer({ className = "" }: { className?: string }) {
           <span className="font-bold tracking-tighter text-lg md:text-xl text-white">Wingo Signal</span>
         </Link>
 
-        {/* Navigation Links in 3 Rows */}
+        {/* Navigation Links in 2 Rows */}
         <nav className="flex flex-col items-center gap-2">
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
             <Link href="/" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-white transition-colors">Home</Link>
             <Link href="/blog" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-white transition-colors">Wingo Blog</Link>
             <Link href="/faq" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-white transition-colors">Support Center</Link>
           </div>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
-            <Link href="/wingo-30-seconds-prediction" className="text-[10px] md:text-xs font-bold text-indigo-400 hover:text-white transition-colors">WinGo 30s</Link>
-            <Link href="/wingo-1-minute-prediction" className="text-[10px] md:text-xs font-bold text-indigo-400 hover:text-white transition-colors">WinGo 1m</Link>
-            <Link href="/wingo-3-minute-prediction" className="text-[10px] md:text-xs font-bold text-indigo-400 hover:text-white transition-colors">WinGo 3m</Link>
-            <Link href="/wingo-5-minute-prediction" className="text-[10px] md:text-xs font-bold text-indigo-400 hover:text-white transition-colors">WinGo 5m</Link>
-          </div>
+
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
             <Link href="/privacy" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-white transition-colors">Terms of Service</Link>

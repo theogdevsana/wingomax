@@ -48,6 +48,7 @@ export default function BlogLayoutClient({
               height={48} 
               priority 
               className="h-8 md:h-12 w-auto object-contain" 
+              style={{ width: 'auto' }}
             />
           </Link>
         </div>
@@ -81,6 +82,7 @@ export default function BlogLayoutClient({
                   width={140} 
                   height={40} 
                   className="h-8 md:h-10 w-auto object-contain" 
+                  style={{ width: 'auto' }}
                 />
                 <button 
                   onClick={() => setIsMenuOpen(false)} 
