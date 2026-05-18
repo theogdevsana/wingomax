@@ -96,8 +96,6 @@ export default function RootLayout({
     >
       <head>
         <OrganizationSchema telegramLink="https://t.me/enzosrs" />
-        {/* Preload critical assets */}
-        <link rel="preload" href="/logo/official-logo.png" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* PWA Manifest & Meta Tags */}

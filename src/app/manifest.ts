@@ -15,11 +15,6 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#007AFF',
     icons: [
       {
-        src: '/favicon.ico',
-        sizes: 'any',
-        type: 'image/x-icon',
-      },
-      {
         src: '/android-chrome-192x192.png',
         sizes: '192x192',
         type: 'image/png',
@@ -32,10 +27,10 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       {
-        name: 'Wingo Predictor',
-        short_name: 'Predictor',
-        description: 'Open the Wingo Predictor Tool directly',
-        url: '/dashboard/wingo',
+        name: 'Wingo 1 Min Tool',
+        short_name: 'Wingo 1 Min',
+        description: 'Open the Wingo 1 Min Prediction Tool directly',
+        url: '/wingo-1-minute-prediction',
         icons: [{ src: '/android-chrome-192x192.png', sizes: '192x192' }]
       }
     ],
