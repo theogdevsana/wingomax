@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   description: "Official Wingo Signal tool for 1-minute, 3-minute, and 5-minute prediction. Get accurate color and number predictions for Wingo with 95% accuracy.",
   keywords: [
-    "wingo signal", "wingo prediction", "color prediction tool", 
+    "wingo signal", "wingo prediction", "color prediction tool",
     "91club prediction", "tiranga prediction tool", "wingo signals telegram",
     "wingo mod apk", "wingo color prediction formula", "wingo big small pattern",
     "wingo predictor app download"
