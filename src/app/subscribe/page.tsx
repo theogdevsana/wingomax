@@ -126,7 +126,7 @@ const PLANS = [
 export default async function SubscribePage() {
   await connectMongo();
   const settings = await Settings.findOne({});
-  const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
+  const telegramLink = settings?.telegramLink ?? null;
 
   const standardPlans = PLANS.slice(0, 3);
   const advancedPlans = PLANS.slice(3, 6);
@@ -202,14 +202,20 @@ export default async function SubscribePage() {
                 ))}
 
                 {/* CTA Button */}
-                <a
-                  href={telegramLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.planBtn}
-                >
-                  Purchase Now
-                </a>
+                {telegramLink ? (
+                  <a
+                    href={telegramLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.planBtn}
+                  >
+                    Purchase Now
+                  </a>
+                ) : (
+                  <span className={styles.planBtn} style={{ opacity: 0.5, cursor: "not-allowed", pointerEvents: "none" }}>
+                    Contact Admin
+                  </span>
+                )}
               </div>
             </div>
           ))}
@@ -275,14 +281,20 @@ export default async function SubscribePage() {
                 ))}
 
                 {/* CTA Button */}
-                <a
-                  href={telegramLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.planBtn}
-                >
-                  Purchase Now
-                </a>
+                {telegramLink ? (
+                  <a
+                    href={telegramLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.planBtn}
+                  >
+                    Purchase Now
+                  </a>
+                ) : (
+                  <span className={styles.planBtn} style={{ opacity: 0.5, cursor: "not-allowed", pointerEvents: "none" }}>
+                    Contact Admin
+                  </span>
+                )}
               </div>
             </div>
           ))}
