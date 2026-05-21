@@ -246,35 +246,35 @@ export default function HistoryClient({ slug }: { slug: string }) {
       </div>
 
       <div className={styles.content}>
-        <div className={styles.lotteryRow} style={{ position: 'relative', overflow: 'hidden', borderRadius: '12px', maxHeight: '90px' }}>
+        <div className={styles.lotteryRow} style={{ position: 'relative', overflow: 'hidden', borderRadius: '12px' }}>
           <img 
             src={`/svg/png/wingo_${selectedGame === "30sec" ? "30sec" : "1min"}.png`} 
             alt="Wingo Background"
-            style={{ width: '100%', height: '90px', objectFit: 'cover', display: 'block' }}
+            style={{ width: '100%', height: 'auto', display: 'block' }}
           />
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', padding: '0 20px 0 39%', justifyContent: 'center', paddingTop: '5px' }}>
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', padding: '0 min(4vw, 16px) 0 39%', justifyContent: 'center', gap: 'min(2vw, 8px)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-              <div style={{ color: '#000', fontSize: '12px', fontWeight: 'bold' }}>Win Go {selectedGame}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <div style={{ background: timerBg, color: '#fff', width: '22px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor(Math.floor(timeLeft / 60) / 10)}</div>
-                <div style={{ background: timerBg, color: '#fff', width: '22px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor(timeLeft / 60) % 10}</div>
-                <div style={{ color: '#000', fontWeight: '900', fontSize: '16px', marginTop: '-2px' }}>:</div>
-                <div style={{ background: timerBg, color: '#fff', width: '22px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor((timeLeft % 60) / 10)}</div>
-                <div style={{ background: timerBg, color: '#fff', width: '22px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace' }}>{timeLeft % 60 % 10}</div>
+              <div style={{ color: '#000', fontSize: 'clamp(10px, 3.5vw, 14px)', fontWeight: 'bold' }}>Win Go {selectedGame}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'min(1vw, 4px)' }}>
+                <div style={{ background: timerBg, color: '#fff', width: 'clamp(16px, 5.5vw, 22px)', height: 'clamp(20px, 6.5vw, 26px)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: 'clamp(10px, 3.5vw, 14px)', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor(Math.floor(timeLeft / 60) / 10)}</div>
+                <div style={{ background: timerBg, color: '#fff', width: 'clamp(16px, 5.5vw, 22px)', height: 'clamp(20px, 6.5vw, 26px)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: 'clamp(10px, 3.5vw, 14px)', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor(timeLeft / 60) % 10}</div>
+                <div style={{ color: '#000', fontWeight: '900', fontSize: 'clamp(12px, 4vw, 16px)', marginTop: '-2px' }}>:</div>
+                <div style={{ background: timerBg, color: '#fff', width: 'clamp(16px, 5.5vw, 22px)', height: 'clamp(20px, 6.5vw, 26px)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: 'clamp(10px, 3.5vw, 14px)', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor((timeLeft % 60) / 10)}</div>
+                <div style={{ background: timerBg, color: '#fff', width: 'clamp(16px, 5.5vw, 22px)', height: 'clamp(20px, 6.5vw, 26px)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: 'clamp(10px, 3.5vw, 14px)', fontWeight: 'bold', fontFamily: 'monospace' }}>{timeLeft % 60 % 10}</div>
               </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginTop: '9px' }}>
-              <div style={{ display: 'flex', gap: '3px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '8px' }}>
+              <div style={{ display: 'flex', gap: 'min(1vw, 4px)', alignItems: 'center', flexShrink: 0 }}>
                 {historyData.slice(0, 3).map((item, idx) => (
                   <img
                     key={idx}
                     src={`/svg/numbers/${parseInt(item.number) % 10}.svg`}
                     alt={item.number}
-                    style={{ width: '22px', height: '22px', objectFit: 'contain' }}
+                    style={{ width: 'clamp(16px, 6vw, 24px)', height: 'clamp(16px, 6vw, 24px)', objectFit: 'contain' }}
                   />
                 ))}
               </div>
-              <div className={isLoading ? styles.skeletonPeriod : styles.issueNumber} style={{ color: '#000', margin: 0, fontSize: '13px' }}>{isLoading ? "" : currentPeriod}</div>
+              <div className={isLoading ? styles.skeletonPeriod : styles.issueNumber} style={{ color: '#000', margin: 0, fontSize: 'clamp(9px, 3.2vw, 13px)', textAlign: 'right', flexGrow: 1 }}>{isLoading ? "" : currentPeriod}</div>
             </div>
           </div>
         </div>
