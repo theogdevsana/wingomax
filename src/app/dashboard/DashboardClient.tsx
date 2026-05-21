@@ -11,7 +11,7 @@ import BackgroundSvg from "@/components/BackgroundSvg";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [games, setGames] = useState<Game[]>(GAMES);
+  const games = GAMES;
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -175,8 +175,23 @@ export default function DashboardPage() {
                 key={game.id} 
                 className={styles.card}
                 onClick={() => handleGameTap(game)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', position: 'relative' }}
               >
+                <div style={{
+                  position: 'absolute',
+                  top: '10px',
+                  left: '10px',
+                  background: game.color,
+                  color: game.name === "Tashan Win" ? "#1e293b" : "#fff",
+                  padding: '2px 8px',
+                  borderRadius: '12px',
+                  fontSize: '10px',
+                  fontWeight: '500',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                }}>
+                  {game.tag || "New"}
+                </div>
                 <Image
                   src={game.image}
                   alt={game.alt}

@@ -446,16 +446,16 @@
 }
 
 .tableHeader {
-  background: #f8fafc;
+  background: linear-gradient(135deg, #007AFF, #3c4de5);
   padding: 15px 20px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: none;
 }
 
 .tableHeader h2 {
   font-size: 18px;
   font-weight: 800;
   margin: 0;
-  color: #1e293b;
+  color: #ffffff;
 }
 
 .historyTable {

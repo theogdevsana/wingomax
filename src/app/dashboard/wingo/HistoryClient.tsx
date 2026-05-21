@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./history.module.css";
-import { ArrowLeft, Loader2 } from "lucide-react"; 
+import { ArrowLeft, Loader2, Timer } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -62,7 +62,7 @@ function getTimerData(periodName: "30sec" | "1 Min") {
 export default function HistoryClient({ slug }: { slug: string }) {
   const router = useRouter();
   const game = GAMES.find(g => g.slug === slug);
-  
+
   const [selectedGame, setSelectedGame] = useState<"30sec" | "1 Min">("1 Min");
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -127,7 +127,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
         }
         return data.periodNumber;
       });
-      
+
       if (data.remainingSeconds === PERIODS_MAP[selectedGame] - 1) {
         fetchHistory();
       }
@@ -203,6 +203,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
   const gameImg = game.image.replace("/duner/", "/logo/");
   const iosBlue = "#007AFF";
   const iosPurple = "#AF52DE";
+  const timerBg = selectedGame === "30sec" ? "#7810d2" : "linear-gradient(135deg, #007AFF, #3c4de5)";
 
   return (
     <main className={styles.main}>
@@ -234,19 +235,19 @@ export default function HistoryClient({ slug }: { slug: string }) {
           </Link>
           <div className={styles.gameInfo}>
             <div className={styles.gameIconWrapper}>
-              <Image 
-                src={gameImg} 
-                alt={gameName} 
+              <Image
+                src={gameImg}
+                alt={gameName}
                 width={48}
                 height={48}
                 priority
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
+                style={{
+                  width: '100%',
+                  height: '100%',
                   objectFit: 'contain',
                   borderRadius: '12px',
                   display: 'block'
-                }} 
+                }}
               />
             </div>
             <div className={styles.gameNameGroup}>
@@ -255,16 +256,16 @@ export default function HistoryClient({ slug }: { slug: string }) {
             </div>
           </div>
         </div>
-        
+
         <div className={styles.headerRight}>
           <div className={styles.miniSwitch}>
-            <button 
+            <button
               className={`${styles.miniBtn} ${selectedGame === "30sec" ? styles.miniActive : ""}`}
               onClick={() => setSelectedGame("30sec")}
             >
               30s
             </button>
-            <button 
+            <button
               className={`${styles.miniBtn} ${selectedGame === "1 Min" ? styles.miniActive : ""}`}
               onClick={() => setSelectedGame("1 Min")}
             >
@@ -275,51 +276,37 @@ export default function HistoryClient({ slug }: { slug: string }) {
       </div>
 
       <div className={styles.content}>
-        <div className={styles.lotteryRow}>
-          <div className={styles.lotteryTypeCard}>
-            <Image 
-              className={styles.lotteryBgSvg} 
-              src="/svg/png/lottery_type_bg.svg" 
-              alt="Wingo Lottery Type Decoration Background"
-              width={200}
-              height={100}
-            />
-            <div className={styles.wingoCircle}>
-              <Image 
-                src={`/svg/png/wingo_circle${selectedGame === "30sec" ? "" : "_1m"}.svg`} 
-                width={60}
-                height={60}
-                style={{ width: '100%' }} 
-                alt="Wingo Game Mode Timer Circle"
-              />
-            </div>
-            <div className={styles.lotteryInner}>
-              <div className={styles.lotteryText}>Win Go {selectedGame}</div>
-              <div className={styles.moreBadge}>AI Prediction</div>
-            </div>
-          </div>
-
-          <div className={styles.timeCard}>
-            <Image 
-              className={styles.lotteryBgSvg} 
-              src="/svg/png/time_bg.svg" 
-              alt="Wingo Countdown Timer Background"
-              width={200}
-              height={100}
-              priority
-            />
-            <div className={styles.timeContent}>
-              <div className={isLoading ? styles.skeletonPeriod : styles.issueNumber}>{isLoading ? "" : currentPeriod}</div>
-              <div className={styles.timerRow}>
-                <span className={styles.timerLabel}>Time Remaining</span>
-                <div className={styles.digitGroup}>
-                  <span className={styles.digit}>{Math.floor(Math.floor(timeLeft / 60) / 10)}</span>
-                  <span className={styles.digit}>{Math.floor(timeLeft / 60) % 10}</span>
-                  <span className={styles.digitSep}>:</span>
-                  <span className={styles.digit}>{Math.floor((timeLeft % 60) / 10)}</span>
-                  <span className={styles.digit}>{timeLeft % 60 % 10}</span>
-                </div>
+        <div className={styles.lotteryRow} style={{ position: 'relative', overflow: 'hidden', borderRadius: '12px', maxHeight: '90px' }}>
+          <img
+            src={`/svg/png/wingo_${selectedGame === "30sec" ? "30sec" : "1min"}.png`}
+            alt="Wingo Background"
+            style={{ width: '100%', height: '90px', objectFit: 'cover', display: 'block' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', padding: '0 20px 0 39%', justifyContent: 'center', paddingTop: '5px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+              <div style={{ color: '#000', fontSize: '12px', fontWeight: 'bold' }}>Win Go {selectedGame}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <div style={{ background: timerBg, color: '#fff', width: '22px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor(Math.floor(timeLeft / 60) / 10)}</div>
+                <div style={{ background: timerBg, color: '#fff', width: '22px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor(timeLeft / 60) % 10}</div>
+                <div style={{ color: '#000', fontWeight: '900', fontSize: '16px', marginTop: '-2px' }}>:</div>
+                <div style={{ background: timerBg, color: '#fff', width: '22px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace' }}>{Math.floor((timeLeft % 60) / 10)}</div>
+                <div style={{ background: timerBg, color: '#fff', width: '22px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', fontFamily: 'monospace' }}>{timeLeft % 60 % 10}</div>
               </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginTop: '9px' }}>
+              <div style={{ display: 'flex', gap: '3px', alignItems: 'center' }}>
+                {historyData.slice(0, 3).map((item, idx) => (
+                  <Image
+                    key={idx}
+                    src={parseInt(item.number) >= 5 ? '/svg/png/result_big.png' : '/svg/png/result_small.png'}
+                    alt={parseInt(item.number) >= 5 ? 'Big' : 'Small'}
+                    width={24}
+                    height={24}
+                    style={{ width: '24px', height: '24px', objectFit: 'contain' }}
+                  />
+                ))}
+              </div>
+              <div className={isLoading ? styles.skeletonPeriod : styles.issueNumber} style={{ color: '#000', margin: 0, fontSize: '13px' }}>{isLoading ? "" : currentPeriod}</div>
             </div>
           </div>
         </div>
@@ -330,10 +317,10 @@ export default function HistoryClient({ slug }: { slug: string }) {
           <Image src="/svg/png/result_small.png" alt="" width={36} height={36} priority />
           <Image src="/svg/png/result_big.png" alt="" width={36} height={36} priority />
         </div>
-        <div className={styles.drawResultSection}>
-          <Image 
-            className={styles.resultBg} 
-            src="/svg/png/draw_result_bg.svg" 
+        <div className={styles.drawResultSection} style={{ marginTop: '-12px' }}>
+          <Image
+            className={styles.resultBg}
+            src="/svg/png/draw_result_bg.svg"
             alt="Wingo Game History Draw Result Background"
             width={400}
             height={100}
@@ -350,10 +337,10 @@ export default function HistoryClient({ slug }: { slug: string }) {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.05 }}
                     >
-                      <Image 
-                        className={styles.resultImg} 
-                        src={`/svg/png/what_is_result${(shuffleTick + i) % 2 === 0 ? "" : "_v2"}.png`} 
-                        alt="Shuffling" 
+                      <Image
+                        className={styles.resultImg}
+                        src={`/svg/png/what_is_result${(shuffleTick + i) % 2 === 0 ? "" : "_v2"}.png`}
+                        alt="Shuffling"
                         width={36}
                         height={36}
                       />
@@ -365,33 +352,33 @@ export default function HistoryClient({ slug }: { slug: string }) {
                   <>
                     {[1, 2, 3].map((_, idx) => (
                       <div key={`mystery-pre-${idx}`} className={styles.resultItem}>
-                        <Image 
-                          className={`${styles.resultImg} ${prediction !== null ? styles.grayscale : ""}`} 
-                          src={`/svg/png/what_is_result${idx % 2 === 0 ? "" : "_v2"}.png`} 
-                          alt="Mystery Result Placeholder" 
+                        <Image
+                          className={`${styles.resultImg} ${prediction !== null ? styles.grayscale : ""}`}
+                          src={`/svg/png/what_is_result${idx % 2 === 0 ? "" : "_v2"}.png`}
+                          alt="Mystery Result Placeholder"
                           width={36}
                           height={36}
                         />
                       </div>
                     ))}
-                    
+
                     <div className={styles.resultItem}>
                       <motion.div
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         key={prediction !== null ? `size-${prediction}` : "size-default"}
                       >
-                        <Image 
-                          className={styles.resultImg} 
-                          src={prediction !== null ? (prediction >= 5 ? "/svg/png/result_big.png" : "/svg/png/result_small.png") : "/svg/png/what_is_result.png"} 
-                          alt={prediction !== null ? (prediction >= 5 ? "Big" : "Small") : "Random Prediction State"} 
+                        <Image
+                          className={styles.resultImg}
+                          src={prediction !== null ? (prediction >= 5 ? "/svg/png/result_big.png" : "/svg/png/result_small.png") : "/svg/png/what_is_result.png"}
+                          alt={prediction !== null ? (prediction >= 5 ? "Big" : "Small") : "Random Prediction State"}
                           width={36}
                           height={36}
                         />
                         {prediction !== null && (
-                          <Image 
-                            className={styles.firstBadge} 
-                            src="/svg/png/first_num_bg.svg" 
+                          <Image
+                            className={styles.firstBadge}
+                            src="/svg/png/first_num_bg.svg"
                             alt="Result Badge"
                             width={18}
                             height={18}
@@ -402,10 +389,10 @@ export default function HistoryClient({ slug }: { slug: string }) {
 
                     {[1, 2, 3].map((_, idx) => (
                       <div key={`mystery-post-${idx}`} className={styles.resultItem}>
-                        <Image 
-                          className={`${styles.resultImg} ${prediction !== null ? styles.grayscale : ""}`} 
-                          src={`/svg/png/what_is_result${idx % 2 === 0 ? "_v2" : ""}.png`} 
-                          alt="Mystery Result Placeholder" 
+                        <Image
+                          className={`${styles.resultImg} ${prediction !== null ? styles.grayscale : ""}`}
+                          src={`/svg/png/what_is_result${idx % 2 === 0 ? "_v2" : ""}.png`}
+                          alt="Mystery Result Placeholder"
                           width={36}
                           height={36}
                         />
@@ -416,10 +403,10 @@ export default function HistoryClient({ slug }: { slug: string }) {
                   <div style={{ display: 'flex', gap: '4px', width: '100%', justifyContent: 'center' }}>
                     {[1, 2, 3, 4, 5, 6, 7].map((i) => (
                       <div key={i} className={styles.resultItem}>
-                        <Image 
-                          className={styles.resultImg} 
-                          src={`/svg/png/what_is_result${i % 2 === 0 ? "" : "_v2"}.png`} 
-                          alt="Loading" 
+                        <Image
+                          className={styles.resultImg}
+                          src={`/svg/png/what_is_result${i % 2 === 0 ? "" : "_v2"}.png`}
+                          alt="Loading"
                           width={36}
                           height={36}
                           style={{ opacity: 0.5 }}
@@ -433,14 +420,35 @@ export default function HistoryClient({ slug }: { slug: string }) {
           </div>
         </div>
 
-        <div className={styles.predictBtnContainer}>
-          <button 
-            className={styles.predictBtn} 
-            onClick={handlePredict}
-            disabled={isAnimating || lastPredictedPeriod === currentPeriod}
-          >
-            {lastPredictedPeriod === currentPeriod && !isAnimating ? "Predicted" : "Predict"}
-          </button>
+        <div style={{ position: 'relative', width: '100%', marginTop: '-12px', borderRadius: '12px', overflow: 'hidden' }}>
+          <img 
+            src="/svg/png/predict_bg.jpg" 
+            alt="AI Prediction" 
+            style={{ width: '100%', height: 'auto', display: 'block' }} 
+          />
+          <div style={{ position: 'absolute', top: '12px', left: '16px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <span style={{ color: '#000', fontSize: '14px', fontWeight: 'bold' }}>AI Prediction</span>
+            <span style={{ color: '#333', fontSize: '10px', lineHeight: '1.2' }}>
+              Get highly accurate predictions based<br/>
+              on our advanced AI algorithms.
+            </span>
+          </div>
+          <div style={{ position: 'absolute', bottom: '12px', left: '16px' }}>
+            <button 
+              className={styles.predictBtn}
+              onClick={handlePredict}
+              disabled={isAnimating || lastPredictedPeriod === currentPeriod}
+              style={{ 
+                padding: '0 30px', 
+                height: '36px', 
+                fontSize: '12px',
+                cursor: (isAnimating || lastPredictedPeriod === currentPeriod) ? 'not-allowed' : 'pointer',
+                opacity: (isAnimating || lastPredictedPeriod === currentPeriod) ? 0.7 : 1
+              }}
+            >
+              {lastPredictedPeriod === currentPeriod && !isAnimating ? "Predicted" : "Predict"}
+            </button>
+          </div>
         </div>
 
         <div className={styles.historyContainer}>
