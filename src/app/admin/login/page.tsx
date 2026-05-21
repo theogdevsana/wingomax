@@ -18,7 +18,7 @@ export default function AdminLogin() {
     if (savedPass) setPassword(savedPass);
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -68,7 +68,7 @@ export default function AdminLogin() {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
             <label className="text-sm font-bold text-slate-700 ml-1">Admin ID</label>
             <div className="relative flex items-center">

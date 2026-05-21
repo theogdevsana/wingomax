@@ -5,17 +5,19 @@ import License from '@/lib/models/License';
 import { verifyAdminToken } from '@/lib/jwt';
 import crypto from 'crypto';
 
-async function checkAuth() {
+async function getAuthToken() {
   const cookieStore = await cookies();
   const token = cookieStore.get('admin_token')?.value;
-  return token && verifyAdminToken(token);
+  return token ? verifyAdminToken(token) : null;
 }
 
 export async function POST(req: Request) {
   try {
-    if (!(await checkAuth())) {
+    const adminData = await getAuthToken();
+    if (!adminData) {
       return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
     }
+    const createdBy = adminData.username || 'unknown';
     await connectToDatabase();
     
     const { durationDays } = await req.json();
@@ -34,6 +36,7 @@ export async function POST(req: Request) {
     const license = await License.create({
       key,
       expiresAt,
+      createdBy,
     });
 
     return NextResponse.json({ 
@@ -53,7 +56,7 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
-    if (!(await checkAuth())) {
+    if (!(await getAuthToken())) {
       return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
     }
     await connectToDatabase();
@@ -66,7 +69,7 @@ export async function GET() {
 
 export async function PUT(req: Request) {
   try {
-    if (!(await checkAuth())) {
+    if (!(await getAuthToken())) {
       return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
     }
     await connectToDatabase();
@@ -103,7 +106,7 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    if (!(await checkAuth())) {
+    if (!(await getAuthToken())) {
       return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
     }
     await connectToDatabase();

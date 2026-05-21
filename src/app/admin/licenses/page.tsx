@@ -105,11 +105,14 @@ export default function CreateLicense() {
             <label className="block text-sm font-bold text-slate-700 mb-2">
               Subscription Plan
             </label>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[
-                { label: "7 Days", value: 7 },
-                { label: "15 Days", value: 15 },
-                { label: "1 Month", value: 30 },
+                { label: "7 Days (Starter)", value: 7 },
+                { label: "10 Days (Elite)", value: 10 },
+                { label: "30 Days (Max Pro)", value: 30 },
+                { label: "45 Days (Smart AI)", value: 45 },
+                { label: "90 Days (Neural)", value: 90 },
+                { label: "Lifetime (Quantum)", value: 36500 },
               ].map((opt) => (
                 <button
                   key={opt.value}

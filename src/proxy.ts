@@ -19,7 +19,9 @@ export async function proxy(request: NextRequest) {
   
   // Paths that are exempt from authentication
   const isLoginPage = pathname === '/admin/login';
+  const isSetupPage = pathname === '/admin/setup';
   const isLoginApi = pathname === '/api/admin/login';
+  const isSetupApi = pathname === '/api/admin/register';
   
   // Get admin token
   const token = request.cookies.get('admin_token')?.value;
@@ -28,13 +30,13 @@ export async function proxy(request: NextRequest) {
   console.log('Middleware Check:', { pathname, hasToken: !!token, isValid });
 
   // If trying to access admin pages without valid token
-  if (isAdminPath && !isLoginPage && !isValid) {
+  if (isAdminPath && !isLoginPage && !isSetupPage && !isValid) {
     console.log('Redirecting to login: Unauthorized');
     return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
   // If trying to access admin APIs without valid token
-  if (isAdminApi && !isLoginApi && !isValid) {
+  if (isAdminApi && !isLoginApi && !isSetupApi && !isValid) {
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
   }
 

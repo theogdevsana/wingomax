@@ -6,6 +6,7 @@ export interface ILicense extends Document {
   expiresAt: Date;
   status: 'active' | 'expired' | 'banned';
   createdAt: Date;
+  createdBy: string;
 }
 
 const LicenseSchema: Schema = new Schema({
@@ -14,6 +15,7 @@ const LicenseSchema: Schema = new Schema({
   expiresAt: { type: Date, required: true },
   status: { type: String, enum: ['active', 'expired', 'banned'], default: 'active' },
   createdAt: { type: Date, default: Date.now },
+  createdBy: { type: String, required: true }, // The admin username who generated this key
 });
 
 export default mongoose.models.License || mongoose.model<ILicense>('License', LicenseSchema);
