@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import styles from "@/app/page.module.css";
+import { getLoginErrorToast } from "@/lib/login-errors";
 
 const Toast = dynamic(() => import("@/components/Toast"), { ssr: false });
 
@@ -73,14 +74,11 @@ export default function LoginForm() {
           router.push("/dashboard");
         }, 1500);
       } else {
-        const rawMsg = jsonResponse?.msg;
-        const safeMsg = typeof rawMsg === "string" ? rawMsg.replace(/<[^>]*>/g, "") : "Login failed.";
-        
-        setToast({
-          message: "Login Failed",
-          subText: safeMsg,
-          type: "error",
-        });
+        const errorToast = getLoginErrorToast(jsonResponse);
+        if (jsonResponse?.code === "expired") {
+          localStorage.removeItem("login_key");
+        }
+        setToast(errorToast);
       }
     } catch {
       setToast({

@@ -26,16 +26,42 @@ export async function POST(req: Request) {
       return NextResponse.json({ status: 'error', msg: 'Invalid License Key' }, { status: 401 });
     }
 
+    const isExpired =
+      license.status === 'expired' ||
+      new Date() > new Date(license.expiresAt);
 
-    if (license.status !== 'active') {
-      return NextResponse.json({ status: 'error', msg: 'License is ' + license.status }, { status: 403 });
+    if (isExpired) {
+      if (license.status !== 'expired') {
+        license.status = 'expired';
+        await license.save();
+      }
+      return NextResponse.json(
+        {
+          status: 'error',
+          code: 'expired',
+          msg: 'Your license key has expired',
+          expires_at: license.expiresAt,
+        },
+        { status: 403 }
+      );
     }
 
+    if (license.status === 'banned') {
+      return NextResponse.json(
+        {
+          status: 'error',
+          code: 'banned',
+          msg: 'This license key has been banned',
+        },
+        { status: 403 }
+      );
+    }
 
-    if (new Date() > new Date(license.expiresAt)) {
-      license.status = 'expired';
-      await license.save();
-      return NextResponse.json({ status: 'error', msg: 'License Key has expired' }, { status: 403 });
+    if (license.status !== 'active') {
+      return NextResponse.json(
+        { status: 'error', msg: `License is ${license.status}` },
+        { status: 403 }
+      );
     }
 
 

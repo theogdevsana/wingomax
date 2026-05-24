@@ -1,10 +1,18 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import connectToDatabase from '@/lib/mongodb';
 import Admin from '@/lib/models/Admin';
+import { isSetupAccessCookie } from '@/lib/setup-access';
 import crypto from 'crypto';
 
 export async function POST(req: Request) {
   try {
+    const cookieStore = await cookies();
+    const setupCookie = cookieStore.get('setup_access')?.value;
+    if (!isSetupAccessCookie(setupCookie)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { username, password } = await req.json();
 
     if (!username || !password) {

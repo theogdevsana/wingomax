@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { User, KeyRound, AlertCircle, ShieldCheck } from "lucide-react";
 
-export default function SetupForm() {
-  const router = useRouter();
+export default function SetupForm({
+  onAdminCreated,
+}: {
+  onAdminCreated?: () => void;
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -28,10 +30,10 @@ export default function SetupForm() {
       const data = await res.json();
 
       if (res.ok && data.status === "success") {
-        setSuccess("Admin created successfully! Redirecting to login...");
-        setTimeout(() => {
-          router.push("/admin/login");
-        }, 2000);
+        setSuccess("Admin created successfully!");
+        setUsername("");
+        setPassword("");
+        onAdminCreated?.();
       } else {
         setError(data.msg || "Registration failed");
       }

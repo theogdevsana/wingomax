@@ -21,7 +21,9 @@ export async function proxy(request: NextRequest) {
   const isLoginPage = pathname === '/admin/login';
   const isSetupPage = pathname === '/admin/setup';
   const isLoginApi = pathname === '/api/admin/login';
-  const isSetupApi = pathname === '/api/admin/register';
+  const isSetupApi =
+    pathname === '/api/admin/register' ||
+    pathname.startsWith('/api/admin/setup/');
   
   // Get admin token
   const token = request.cookies.get('admin_token')?.value;

@@ -19,7 +19,7 @@ const PLANS = [
     price: "₹499",
     period: "7 Days Access",
     features: [
-      "45%+ Accuracy Basic Signals",
+      "55%+ Accuracy Basic Signals",
       "Live Profitable Trend Scan",
       "Double-Chance Safe Signals",
       "Dedicated Telegram Support",
@@ -34,7 +34,7 @@ const PLANS = [
   {
     title: "Wingo Elite",
     subtitle: "Most Popular Choice",
-    price: "₹1499",
+    price: "₹999",
     period: "10 Days Access",
     features: [
       "70%+ High Win-Rate Signals",
@@ -52,7 +52,7 @@ const PLANS = [
   {
     title: "Wingo Max Pro",
     subtitle: "Ultimate Lifetime Power",
-    price: "₹2499", 
+    price: "₹1599", 
     period: "30 Days Access",
     features: [
       "83%+ Neural Model Accuracy",
@@ -70,7 +70,7 @@ const PLANS = [
   {
     title: "Wingo Smart AI",
     subtitle: "AI-Powered Predictions",
-    price: "₹3499",
+    price: "₹2499",
     period: "45 Days Access",
     features: [
       "95%+ Fully Automated Accuracy",
@@ -88,7 +88,7 @@ const PLANS = [
   {
     title: "Wingo Neural Pro",
     subtitle: "Ultra Advanced Algorithmic Edge",
-    price: "₹4999",
+    price: "₹3999",
     period: "90 Days Access",
     features: [
       "98%+ Deep Neural Precision",
@@ -106,7 +106,7 @@ const PLANS = [
   {
     title: "Wingo Lifetime Quantum",
     subtitle: "Ultimate Lifetime Power Plan",
-    price: "₹8999",
+    price: "₹4999",
     period: "Lifetime VIP Access",
     features: [
       "Uncapped 99% Max Accuracy",
