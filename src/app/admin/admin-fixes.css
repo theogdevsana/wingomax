@@ -1,0 +1,37 @@
+/* Prevent Bootstrap (Summernote) from underlining admin nav links */
+.admin-sidebar a,
+.admin-sidebar a:hover,
+.admin-sidebar a:focus,
+.admin-sidebar a:visited,
+.admin-header a,
+.admin-header a:hover,
+.admin-header a:focus {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+.admin-sidebar .blog-sub-link {
+  text-decoration: none !important;
+}
+
+.admin-blogs-page {
+  font-size: 12px;
+}
+
+#blog-editor-scope .note-editable {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+#blog-editor-scope .note-toolbar {
+  background: #f8fafc;
+}
+
+/* Hide scrollbar for side menu */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

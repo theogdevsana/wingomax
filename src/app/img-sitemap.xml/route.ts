@@ -1,7 +1,8 @@
-import { BLOG_POSTS } from '@/lib/blogs';
+import { getAllBlogPosts } from '@/lib/blog-data';
 
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
+  const BLOG_POSTS = await getAllBlogPosts();
   
   const games = [
     '82_lottery', '91club', 'bdg_win', 'bgd_game', 'goa_game', 

@@ -13,6 +13,9 @@ export interface BlogPost {
   image: string;
   imageAlt: string;
   faqs?: FAQ[];
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
 }
 
 export const BLOG_POSTS: BlogPost[] = [

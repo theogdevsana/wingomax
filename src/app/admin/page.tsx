@@ -73,20 +73,20 @@ export default async function AdminDashboard() {
   const currentUsername = await getAuthUsername();
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-6 md:space-y-8">
       <div>
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Overview</h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1 font-medium">Welcome back, <span className="font-bold text-blue-600">{currentUsername}</span>. Real-time statistics are loaded.</p>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">Overview</h1>
+        <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-1 font-medium">Welcome back, <span className="font-bold text-blue-600">{currentUsername}</span>. Real-time statistics are loaded.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard title="Total Keys" value={stats.totalKeys.toString()} icon={<Key className="text-blue-600" size={24} />} color="#007AFF" />
         <StatCard title="Used Devices" value={stats.totalUsed.toString()} icon={<Users className="text-purple-600" size={24} />} color="#AF52DE" />
         <StatCard title="Banned Keys" value={stats.totalBanned.toString()} icon={<AlertOctagon className="text-red-600" size={24} />} negative={stats.totalBanned > 0} color="#FF3B30" />
-        <StatCard title="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} icon={<DollarSign className="text-purple-600" size={24} />} color="#AF52DE" />
+        <StatCard title="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} icon={<DollarSign className="text-emerald-500" size={24} />} color="#34C759" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
         {/* Admin Key Generation Stats */}
         <div className="bg-white rounded-[28px] p-6 md:p-8 border border-white shadow-xl">
           <div className="flex items-center gap-3 mb-6">
@@ -126,35 +126,35 @@ export default async function AdminDashboard() {
 }
 
 function StatCard({ title, value, icon, negative = false, color = "#007AFF" }: { title: string, value: string, icon: React.ReactNode, negative?: boolean, color?: string }) {
-  const blobColor = `${color}15`; // 8% opacity for blobs
-  const blobColor2 = `${color}08`; // 5% opacity for blobs
-  const shadowColor = `${color}25`; // shadow color with opacity
+  const blobColor = `${color}15`;
+  const blobColor2 = `${color}08`;
+  const shadowColor = `${color}25`;
   
   return (
     <div 
-      className="bg-white rounded-[28px] p-6 border border-white shadow-xl hover:shadow-2xl transition-all relative overflow-hidden group min-h-[160px] flex flex-col justify-center"
-      style={{ boxShadow: `0 10px 30px -10px ${shadowColor}` }}
+      className="bg-white rounded-2xl p-4 border border-slate-100 hover:border-transparent transition-all relative overflow-hidden group min-h-[110px] flex flex-col justify-center cursor-default"
+      style={{ boxShadow: `0 8px 24px -8px ${shadowColor}` }}
     >
       {/* Decorative Blobs */}
       <div 
-        className="absolute -top-12 -right-12 w-32 h-32 rounded-full pointer-events-none transition-transform group-hover:scale-110" 
+        className="absolute -top-8 -right-8 w-24 h-24 rounded-full pointer-events-none transition-transform duration-500 group-hover:scale-125" 
         style={{ background: blobColor }}
       />
       <div 
-        className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full pointer-events-none transition-transform group-hover:scale-110" 
+        className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full pointer-events-none transition-transform duration-500 group-hover:scale-110" 
         style={{ background: blobColor2 }}
       />
       
-      <div className="relative z-10">
-        <div className="flex justify-between items-center mb-4">
-          <div className="p-3 bg-white rounded-2xl shadow-sm border border-slate-100 group-hover:border-white transition-colors">
-            {icon}
-          </div>
+      <div className="relative z-10 flex items-center justify-between">
+        <div>
+          <h4 className="text-slate-400 font-bold text-[10px] sm:text-xs uppercase tracking-wider mb-0.5">{title}</h4>
+          <p className={`text-2xl sm:text-3xl font-black tracking-tight ${negative ? 'text-red-500' : 'text-slate-800'}`}>
+            {value}
+          </p>
         </div>
-        <h4 className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">{title}</h4>
-        <p className={`text-2xl md:text-3xl font-black mt-1 tracking-tight ${negative ? 'text-red-600' : 'text-slate-900'}`}>
-          {value}
-        </p>
+        <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-50 group-hover:shadow-md transition-all">
+          {icon}
+        </div>
       </div>
     </div>
   );

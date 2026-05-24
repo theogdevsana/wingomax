@@ -3,9 +3,11 @@
 import { ReactNode, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Home, Users, Gamepad2, Settings, BarChart3, LogOut, Key, Menu, X, DollarSign, Power } from "lucide-react";
+import { Home, Users, Gamepad2, Settings, LogOut, Key, Menu, X, DollarSign, Power } from "lucide-react";
 import Image from "next/image";
 import { Nunito } from 'next/font/google';
+import AdminBlogNav from "./AdminBlogNav";
+import "./admin-fixes.css";
 
 const nunito = Nunito({ subsets: ['latin'] });
 
@@ -28,7 +30,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className={`flex h-screen bg-[#F5F5F7] text-slate-900 overflow-hidden ${nunito.className}`}>
+    <div className={`admin-shell flex h-screen bg-[#F5F5F7] text-slate-900 overflow-hidden ${nunito.className}`}>
       
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
@@ -39,7 +41,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-60 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 md:relative md:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={`admin-sidebar fixed inset-y-0 left-0 z-50 w-60 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 md:relative md:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="p-5 border-b border-slate-100 flex justify-start items-center relative">
           <Link href="/admin" className="flex items-center pl-1">
             <div className="relative w-36 h-12">
@@ -57,11 +59,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <X size={24} />
           </button>
         </div>
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto hide-scrollbar">
           <NavItem href="/admin" icon={<Home size={20} color="#007AFF" />} label="Dashboard" onClick={() => setSidebarOpen(false)} />
           <NavItem href="/admin/licenses" icon={<Key size={20} color="#FF9500" />} label="License Keys" onClick={() => setSidebarOpen(false)} />
           <NavItem href="/admin/users" icon={<Users size={20} color="#AF52DE" />} label="Users" onClick={() => setSidebarOpen(false)} />
           <NavItem href="/admin/revenue" icon={<DollarSign size={20} color="#34C759" />} label="Revenue" onClick={() => setSidebarOpen(false)} />
+          <AdminBlogNav onNavigate={() => setSidebarOpen(false)} />
           <NavItem href="#" icon={<Gamepad2 size={20} color="#FF2D55" />} label="Games" />
           <NavItem href="/admin/settings" icon={<Settings size={20} color="#8E8E93" />} label="Settings" onClick={() => setSidebarOpen(false)} />
         </nav>
@@ -79,7 +82,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Top Header */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center px-4 md:px-6 shrink-0">
+        <header className="admin-header h-16 bg-white border-b border-slate-200 flex items-center px-4 md:px-6 shrink-0">
           <div className="flex-1 flex items-center">
             <button className="md:hidden p-2 text-slate-600 rounded-lg hover:bg-slate-100" onClick={() => setSidebarOpen(true)}>
               <Menu size={24} />
@@ -120,12 +123,14 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 }
 
 function NavItem({ href, icon, label, active = false, onClick }: { href: string; icon: ReactNode; label: string; active?: boolean, onClick?: () => void }) {
+  const pathname = usePathname();
+  const isActive = active || (href !== "#" && pathname === href);
   return (
-    <Link href={href} onClick={onClick} className={`flex items-center gap-3 p-3 rounded-xl font-medium transition-all ${
-      active 
+    <Link href={href} onClick={onClick} className={`no-underline flex items-center gap-3 p-3 rounded-xl font-medium transition-all ${
+      isActive
         ? "bg-blue-50 text-blue-600 shadow-sm" 
         : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-    }`}>
+    }`} style={{ textDecoration: "none" }}>
       {icon}
       <span>{label}</span>
     </Link>

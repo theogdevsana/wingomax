@@ -54,10 +54,10 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="max-w-[1600px] mx-auto space-y-8 pb-12">
+    <div className="max-w-[1600px] mx-auto space-y-6 md:space-y-8 pb-12">
       <div>
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">License Database</h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1 font-medium">Manage all generated access keys and users.</p>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">License Database</h1>
+        <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-1 font-medium">Manage all generated access keys and users.</p>
       </div>
 
       <div>
@@ -101,7 +101,7 @@ export default function UsersPage() {
               }
 
               return (
-                <div key={user._id} className={`rounded-3xl border flex flex-col justify-between shadow-sm transition-all hover:shadow-md hover:-translate-y-1 min-h-[220px] relative overflow-hidden ${bgClass}`}>
+                <div key={user._id} className={`aspect-video rounded-2xl border flex flex-col justify-between shadow-sm transition-all hover:shadow-md hover:-translate-y-1 relative overflow-hidden ${bgClass}`}>
                   
                   {/* Decorative Blobs - Subscription Style */}
                   <div 
@@ -114,45 +114,47 @@ export default function UsersPage() {
                   />
 
                   {/* Status Badge */}
-                  <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-black tracking-wide uppercase shadow-sm z-10 ${badgeClass}`}>
+                  <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[9px] sm:text-[10px] font-black tracking-widest uppercase shadow-sm z-10 ${badgeClass}`}>
                     {badgeText}
                   </div>
 
-                  <div className="relative z-10 p-5 md:p-6 flex-1 flex flex-col justify-center">
+                  <div className="relative z-10 p-3 flex-1 flex flex-col justify-center">
                     
-                    <div className="flex items-center mb-3 md:mb-4">
-                      <div className="p-2.5 bg-white/60 backdrop-blur-md rounded-2xl shadow-sm">
-                        <Key className={iconColor} size={20} />
+                    <div className="flex items-center mb-1.5">
+                      <div className="p-1 bg-white/60 backdrop-blur-md rounded-lg shadow-sm">
+                        <Key className={iconColor} size={12} />
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between gap-3">
-                      <h4 className="font-mono text-sm md:text-lg font-bold text-slate-800 tracking-widest break-all">
-                        {user.key}
-                      </h4>
+                    <div className="flex items-center justify-between gap-1.5 mt-2">
+                      <div className="border border-dashed border-slate-300 bg-white/40 px-2 sm:px-3 py-1.5 rounded-md flex-1 backdrop-blur-sm overflow-hidden flex items-center">
+                        <h4 className="font-mono text-[10px] sm:text-[11px] md:text-xs font-bold text-slate-800 tracking-wider truncate w-full">
+                          {user.key}
+                        </h4>
+                      </div>
                       <button 
                         onClick={() => copyToClipboard(user.key)}
-                        className="shrink-0 p-2 bg-white/50 hover:bg-white backdrop-blur-md rounded-xl text-slate-600 transition-all shadow-sm"
+                        className="shrink-0 p-1.5 bg-white/60 hover:bg-white backdrop-blur-md rounded-md text-slate-600 transition-all shadow-sm border border-slate-100/50 flex items-center justify-center"
                         title="Copy Key"
                       >
-                        {copiedKey === user.key ? <CheckCircle2 size={18} className="text-green-600" /> : <Copy size={18} />}
+                        {copiedKey === user.key ? <CheckCircle2 size={12} className="text-green-600" /> : <Copy size={12} />}
                       </button>
                     </div>
                     
-                    <div className="mt-3 md:mt-4 flex flex-wrap gap-2 text-xs md:text-sm font-bold">
-                      <div className="flex items-center gap-1 text-slate-700 bg-white/50 backdrop-blur-md px-2 py-1.5 md:px-3 rounded-xl shadow-sm">
-                        <Clock size={14} className={iconColor} />
-                        {new Date(user.expiresAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                    <div className="mt-2 flex flex-wrap gap-1.5 text-[9px] sm:text-[10px] font-bold">
+                      <div className="flex items-center gap-1 text-slate-600 bg-white/60 backdrop-blur-md px-2 py-1 rounded shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] border border-white">
+                        <Clock size={12} className={iconColor} />
+                        {new Date(user.expiresAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: '2-digit' })}
                       </div>
                       
                       {isUsed ? (
-                        <div className="flex items-center gap-1 text-blue-800 bg-blue-100/70 backdrop-blur-md px-2 py-1.5 md:px-3 rounded-xl shadow-sm" title={user.deviceId}>
-                          <Smartphone size={14} />
-                          <span className="truncate max-w-[80px] md:max-w-[120px]">Used</span>
+                        <div className="flex items-center gap-1 text-blue-700 bg-blue-100/70 backdrop-blur-md px-2 py-1 rounded shadow-[0_2px_10px_-4px_rgba(59,130,246,0.2)] border border-blue-50" title={user.deviceId}>
+                          <Smartphone size={12} />
+                          <span className="truncate max-w-[50px] sm:max-w-[70px]">Used</span>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-1 text-slate-500 bg-white/50 backdrop-blur-md px-2 py-1.5 md:px-3 rounded-xl shadow-sm">
-                          <Smartphone size={14} />
+                        <div className="flex items-center gap-1 text-slate-500 bg-white/60 backdrop-blur-md px-2 py-1 rounded shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] border border-white">
+                          <Smartphone size={12} />
                           <span>Unused</span>
                         </div>
                       )}
@@ -160,14 +162,14 @@ export default function UsersPage() {
                   </div>
 
                   {/* Actions Bar */}
-                  <div className="relative z-10 bg-white/40 backdrop-blur-md border-t border-black/5 p-2.5 md:p-3 flex items-center justify-end gap-2">
+                  <div className="relative z-10 bg-white/50 backdrop-blur-md border-t border-black/5 p-2 flex items-center justify-end gap-1.5">
                     {isUsed && !isExpired && (
                       <button 
                         onClick={() => handleAction(user._id, 'reset')}
-                        className="flex items-center justify-center gap-1 p-2 md:p-2.5 rounded-xl bg-blue-500 text-white hover:bg-blue-600 transition-all shadow-md active:scale-95"
+                        className="flex items-center justify-center gap-1 p-1.5 rounded bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white transition-all active:scale-95 font-bold text-[10px] sm:text-xs group"
                         title="Reset Device"
                       >
-                        <RotateCcw size={16} />
+                        <RotateCcw size={12} className="group-hover:-rotate-90 transition-transform duration-300" />
                       </button>
                     )}
                     
@@ -175,25 +177,25 @@ export default function UsersPage() {
                       isBanned ? (
                         <button 
                           onClick={() => handleAction(user._id, 'unban')}
-                          className="flex items-center justify-center gap-1 flex-1 py-2 md:py-2.5 rounded-xl bg-green-500 text-white hover:bg-green-600 text-xs md:text-sm font-black transition-all shadow-md active:scale-95"
+                          className="flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white text-[10px] sm:text-xs font-black tracking-wider transition-all active:scale-95 shadow-sm border border-emerald-100/50"
                         >
-                          <ShieldCheck size={14} /> UNBAN
+                          <ShieldCheck size={12} /> UNBAN
                         </button>
                       ) : (
                         <button 
                           onClick={() => handleAction(user._id, 'ban')}
-                          className="flex items-center justify-center gap-1 flex-1 py-2 md:py-2.5 rounded-xl bg-orange-500 text-white hover:bg-orange-600 text-xs md:text-sm font-black transition-all shadow-md active:scale-95"
+                          className="flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white text-[10px] sm:text-xs font-black tracking-wider transition-all active:scale-95 shadow-sm border border-amber-100/50"
                         >
-                          <ShieldBan size={14} /> BAN
+                          <ShieldBan size={12} /> BAN
                         </button>
                       )
                     )}
                     
                     <button 
                       onClick={() => handleAction(user._id, 'delete')}
-                      className={`flex items-center justify-center gap-1 py-2 md:py-2.5 px-3 md:px-4 rounded-xl text-white hover:bg-red-600 text-xs md:text-sm font-black transition-all shadow-md active:scale-95 ${isExpired ? 'flex-1 bg-red-500' : 'bg-red-500'}`}
+                      className={`flex items-center justify-center gap-1 py-1.5 px-2 rounded text-[10px] sm:text-xs font-black tracking-wider transition-all active:scale-95 shadow-sm border ${isExpired ? 'flex-1 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border-red-100/50' : 'bg-red-50 text-red-500 hover:bg-red-500 hover:text-white border-red-100/50'}`}
                     >
-                      <Trash2 size={14} /> {isExpired ? 'DELETE' : ''}
+                      <Trash2 size={12} /> {isExpired ? 'DEL' : ''}
                     </button>
                   </div>
                 </div>

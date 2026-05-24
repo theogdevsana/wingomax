@@ -105,25 +105,40 @@ export default function CreateLicense() {
             <label className="block text-sm font-bold text-slate-700 mb-2">
               Subscription Plan
             </label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {[
-                { label: "7 Days (Starter)", value: 7 },
-                { label: "10 Days (Elite)", value: 10 },
-                { label: "30 Days (Max Pro)", value: 30 },
-                { label: "45 Days (Smart AI)", value: 45 },
-                { label: "90 Days (Neural)", value: 90 },
-                { label: "Lifetime (Quantum)", value: 36500 },
+                { days: "7 Days", tier: "Starter", value: 7 },
+                { days: "10 Days", tier: "Elite", value: 10 },
+                { days: "30 Days", tier: "Max Pro", value: 30, popular: true },
+                { days: "45 Days", tier: "Smart AI", value: 45 },
+                { days: "90 Days", tier: "Neural", value: 90 },
+                { days: "Lifetime", tier: "Quantum", value: 36500 },
               ].map((opt) => (
                 <button
                   key={opt.value}
                   onClick={() => setDuration(opt.value)}
-                  className={`py-2 md:py-3 px-2 md:px-4 rounded-xl border-2 font-bold text-xs md:text-sm transition-all ${
+                  className={`relative p-3 rounded-[1.25rem] border-2 text-left transition-all duration-300 overflow-hidden flex flex-col justify-center min-h-[72px] group ${
                     duration === opt.value
-                      ? "border-[#007AFF] bg-[#E5F0FF] text-[#007AFF]"
-                      : "border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                      ? "border-blue-500 bg-blue-50/50 shadow-md ring-4 ring-blue-500/10 scale-[1.02] z-10"
+                      : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm"
                   }`}
                 >
-                  {opt.label}
+                  {opt.popular && (
+                    <div className="absolute top-0 right-0 bg-blue-500 text-white text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-bl-lg">
+                      Popular
+                    </div>
+                  )}
+                  <div className={`text-[10px] font-black uppercase tracking-widest mb-0.5 ${duration === opt.value ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-500'}`}>
+                    {opt.tier}
+                  </div>
+                  <div className={`text-base font-black tracking-tight ${duration === opt.value ? 'text-slate-900' : 'text-slate-700'}`}>
+                    {opt.days}
+                  </div>
+                  {duration === opt.value && (
+                    <div className="absolute bottom-2.5 right-2.5 text-blue-500">
+                      <CheckCircle2 size={16} className="drop-shadow-sm" />
+                    </div>
+                  )}
                 </button>
               ))}
             </div>

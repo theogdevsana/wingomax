@@ -1,7 +1,8 @@
-import { BLOG_POSTS } from '@/lib/blogs';
+import { getAllBlogPosts } from '@/lib/blog-data';
 
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
+  const BLOG_POSTS = await getAllBlogPosts();
   
   const items = BLOG_POSTS.map(post => `
     <item>

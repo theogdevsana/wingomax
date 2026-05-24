@@ -1,0 +1,154 @@
+.root {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #334155;
+}
+
+.root h1 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.root h2 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.root h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.root p,
+.root label {
+  font-size: 11px;
+}
+
+.root input,
+.root textarea,
+.root select {
+  font-size: 11px !important;
+  padding: 0.4rem 0.6rem !important;
+}
+
+.root :global(.note-editor) {
+  font-size: 12px;
+}
+
+.root :global(.note-toolbar) {
+  padding: 4px 6px;
+}
+
+.root :global(.note-btn) {
+  font-size: 11px;
+  padding: 4px 6px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  background: #007aff;
+  color: white;
+}
+
+.btnGreen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  background: #34c759;
+  color: white;
+}
+
+.btnGhost {
+  padding: 0.35rem 0.55rem;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  color: #64748b;
+}
+
+.btnGhost:hover {
+  background: #f1f5f9;
+}
+
+.metaBox {
+  padding: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.65rem;
+}
+
+.metaTitle {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.cdnHint {
+  font-size: 10px;
+  color: #94a3b8;
+  margin-top: 0.2rem;
+}
+
+.listRow {
+  padding: 0.65rem 0.85rem;
+}
+
+.listTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.listSlug {
+  font-size: 10px;
+  font-family: ui-monospace, monospace;
+  color: #94a3b8;
+}
+
+.badge {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+}
+
+.badgeLive {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.badgeDraft {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #64748b;
+}

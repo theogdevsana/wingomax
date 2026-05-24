@@ -1,4 +1,4 @@
-import { BLOG_POSTS } from "@/lib/blogs";
+import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/blog-data";
 import Link from "next/link";
 import connectMongo from '@/lib/mongodb';
 import Settings from '@/lib/models/Settings';
@@ -20,29 +20,37 @@ import {
 } from "lucide-react";
 import { TableOfContents, FAQItem, SocialShare, ContentRenderer } from "./BlogClient";
 import JsonLd from "@/components/JsonLd";
+import { toAbsoluteBlogImage } from "@/lib/cdn";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = await getBlogPostBySlug(slug);
   if (!post) return {};
 
+  const metaTitle = post.metaTitle || post.title;
+  const metaDescription = post.metaDescription || post.description;
+  const keywords = post.metaKeywords
+    ? post.metaKeywords.split(",").map((k) => k.trim()).filter(Boolean)
+    : undefined;
+
   return {
-    title: `${post.title} | Wingo Signal`,
-    description: post.description,
+    title: `${metaTitle} | Wingo Signal`,
+    description: metaDescription,
+    keywords,
     alternates: {
       canonical: `/blog/${slug}`,
     },
     openGraph: {
-      title: post.title,
-      description: post.description,
+      title: metaTitle,
+      description: metaDescription,
       type: "article",
       url: `https://wingosignals.xyz/blog/${slug}`,
       images: [
         {
-          url: post.image,
+          url: toAbsoluteBlogImage(post.image),
           width: 1200,
           height: 630,
-          alt: post.title,
+          alt: post.imageAlt || post.title,
         },
       ],
     },
@@ -58,7 +66,7 @@ function calculateReadingTime(content: string) {
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -72,14 +80,15 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   const readingTime = calculateReadingTime(post.content);
   const fullUrl = `https://wingosignals.xyz/blog/${slug}`;
-  const otherPosts = BLOG_POSTS.filter(p => p.slug !== slug).slice(0, 3);
+  const allPosts = await getAllBlogPosts();
+  const otherPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.description,
-    "image": post.image.startsWith('http') ? post.image : `https://wingosignals.xyz${post.image}`,
+    "image": toAbsoluteBlogImage(post.image),
     "author": {
       "@type": "Person",
       "name": post.author

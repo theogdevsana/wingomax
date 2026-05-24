@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { BLOG_POSTS } from "@/lib/blogs";
+import { getAllBlogPosts } from "@/lib/blog-data";
 
 export const dynamic = 'force-dynamic';
 
@@ -15,7 +15,9 @@ export const metadata = {
 
 import JsonLd from "@/components/JsonLd";
 
-export default function BlogListing() {
+export default async function BlogListing() {
+  const BLOG_POSTS = await getAllBlogPosts();
+
   const breadcrumbs = [
     { name: "Home", item: "/" },
     { name: "Wingo Blog", item: "/blog" }
