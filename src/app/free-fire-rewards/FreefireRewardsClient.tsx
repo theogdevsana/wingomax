@@ -81,8 +81,9 @@ function RewardCard({
           alt={`Reward ${reward.slot_id}`}
           fill
           priority={index < 6}
+          quality={90}
           className={`object-cover transition-opacity duration-500 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
-          sizes="(max-width: 512px) 33vw, 170px"
+          sizes="(max-width: 390px) 30vw, (max-width: 512px) 33vw, (max-width: 768px) 28vw, 170px"
           onLoad={() => setImgLoaded(true)}
         />
 
