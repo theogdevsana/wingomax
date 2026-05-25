@@ -35,6 +35,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.nexapk.in',
       },
+      {
+        protocol: 'https',
+        hostname: 'app.nexapk.in',
+      },
+      {
+        protocol: 'https',
+        hostname: 'dl.dir.freefiremobile.com',
+      },
     ],
   },
 
