@@ -567,4 +567,4 @@ export default function FreefireRewardsClient() {
       `}</style>
     </>
   );
-}
+} 
