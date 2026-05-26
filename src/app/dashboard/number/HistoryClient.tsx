@@ -413,6 +413,8 @@ export default function HistoryClient({ slug }: { slug: string }) {
                 padding: '0 30px', 
                 height: '36px', 
                 fontSize: '12px',
+                background: timerBg,
+                boxShadow: selectedGame === '30sec' ? '0 6px 20px rgba(120,16,210,0.35)' : '0 6px 20px rgba(0,122,255,0.3)',
                 cursor: (isAnimating || lastPredictedPeriod === currentPeriod) ? 'not-allowed' : 'pointer',
                 opacity: (isAnimating || lastPredictedPeriod === currentPeriod) ? 0.7 : 1
               }}
@@ -423,7 +425,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
         </div>
 
         <div className={styles.historyContainer}>
-          <div className={styles.tableHeader}>
+          <div className={styles.tableHeader} style={{ background: timerBg }}>
             <h2>Game History</h2>
           </div>
           <div key={selectedGame}>
