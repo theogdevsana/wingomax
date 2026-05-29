@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { edgeVerifyToken } from './lib/jwt';
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hostname = request.nextUrl.hostname.toLowerCase();
 
@@ -83,7 +83,7 @@ export async function proxy(request: NextRequest) {
   if (isApiDomain) {
     if (!pathname.startsWith('/v1/')) {
       const url = request.nextUrl.clone();
-      url.pathname = `/api${pathname === '/' ? '' : pathname}`;
+      url.pathname = `/v1${pathname === '/' ? '' : pathname}`;
       const res = NextResponse.rewrite(url);
       Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
       return res;
