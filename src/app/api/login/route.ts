@@ -4,6 +4,9 @@ import connectToDatabase from '@/lib/mongodb';
 import License from '@/lib/models/License';
 import { generateToken } from '@/lib/jwt';
 
+export async function GET() {
+  return NextResponse.json({ status: 'info', msg: 'WingoSignals API is running. Please use POST for login requests.' });
+}
 
 export async function POST(req: Request) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1';
