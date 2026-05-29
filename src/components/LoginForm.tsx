@@ -54,7 +54,7 @@ export default function LoginForm() {
     setIsLoading(true);
     try {
       const deviceId = getOrCreateDeviceId();
-      const res = await fetch(getApiUrl("/api/login"), {
+      const res = await fetch(getApiUrl("/v1/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: enteredKey, device_id: deviceId }),

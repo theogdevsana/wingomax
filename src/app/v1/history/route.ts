@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const period = searchParams.get("period") || "1m";
-  const api = `https://acxdev.us.cc/api/GetGameHistory?period=${period}`;
+  const api = `https://acxdev.us.cc/v1/GetGameHistory?period=${period}`;
 
   try {
     const res = await fetch(api, {

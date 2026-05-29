@@ -15,7 +15,7 @@ export default function AdminBlogNav({ onNavigate }: { onNavigate?: () => void }
 
   useEffect(() => {
     if (!isBlogSection) return;
-    fetch(getApiUrl("/api/admin/blog"))
+    fetch(getApiUrl("/v1/admin/blog"))
       .then((r) => r.json())
       .then((data) => {
         if (data.status === "success") {

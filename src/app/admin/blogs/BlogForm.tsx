@@ -88,7 +88,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
     };
 
     try {
-      const url = isEdit ? `/api/admin/blog/${postId}` : "/api/admin/blog";
+      const url = isEdit ? `/v1/admin/blog/${postId}` : "/v1/admin/blog";
       const res = await fetch(getApiUrl(url), {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },

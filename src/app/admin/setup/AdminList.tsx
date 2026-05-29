@@ -20,7 +20,7 @@ export default function AdminList({ refreshKey }: { refreshKey: number }) {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(getApiUrl("/api/admin/setup/admins"));
+      const res = await fetch(getApiUrl("/v1/admin/setup/admins"));
       if (!res.ok) {
         setError("Could not load admin list");
         setAdmins([]);
@@ -48,7 +48,7 @@ export default function AdminList({ refreshKey }: { refreshKey: number }) {
     setError("");
 
     try {
-      const res = await fetch(getApiUrl(`/api/admin/setup/admins?id=${encodeURIComponent(id)}`), {
+      const res = await fetch(getApiUrl(`/v1/admin/setup/admins?id=${encodeURIComponent(id)}`), {
         method: "DELETE",
       });
       const data = await res.json();

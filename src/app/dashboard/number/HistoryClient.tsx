@@ -87,7 +87,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     }
   }, [router, game]);
 
-  const historyApi = getApiUrl("/api/history");
+  const historyApi = getApiUrl("/v1/history");
 
   const fetchHistory = async () => {
     if (isAuthChecking || !game) return;

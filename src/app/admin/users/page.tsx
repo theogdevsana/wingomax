@@ -12,7 +12,7 @@ export default function UsersPage() {
   const fetchUsers = async () => {
     setIsFetching(true);
     try {
-      const res = await fetch(getApiUrl("/api/admin/license"));
+      const res = await fetch(getApiUrl("/v1/admin/license"));
       const data = await res.json();
       if (res.ok && data.status === "success") {
         // Show ALL keys
@@ -34,9 +34,9 @@ export default function UsersPage() {
       if (action === 'delete') {
         const confirmDelete = confirm("Are you sure you want to delete this key?");
         if (!confirmDelete) return;
-        await fetch(getApiUrl(`/api/admin/license?id=${id}`), { method: 'DELETE' });
+        await fetch(getApiUrl(`/v1/admin/license?id=${id}`), { method: 'DELETE' });
       } else {
-        await fetch(getApiUrl('/api/admin/license'), {
+        await fetch(getApiUrl('/v1/admin/license'), {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id, action })

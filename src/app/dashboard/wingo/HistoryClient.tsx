@@ -87,7 +87,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     }
   }, [router, game]);
 
-  const historyApi = getApiUrl("/api/history");
+  const historyApi = getApiUrl("/v1/history");
 
   const fetchHistory = async () => {
     if (isAuthChecking || !game) return;
@@ -166,7 +166,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     const clientTimeout = setTimeout(() => controller.abort(), 2800);
 
     try {
-      const res = await fetch(getApiUrl("/api/predict"), { signal: controller.signal });
+      const res = await fetch(getApiUrl("/v1/predict"), { signal: controller.signal });
       clearTimeout(clientTimeout);
       const data = await res.json();
 

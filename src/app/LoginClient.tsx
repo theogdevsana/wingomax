@@ -20,7 +20,7 @@ export default function LoginPage() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch(getApiUrl("/api/settings"));
+        const res = await fetch(getApiUrl("/v1/settings"));
         const json = await res.json();
         if (json.status === "success") {
           setSubscriptionLink(json.data.subscription_link);
@@ -77,7 +77,7 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       const deviceId = getOrCreateDeviceId();
-      const res = await fetch(getApiUrl("/api/login"), {
+      const res = await fetch(getApiUrl("/v1/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: enteredKey, device_id: deviceId }),

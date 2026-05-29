@@ -1,5 +1,6 @@
 export function getApiUrl(path: string): string {
-  // Use relative paths for all API calls so it works identically
-  // on localhost, staging, and production domains.
-  return path;
+  if (process.env.NODE_ENV === 'development') {
+    return path;
+  }
+  return `https://api.wingosignals.xyz${path}`;
 }

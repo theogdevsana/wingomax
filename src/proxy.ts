@@ -47,7 +47,7 @@ export async function proxy(request: NextRequest) {
     const adminToken = request.cookies.get('admin_token')?.value;
     const isAdminValid = adminToken ? !!(await edgeVerifyToken(adminToken)) : false;
 
-    if (!pathname.startsWith('/api/')) {
+    if (!pathname.startsWith('/v1/')) {
       // Normalize the target path: strip /admin prefix if already there to avoid double prefix
       const targetPath = pathname.startsWith('/admin') ? pathname : `/admin${pathname === '/' ? '' : pathname}`;
       const isTargetLogin = targetPath === '/admin/login';
@@ -75,13 +75,13 @@ export async function proxy(request: NextRequest) {
       }
       // If already /admin/*, just continue (Next.js will serve it directly)
     }
-    // /api/* on admin subdomain: pass through (admin API calls work normally)
+    // /v1/* on admin subdomain: pass through (admin API calls work normally)
   }
 
-  // 3. API Domain Subrouting: api.wingosignals.xyz/* -> rewrites to /api/*
-  // Clients call api.wingosignals.xyz/login (NOT /api/login)
+  // 3. API Domain Subrouting: api.wingosignals.xyz/* -> rewrites to /v1/*
+  // Clients call api.wingosignals.xyz/login (NOT /v1/login)
   if (isApiDomain) {
-    if (!pathname.startsWith('/api/')) {
+    if (!pathname.startsWith('/v1/')) {
       const url = request.nextUrl.clone();
       url.pathname = `/api${pathname === '/' ? '' : pathname}`;
       const res = NextResponse.rewrite(url);
@@ -94,14 +94,14 @@ export async function proxy(request: NextRequest) {
 
   const resolvedPath = pathname;
   const isAdminPath = resolvedPath.startsWith('/admin');
-  const isAdminApi = resolvedPath.startsWith('/api/admin');
+  const isAdminApi = resolvedPath.startsWith('/v1/admin');
 
   const isLoginPage = resolvedPath === '/admin/login';
   const isSetupPage = resolvedPath === '/admin/setup';
-  const isLoginApi = resolvedPath === '/api/admin/login';
+  const isLoginApi = resolvedPath === '/v1/admin/login';
   const isSetupApi =
-    resolvedPath === '/api/admin/register' ||
-    resolvedPath.startsWith('/api/admin/setup/');
+    resolvedPath === '/v1/admin/register' ||
+    resolvedPath.startsWith('/v1/admin/setup/');
 
   // Verify token
   const token = request.cookies.get('admin_token')?.value;
