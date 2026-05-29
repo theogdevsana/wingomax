@@ -2,12 +2,11 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { edgeVerifyToken } from './lib/jwt';
 
-// Proxy must run in Edge Runtime and cannot use Node.js modules like 'stream' (Mongoose)
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hostname = request.nextUrl.hostname.toLowerCase();
 
-  // Allow all local development hosts or test runners to bypass domain checks
+  // Allow all local development hosts or test runners to bypass domain checks if required
   const isDev =
     hostname === 'localhost' ||
     hostname === '127.0.0.1' ||
@@ -15,113 +14,88 @@ export async function proxy(request: NextRequest) {
     hostname.includes('gitpod') ||
     hostname.includes('github.dev');
 
-  if (!isDev) {
-    const isMainDomain = hostname === 'wingosignals.xyz' || hostname === 'www.wingosignals.xyz';
-    const isAdminDomain = hostname === 'admin.wingosignals.xyz';
-    const isApiDomain = hostname === 'api.wingosignals.xyz';
+  const mainDomain = 'wingosignals.xyz';
+  const adminDomain = 'admin.wingosignals.xyz';
+  const apiDomain = 'api.wingosignals.xyz';
 
-    // --- RULE 1: Main Domain (wingosignals.xyz) ---
-    if (isMainDomain) {
-      // Admin access is strictly forbidden on the main domain -> Return 404
-      if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
-        console.log(`[PROXY] Blocking admin access on main domain: ${pathname}`);
-        
-        if (pathname.startsWith('/api/')) {
-          return NextResponse.json(
-            { error: 'Not Found' },
-            { status: 404 }
-          );
-        }
-        
-        // Rewrite to /404 to trigger Next.js built-in 404 page while keeping URL intact
+  // Determine current domain context based on hostname
+  const isMainDomain = isDev ? (!hostname.startsWith('admin.') && !hostname.startsWith('api.')) : (hostname === mainDomain || hostname === `www.${mainDomain}`);
+  const isAdminDomain = isDev ? hostname.startsWith('admin.') : (hostname === adminDomain);
+  const isApiDomain = isDev ? hostname.startsWith('api.') : (hostname === apiDomain);
+
+  // 1. Route Blocking Rule: Prevent main domain from accessing admin or api-panel routes directly
+  if (isMainDomain) {
+    if (pathname.startsWith('/admin') || pathname.startsWith('/api-panel')) {
+      console.log(`[PROXY] Blocking direct route ${pathname} on main domain`);
+      return new NextResponse(null, { status: 404 });
+    }
+  }
+
+  // 2. Admin Domain Subrouting: admin.wingosignals.xyz/* -> rewrites to /admin/*
+  if (isAdminDomain) {
+    if (!pathname.startsWith('/api/')) {
+      if (!pathname.startsWith('/admin')) {
         const url = request.nextUrl.clone();
-        url.pathname = '/404';
+        url.pathname = `/admin${pathname === '/' ? '' : pathname}`;
         return NextResponse.rewrite(url);
       }
     }
+  }
 
-    // --- RULE 2: Admin Domain (admin.wingosignals.xyz) ---
-    else if (isAdminDomain) {
-      // If hitting the root of the admin subdomain, redirect to /admin
-      if (pathname === '/') {
-        return NextResponse.redirect(new URL('/admin', request.url));
+  // 3. API Domain Subrouting: api.wingosignals.xyz/* -> rewrites to /api-panel/*
+  if (isApiDomain) {
+    if (!pathname.startsWith('/api/')) {
+      if (!pathname.startsWith('/api-panel')) {
+        const url = request.nextUrl.clone();
+        url.pathname = `/api-panel${pathname === '/' ? '' : pathname}`;
+        return NextResponse.rewrite(url);
       }
-
-      const isAllowedAdminPath = pathname.startsWith('/admin') || pathname.startsWith('/api/admin');
-      
-      if (!isAllowedAdminPath) {
-        console.log(`[PROXY] Redirecting non-admin path ${pathname} from admin domain to main domain`);
-        return NextResponse.redirect(new URL(pathname, 'https://wingosignals.xyz'));
-      }
-    }
-
-    // --- RULE 3: API Domain (api.wingosignals.xyz) ---
-    else if (isApiDomain) {
-      // Only allow API routes on the API domain. Non-API routes redirect to main domain.
-      if (!pathname.startsWith('/api')) {
-        console.log(`[PROXY] Redirecting non-api path ${pathname} from api domain to main domain`);
-        return NextResponse.redirect(new URL(pathname, 'https://wingosignals.xyz'));
-      }
-      
-      // Admin APIs are strictly forbidden on the general API domain; they must go through admin.wingosignals.xyz
-      if (pathname.startsWith('/api/admin')) {
-        console.log(`[PROXY] Blocking admin api on api domain: ${pathname}`);
-        return NextResponse.json(
-          { error: 'Not Found' },
-          { status: 404 }
-        );
-      }
-    }
-
-    // --- RULE 4: Fallback for any unknown host ---
-    else {
-      console.log(`[PROXY] Unknown hostname: ${hostname}. Redirecting to main domain.`);
-      return NextResponse.redirect(new URL(pathname, 'https://wingosignals.xyz'));
     }
   }
 
-  // --- EXISTING ROUTING & PROTECTION LOGIC ---
+  // --- Auth Checks & Route Protection (From original src/proxy.ts) ---
 
-  // Paths that require admin authentication
-  const isAdminPath = pathname.startsWith('/admin');
-  const isAdminApi = pathname.startsWith('/api/admin');
+  // Detect resolved path for authorization
+  // Note: Rewritten paths will have pathname updated to /admin/... or /api-panel/... internally
+  const resolvedPath = request.nextUrl.pathname;
+  const isAdminPath = resolvedPath.startsWith('/admin');
+  const isAdminApi = resolvedPath.startsWith('/api/admin');
   
-  // Paths that are exempt from authentication
-  const isLoginPage = pathname === '/admin/login';
-  const isSetupPage = pathname === '/admin/setup';
-  const isLoginApi = pathname === '/api/admin/login';
+  const isLoginPage = resolvedPath === '/admin/login';
+  const isSetupPage = resolvedPath === '/admin/setup';
+  const isLoginApi = resolvedPath === '/api/admin/login';
   const isSetupApi =
-    pathname === '/api/admin/register' ||
-    pathname.startsWith('/api/admin/setup/');
+    resolvedPath === '/api/admin/register' ||
+    resolvedPath.startsWith('/api/admin/setup/');
   
-  // Get admin token
+  // Verify token
   const token = request.cookies.get('admin_token')?.value;
   const isValid = token ? !!(await edgeVerifyToken(token)) : false;
 
-  console.log('[PROXY] Auth Check:', { pathname, hasToken: !!token, isValid });
-
-  // If trying to access admin pages without valid token
+  // Protect Admin Pages
   if (isAdminPath && !isLoginPage && !isSetupPage && !isValid) {
-    console.log('Redirecting to login: Unauthorized');
-    return NextResponse.redirect(new URL('/admin/login', request.url));
+    const loginUrl = new URL('/login', request.url);
+    return NextResponse.redirect(loginUrl);
   }
 
-  // If trying to access admin APIs without valid token
+  // Protect Admin APIs
   if (isAdminApi && !isLoginApi && !isSetupApi && !isValid) {
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
   }
 
-  // If trying to access login page while already authenticated
+  // Redirect to Dashboard if already logged in on login page
   if (isLoginPage && isValid) {
-    return NextResponse.redirect(new URL('/admin', request.url));
+    const dashboardUrl = new URL('/', request.url);
+    return NextResponse.redirect(dashboardUrl);
   }
 
-  // --- Dashboard Protection ---
-  if (pathname.startsWith('/dashboard')) {
+  // Protect Dashboard
+  if (resolvedPath.startsWith('/dashboard')) {
     const userToken = request.cookies.get('auth_token')?.value;
 
     if (!userToken) {
-      return NextResponse.redirect(new URL('/', request.url));
+      const homeUrl = new URL('/', request.url);
+      return NextResponse.redirect(homeUrl);
     }
 
     const userPayload = await edgeVerifyToken(userToken);
@@ -142,8 +116,10 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - public folder assets (e.g. images, manifest, service worker)
+     * - robots.txt (robots file)
+     * - sitemap.xml / sitemaps (sitemap files)
+     * - public assets matching extensions: svg, png, jpg, jpeg, gif, webp, ico, json, txt, js, css
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|json|txt|js|css)).*)',
+    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*sitemap.*|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|json|txt|js|css)).*)',
   ],
 };
