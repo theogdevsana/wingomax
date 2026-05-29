@@ -1,6 +1,6 @@
 // This is the "Offline page" service worker for PWABuilder
 
-const CACHE_NAME = "wingo-pwa-cache-v1";
+const CACHE_NAME = "wingo-pwa-cache-v2";
 const offlineFallbackPage = "/offline.html";
 
 // Install stage sets up the offline page in the cache and opens a new cache
@@ -16,8 +16,16 @@ self.addEventListener("activate", function (event) {
   event.waitUntil(self.clients.claim());
 });
 
-// If any page cannot be fetched, we show the offline page
 self.addEventListener("fetch", function (event) {
+  // Bypass service worker for non-GET requests or API requests
+  if (
+    event.request.method !== "GET" ||
+    event.request.url.includes("/v1/") ||
+    event.request.url.includes("api.wingosignals.xyz")
+  ) {
+    return;
+  }
+
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request).catch(function (error) {
@@ -35,3 +43,4 @@ self.addEventListener("fetch", function (event) {
     );
   }
 });
+
