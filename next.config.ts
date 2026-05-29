@@ -42,8 +42,9 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'dl.dir.freefiremobile.com',
+      },
+    ],
   },
-
 };
 
 export default withPWA(nextConfig);
