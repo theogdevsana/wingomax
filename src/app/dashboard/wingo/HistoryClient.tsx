@@ -161,9 +161,9 @@ export default function HistoryClient({ slug }: { slug: string }) {
 
     let finalVal: number | null = null;
 
-    // 2.8s client timeout — safety net if server is slow
+    // 8.5s client timeout — safety net if server is slow
     const controller = new AbortController();
-    const clientTimeout = setTimeout(() => controller.abort(), 2800);
+    const clientTimeout = setTimeout(() => controller.abort(), 8500);
 
     try {
       const res = await fetch(getApiUrl("/v1/predict"), { signal: controller.signal, credentials: 'include' });
