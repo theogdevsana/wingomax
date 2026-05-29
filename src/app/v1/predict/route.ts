@@ -28,7 +28,8 @@ export async function GET() {
     }
 
     if (!response.ok) {
-      return NextResponse.json({ status: 'error', msg: 'External API Error' }, { status: 502 });
+      // External API is down (e.g. 500). Return 200 with a fallback flag so client doesn't log a 502 error
+      return NextResponse.json({ status: 'fallback', msg: 'External API down, using local generator' }, { status: 200 });
     }
 
     const data = await response.json();
@@ -50,13 +51,13 @@ export async function GET() {
       return NextResponse.json({ predictionResult: cleanResult });
     }
 
-    return NextResponse.json({ status: 'error', msg: 'Invalid Data Format' }, { status: 500 });
+    return NextResponse.json({ status: 'fallback', msg: 'Invalid Data Format, using local generator' }, { status: 200 });
 
   } catch (error: unknown) {
     if (error instanceof Error && error.name === 'AbortError') {
-      return NextResponse.json({ status: 'error', msg: 'Prediction API Timeout' }, { status: 504 });
+      return NextResponse.json({ status: 'fallback', msg: 'Prediction API Timeout, using local generator' }, { status: 200 });
     }
     console.error('Prediction API Error:', error);
-    return NextResponse.json({ status: 'error', msg: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ status: 'fallback', msg: 'Internal Server Error, using local generator' }, { status: 200 });
   }
 }
