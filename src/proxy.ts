@@ -69,12 +69,6 @@ export async function proxy(request: NextRequest) {
       url.pathname = `/api${pathname === '/' ? '' : pathname}`;
       return NextResponse.rewrite(url);
     }
-    // If client already prefixed /api/, strip it to avoid /api/api/... double prefix
-    // e.g. api.wingosignals.xyz/api/login -> redirect to api.wingosignals.xyz/login
-    const strippedPath = pathname.replace(/^\/api/, '') || '/';
-    if (strippedPath !== pathname) {
-      return NextResponse.redirect(new URL(strippedPath, request.url));
-    }
   }
 
   // --- Auth Checks & Route Protection for non-subdomain paths ---
