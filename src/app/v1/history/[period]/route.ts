@@ -16,7 +16,7 @@ export async function GET(
 
   const { period } = await params;
   const targetPeriod = period || "1m";
-  const api = `https://acxdev.us.cc/v1/GetGameHistory?period=${targetPeriod}`;
+  const api = `https://acxdev.us.cc/api/GetGameHistory?period=${targetPeriod}`;
 
   try {
     const res = await fetch(api, {
