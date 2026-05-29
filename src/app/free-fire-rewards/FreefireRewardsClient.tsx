@@ -241,7 +241,7 @@ export default function FreefireRewardsClient() {
       <div
         className="fixed inset-0 -z-20 bg-cover bg-center bg-fixed"
         style={{
-          backgroundImage: `url('https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/20261/73b117baddfddfe357aabb723e4c9c4d.jpg')`,
+          backgroundImage: `url('https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/20264/417b1a4c151c7fcf2afb73afeaaefa16.jpg')`,
         }}
       />
       <div className="fixed inset-0 -z-10 bg-gradient-to-b from-black/80 via-black/60 to-black/85" />
