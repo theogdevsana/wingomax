@@ -7,13 +7,19 @@ import crypto from 'crypto';
 
 async function setTokenAndRespond(token: string) {
   const cookieStore = await cookies();
-  cookieStore.set('admin_token', token, {
+  const cookieOptions: any = {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
     maxAge: 24 * 60 * 60 // 24 hours
-  });
+  };
+  
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.domain = '.wingosignals.xyz';
+  }
+  
+  cookieStore.set('admin_token', token, cookieOptions);
   return NextResponse.json({ status: 'success', msg: 'Login successful' });
 }
 
