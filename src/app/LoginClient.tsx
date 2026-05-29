@@ -106,7 +106,7 @@ export default function LoginPage() {
         
         // Wait a bit for toast to be seen before redirecting
         setTimeout(() => {
-          router.push("/dashboard");
+          window.location.href = "/dashboard";
         }, 1500);
       } else {
         const errorToast = getLoginErrorToast(jsonResponse);
