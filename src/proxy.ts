@@ -42,14 +42,12 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // 3. API Domain Subrouting: api.wingosignals.xyz/* -> rewrites to /api-panel/*
+  // 3. API Domain Subrouting: api.wingosignals.xyz/* -> rewrites to /api/*
   if (isApiDomain) {
     if (!pathname.startsWith('/api/')) {
-      if (!pathname.startsWith('/api-panel')) {
-        const url = request.nextUrl.clone();
-        url.pathname = `/api-panel${pathname === '/' ? '' : pathname}`;
-        return NextResponse.rewrite(url);
-      }
+      const url = request.nextUrl.clone();
+      url.pathname = `/api${pathname === '/' ? '' : pathname}`;
+      return NextResponse.rewrite(url);
     }
   }
 
