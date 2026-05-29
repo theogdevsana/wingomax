@@ -20,7 +20,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
       }
 
       try {
-        const res = await fetch(getApiUrl("/v1/admin/setup/admins"));
+        const res = await fetch(getApiUrl("/v1/admin/setup/admins"), { credentials: 'include' });
         if (res.ok) {
           setUnlocked(true);
         } else {
@@ -42,7 +42,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
     setError("");
 
     try {
-      const res = await fetch(getApiUrl("/v1/admin/setup/verify"), {
+      const res = await fetch(getApiUrl("/v1/admin/setup/verify"), { credentials: 'include', 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),

@@ -20,7 +20,7 @@ export default function AdminList({ refreshKey }: { refreshKey: number }) {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(getApiUrl("/v1/admin/setup/admins"));
+      const res = await fetch(getApiUrl("/v1/admin/setup/admins"), { credentials: 'include' });
       if (!res.ok) {
         setError("Could not load admin list");
         setAdmins([]);

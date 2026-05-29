@@ -11,7 +11,7 @@ export default function RevenuePage() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch(getApiUrl("/v1/admin/stats"));
+        const res = await fetch(getApiUrl("/v1/admin/stats"), { credentials: 'include' });
         const data = await res.json();
         if (res.ok && data.status === "success") {
           setStats(data.data.revenue);

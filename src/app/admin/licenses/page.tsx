@@ -17,7 +17,7 @@ export default function CreateLicense() {
   const fetchLicenses = async () => {
     setIsFetching(true);
     try {
-      const res = await fetch(getApiUrl("/v1/admin/license"));
+      const res = await fetch(getApiUrl("/v1/admin/license"), { credentials: 'include' });
       const data = await res.json();
       if (res.ok && data.status === "success") {
         setLicenses(data.data);
@@ -40,7 +40,7 @@ export default function CreateLicense() {
     setCopied(false);
 
     try {
-      const res = await fetch(getApiUrl("/v1/admin/license"), {
+      const res = await fetch(getApiUrl("/v1/admin/license"), { credentials: 'include', 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ durationDays: duration }),
@@ -74,9 +74,9 @@ export default function CreateLicense() {
       if (action === 'delete') {
         const confirmDelete = confirm("Are you sure you want to delete this key?");
         if (!confirmDelete) return;
-        await fetch(getApiUrl(`/v1/admin/license?id=${id}`), { method: 'DELETE' });
+        await fetch(getApiUrl(`/v1/admin/license?id=${id}`), { credentials: 'include',  method: 'DELETE' });
       } else {
-        await fetch(getApiUrl('/v1/admin/license'), {
+        await fetch(getApiUrl('/v1/admin/license'), { credentials: 'include', 
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id, action })

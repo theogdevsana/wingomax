@@ -13,7 +13,7 @@ export default function EditBlogPage() {
 
   useEffect(() => {
     async function load() {
-      const res = await fetch(getApiUrl(`/v1/admin/blog/${id}`));
+      const res = await fetch(getApiUrl(`/v1/admin/blog/${id}`), { credentials: 'include' });
       const data = await res.json();
       if (res.ok && data.status === "success") {
         const p = data.data;
