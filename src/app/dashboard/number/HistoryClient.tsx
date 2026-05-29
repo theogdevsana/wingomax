@@ -93,7 +93,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     if (isAuthChecking || !game) return;
     try {
       const periodParam = selectedGame === "30sec" ? "30s" : "1m";
-      const res = await fetch(`${historyApi}/${periodParam}`);
+      const res = await fetch(`${historyApi}/${periodParam}`, { credentials: 'include' });
       const data = await res.json();
       if (data?.status === "success" && data?.data?.data?.list) {
         const list = data.data.data.list;

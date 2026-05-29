@@ -93,7 +93,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     if (isAuthChecking || !game) return;
     try {
       const periodParam = selectedGame === "30sec" ? "30s" : "1m";
-      const res = await fetch(`${historyApi}/${periodParam}`);
+      const res = await fetch(`${historyApi}/${periodParam}`, { credentials: 'include' });
       const data = await res.json();
       if (data?.status === "success" && data?.data?.data?.list) {
         const list = data.data.data.list;
@@ -166,7 +166,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     const clientTimeout = setTimeout(() => controller.abort(), 2800);
 
     try {
-      const res = await fetch(getApiUrl("/v1/predict"), { signal: controller.signal });
+      const res = await fetch(getApiUrl("/v1/predict"), { signal: controller.signal, credentials: 'include' });
       clearTimeout(clientTimeout);
       const data = await res.json();
 
