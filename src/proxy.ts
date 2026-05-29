@@ -33,47 +33,70 @@ export async function proxy(request: NextRequest) {
 
   // 2. Admin Domain Subrouting: admin.wingosignals.xyz/* -> rewrites to /admin/*
   if (isAdminDomain) {
+    const adminToken = request.cookies.get('admin_token')?.value;
+    const isAdminValid = adminToken ? !!(await edgeVerifyToken(adminToken)) : false;
+
     if (!pathname.startsWith('/api/')) {
+      // Normalize the target path: strip /admin prefix if already there to avoid double prefix
+      const targetPath = pathname.startsWith('/admin') ? pathname : `/admin${pathname === '/' ? '' : pathname}`;
+      const isTargetLogin = targetPath === '/admin/login';
+      const isTargetSetup = targetPath === '/admin/setup';
+
+      // Unauthenticated → redirect to /login (proxy will rewrite to /admin/login)
+      if (!isTargetLogin && !isTargetSetup && !isAdminValid) {
+        return NextResponse.redirect(new URL('/login', request.url));
+      }
+      // Authenticated on login page → redirect to / (proxy rewrites to /admin dashboard)
+      if (isTargetLogin && isAdminValid) {
+        return NextResponse.redirect(new URL('/', request.url));
+      }
+      // If pathname doesn't start with /admin yet, rewrite it
       if (!pathname.startsWith('/admin')) {
         const url = request.nextUrl.clone();
-        url.pathname = `/admin${pathname === '/' ? '' : pathname}`;
+        url.pathname = targetPath;
         return NextResponse.rewrite(url);
       }
+      // If already /admin/*, just continue (Next.js will serve it directly)
     }
+    // /api/* on admin subdomain: pass through (admin API calls work normally)
   }
 
   // 3. API Domain Subrouting: api.wingosignals.xyz/* -> rewrites to /api/*
+  // Clients call api.wingosignals.xyz/login (NOT /api/login)
   if (isApiDomain) {
     if (!pathname.startsWith('/api/')) {
       const url = request.nextUrl.clone();
       url.pathname = `/api${pathname === '/' ? '' : pathname}`;
       return NextResponse.rewrite(url);
     }
+    // If client already prefixed /api/, strip it to avoid /api/api/... double prefix
+    // e.g. api.wingosignals.xyz/api/login -> redirect to api.wingosignals.xyz/login
+    const strippedPath = pathname.replace(/^\/api/, '') || '/';
+    if (strippedPath !== pathname) {
+      return NextResponse.redirect(new URL(strippedPath, request.url));
+    }
   }
 
-  // --- Auth Checks & Route Protection (From original src/proxy.ts) ---
+  // --- Auth Checks & Route Protection for non-subdomain paths ---
 
-  // Detect resolved path for authorization
-  // Note: Rewritten paths will have pathname updated to /admin/... or /api-panel/... internally
-  const resolvedPath = request.nextUrl.pathname;
+  const resolvedPath = pathname;
   const isAdminPath = resolvedPath.startsWith('/admin');
   const isAdminApi = resolvedPath.startsWith('/api/admin');
-  
+
   const isLoginPage = resolvedPath === '/admin/login';
   const isSetupPage = resolvedPath === '/admin/setup';
   const isLoginApi = resolvedPath === '/api/admin/login';
   const isSetupApi =
     resolvedPath === '/api/admin/register' ||
     resolvedPath.startsWith('/api/admin/setup/');
-  
+
   // Verify token
   const token = request.cookies.get('admin_token')?.value;
   const isValid = token ? !!(await edgeVerifyToken(token)) : false;
 
-  // Protect Admin Pages
+  // Protect Admin Pages (accessed directly on main domain path /admin/*)
   if (isAdminPath && !isLoginPage && !isSetupPage && !isValid) {
-    const loginUrl = new URL('/login', request.url);
-    return NextResponse.redirect(loginUrl);
+    return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
   // Protect Admin APIs
@@ -83,8 +106,7 @@ export async function proxy(request: NextRequest) {
 
   // Redirect to Dashboard if already logged in on login page
   if (isLoginPage && isValid) {
-    const dashboardUrl = new URL('/', request.url);
-    return NextResponse.redirect(dashboardUrl);
+    return NextResponse.redirect(new URL('/admin', request.url));
   }
 
   // Protect Dashboard

@@ -17,7 +17,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  if (pathname === '/admin/login' || pathname === '/admin/setup') {
+  if (
+    pathname === '/admin/login' || 
+    pathname === '/login' || 
+    pathname === '/admin/setup' || 
+    pathname === '/setup'
+  ) {
     return <div className={`h-screen bg-[#F5F5F7] ${nunito.className}`}>{children}</div>;
   }
 

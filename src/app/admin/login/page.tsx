@@ -36,7 +36,9 @@ export default function AdminLogin() {
       if (res.ok && data.status === "success") {
         localStorage.setItem("admin_user", username);
         localStorage.setItem("admin_pass", password);
-        router.push("/admin");
+        // On admin.wingosignals.xyz, '/' rewrites to /admin via proxy
+        // Using '/admin' directly would result in /admin/admin (double prefix)
+        router.push("/");
       } else {
         setError(data.msg || "Invalid credentials");
       }
