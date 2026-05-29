@@ -23,6 +23,17 @@ export async function proxy(request: NextRequest) {
   const isAdminDomain = isDev ? hostname.startsWith('admin.') : (hostname === adminDomain);
   const isApiDomain = isDev ? hostname.startsWith('api.') : (hostname === apiDomain);
 
+  // --- CORS Setup ---
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
+  };
+
+  if (request.method === 'OPTIONS') {
+    return NextResponse.json({}, { status: 200, headers: corsHeaders });
+  }
+
   // 1. Route Blocking Rule: Prevent main domain from accessing admin or api-panel routes directly
   if (isMainDomain) {
     if (pathname.startsWith('/admin') || pathname.startsWith('/api-panel')) {
@@ -44,17 +55,23 @@ export async function proxy(request: NextRequest) {
 
       // Unauthenticated → redirect to /login (proxy will rewrite to /admin/login)
       if (!isTargetLogin && !isTargetSetup && !isAdminValid) {
-        return NextResponse.redirect(new URL('/login', request.url));
+        const res = NextResponse.redirect(new URL('/login', request.url));
+        Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
+        return res;
       }
       // Authenticated on login page → redirect to / (proxy rewrites to /admin dashboard)
       if (isTargetLogin && isAdminValid) {
-        return NextResponse.redirect(new URL('/', request.url));
+        const res = NextResponse.redirect(new URL('/', request.url));
+        Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
+        return res;
       }
       // If pathname doesn't start with /admin yet, rewrite it
       if (!pathname.startsWith('/admin')) {
         const url = request.nextUrl.clone();
         url.pathname = targetPath;
-        return NextResponse.rewrite(url);
+        const res = NextResponse.rewrite(url);
+        Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
+        return res;
       }
       // If already /admin/*, just continue (Next.js will serve it directly)
     }
@@ -67,7 +84,9 @@ export async function proxy(request: NextRequest) {
     if (!pathname.startsWith('/api/')) {
       const url = request.nextUrl.clone();
       url.pathname = `/api${pathname === '/' ? '' : pathname}`;
-      return NextResponse.rewrite(url);
+      const res = NextResponse.rewrite(url);
+      Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
+      return res;
     }
   }
 
@@ -90,17 +109,23 @@ export async function proxy(request: NextRequest) {
 
   // Protect Admin Pages (accessed directly on main domain path /admin/*)
   if (isAdminPath && !isLoginPage && !isSetupPage && !isValid) {
-    return NextResponse.redirect(new URL('/admin/login', request.url));
+    const res = NextResponse.redirect(new URL('/admin/login', request.url));
+    Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
+    return res;
   }
 
   // Protect Admin APIs
   if (isAdminApi && !isLoginApi && !isSetupApi && !isValid) {
-    return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
+    const res = NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
+    Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
+    return res;
   }
 
   // Redirect to Dashboard if already logged in on login page
   if (isLoginPage && isValid) {
-    return NextResponse.redirect(new URL('/admin', request.url));
+    const res = NextResponse.redirect(new URL('/admin', request.url));
+    Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
+    return res;
   }
 
   // Protect Dashboard
@@ -109,18 +134,23 @@ export async function proxy(request: NextRequest) {
 
     if (!userToken) {
       const homeUrl = new URL('/', request.url);
-      return NextResponse.redirect(homeUrl);
+      const res = NextResponse.redirect(homeUrl);
+      Object.entries(corsHeaders).forEach(([k, v]) => res.headers.set(k, v));
+      return res;
     }
 
     const userPayload = await edgeVerifyToken(userToken);
     if (!userPayload) {
       const response = NextResponse.redirect(new URL('/', request.url));
       response.cookies.delete('auth_token');
+      Object.entries(corsHeaders).forEach(([k, v]) => response.headers.set(k, v));
       return response;
     }
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  Object.entries(corsHeaders).forEach(([k, v]) => response.headers.set(k, v));
+  return response;
 }
 
 export const config = {
