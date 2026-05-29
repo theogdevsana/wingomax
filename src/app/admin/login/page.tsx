@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Lock, User, KeyRound, AlertCircle } from "lucide-react";
+import { getApiUrl } from "@/lib/api-utils";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function AdminLogin() {
     setError("");
 
     try {
-      const res = await fetch("/api/admin/login", {
+      const res = await fetch(getApiUrl("/api/admin/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

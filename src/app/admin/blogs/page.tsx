@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { getApiUrl } from "@/lib/api-utils";
 import {
   Plus,
   Pencil,
@@ -28,7 +29,7 @@ export default function AdminBlogsListPage() {
   const loadPosts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/blog");
+      const res = await fetch(getApiUrl("/api/admin/blog"));
       const data = await res.json();
       if (res.ok && data.status === "success") {
         setPosts(data.data);
@@ -44,7 +45,7 @@ export default function AdminBlogsListPage() {
 
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`Delete "${title}"?`)) return;
-    await fetch(`/api/admin/blog/${id}`, { method: "DELETE" });
+    await fetch(getApiUrl(`/api/admin/blog/${id}`), { method: "DELETE" });
     loadPosts();
   };
 

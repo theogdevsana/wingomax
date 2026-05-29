@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Save, Link as LinkIcon, Loader2 } from "lucide-react";
+import { getApiUrl } from "@/lib/api-utils";
 
 export default function SettingsPage() {
   const [telegramLink, setTelegramLink] = useState("");
@@ -16,7 +17,7 @@ export default function SettingsPage() {
   const fetchSettings = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("/api/settings");
+      const res = await fetch(getApiUrl("/api/settings"));
       const data = await res.json();
       if (data.status === "success") {
         setTelegramLink(data.data.subscription_link);
@@ -34,7 +35,7 @@ export default function SettingsPage() {
     setMessage({ text: "", type: "" });
 
     try {
-      const res = await fetch("/api/admin/settings", {
+      const res = await fetch(getApiUrl("/api/admin/settings"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ telegramLink }),

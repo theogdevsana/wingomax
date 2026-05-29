@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Key, Clock, Copy, Plus, AlertCircle, CheckCircle2, ShieldBan, ShieldCheck, Trash2, Smartphone } from "lucide-react";
+import { getApiUrl } from "@/lib/api-utils";
 
 export default function CreateLicense() {
   const [duration, setDuration] = useState<number>(30);
@@ -16,7 +17,7 @@ export default function CreateLicense() {
   const fetchLicenses = async () => {
     setIsFetching(true);
     try {
-      const res = await fetch("/api/admin/license");
+      const res = await fetch(getApiUrl("/api/admin/license"));
       const data = await res.json();
       if (res.ok && data.status === "success") {
         setLicenses(data.data);
@@ -39,7 +40,7 @@ export default function CreateLicense() {
     setCopied(false);
 
     try {
-      const res = await fetch("/api/admin/license", {
+      const res = await fetch(getApiUrl("/api/admin/license"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ durationDays: duration }),
@@ -73,9 +74,9 @@ export default function CreateLicense() {
       if (action === 'delete') {
         const confirmDelete = confirm("Are you sure you want to delete this key?");
         if (!confirmDelete) return;
-        await fetch(`/api/admin/license?id=${id}`, { method: 'DELETE' });
+        await fetch(getApiUrl(`/api/admin/license?id=${id}`), { method: 'DELETE' });
       } else {
-        await fetch('/api/admin/license', {
+        await fetch(getApiUrl('/api/admin/license'), {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id, action })

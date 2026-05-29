@@ -7,6 +7,7 @@ import { Home, Users, Gamepad2, Settings, LogOut, Key, Menu, X, DollarSign, Powe
 import Image from "next/image";
 import { Nunito } from 'next/font/google';
 import AdminBlogNav from "./AdminBlogNav";
+import { getApiUrl } from "@/lib/api-utils";
 import "./admin-fixes.css";
 
 const nunito = Nunito({ subsets: ['latin'] });
@@ -22,7 +23,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/admin/logout', { method: 'POST' });
+      await fetch(getApiUrl('/api/admin/logout'), { method: 'POST' });
       router.push('/admin/login');
     } catch (e) {
       console.error(e);

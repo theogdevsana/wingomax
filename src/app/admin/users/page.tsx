@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { UserCircle, Clock, Smartphone, ShieldBan, ShieldCheck, Trash2, Key, Copy, CheckCircle2, RotateCcw } from "lucide-react";
+import { getApiUrl } from "@/lib/api-utils";
 
 export default function UsersPage() {
   const [licenses, setLicenses] = useState<any[]>([]);
@@ -11,7 +12,7 @@ export default function UsersPage() {
   const fetchUsers = async () => {
     setIsFetching(true);
     try {
-      const res = await fetch("/api/admin/license");
+      const res = await fetch(getApiUrl("/api/admin/license"));
       const data = await res.json();
       if (res.ok && data.status === "success") {
         // Show ALL keys
@@ -33,9 +34,9 @@ export default function UsersPage() {
       if (action === 'delete') {
         const confirmDelete = confirm("Are you sure you want to delete this key?");
         if (!confirmDelete) return;
-        await fetch(`/api/admin/license?id=${id}`, { method: 'DELETE' });
+        await fetch(getApiUrl(`/api/admin/license?id=${id}`), { method: 'DELETE' });
       } else {
-        await fetch('/api/admin/license', {
+        await fetch(getApiUrl('/api/admin/license'), {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id, action })

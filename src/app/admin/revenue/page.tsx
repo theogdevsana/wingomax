@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DollarSign, TrendingUp, Calendar, CalendarDays } from "lucide-react";
+import { getApiUrl } from "@/lib/api-utils";
 
 export default function RevenuePage() {
   const [stats, setStats] = useState<any>(null);
@@ -10,7 +11,7 @@ export default function RevenuePage() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch("/api/admin/stats");
+        const res = await fetch(getApiUrl("/api/admin/stats"));
         const data = await res.json();
         if (res.ok && data.status === "success") {
           setStats(data.data.revenue);

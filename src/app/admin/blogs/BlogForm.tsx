@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Loader2, Save, ArrowLeft, Trash2, Plus } from "lucide-react";
 import Link from "next/link";
 import styles from "./blogs-admin.module.css";
+import { getApiUrl } from "@/lib/api-utils";
 import { cdnPathHint, DEFAULT_BLOG_IMAGE, resolveBlogImage } from "@/lib/cdn";
 
 const SummernoteEditor = dynamic(
@@ -88,7 +89,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
 
     try {
       const url = isEdit ? `/api/admin/blog/${postId}` : "/api/admin/blog";
-      const res = await fetch(url, {
+      const res = await fetch(getApiUrl(url), {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import styles from "./page.module.css";
 import { getLoginErrorToast } from "@/lib/login-errors";
 import BackgroundSvg from "@/components/BackgroundSvg";
+import { getApiUrl } from "@/lib/api-utils";
 
 const Toast = dynamic(() => import("@/components/Toast"), { ssr: false });
 
@@ -19,7 +20,7 @@ export default function LoginPage() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch("/api/settings");
+        const res = await fetch(getApiUrl("/api/settings"));
         const json = await res.json();
         if (json.status === "success") {
           setSubscriptionLink(json.data.subscription_link);
@@ -76,7 +77,7 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       const deviceId = getOrCreateDeviceId();
-      const res = await fetch("/api/login", {
+      const res = await fetch(getApiUrl("/api/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: enteredKey, device_id: deviceId }),

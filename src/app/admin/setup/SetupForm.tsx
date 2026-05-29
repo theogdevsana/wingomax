@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { User, KeyRound, AlertCircle, ShieldCheck } from "lucide-react";
+import { getApiUrl } from "@/lib/api-utils";
 
 export default function SetupForm({
   onAdminCreated,
@@ -21,7 +22,7 @@ export default function SetupForm({
     setSuccess("");
 
     try {
-      const res = await fetch("/api/admin/register", {
+      const res = await fetch(getApiUrl("/api/admin/register"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

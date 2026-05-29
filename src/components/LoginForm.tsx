@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import styles from "@/app/page.module.css";
 import { getLoginErrorToast } from "@/lib/login-errors";
+import { getApiUrl } from "@/lib/api-utils";
 
 const Toast = dynamic(() => import("@/components/Toast"), { ssr: false });
 
@@ -53,7 +54,7 @@ export default function LoginForm() {
     setIsLoading(true);
     try {
       const deviceId = getOrCreateDeviceId();
-      const res = await fetch("/api/login", {
+      const res = await fetch(getApiUrl("/api/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: enteredKey, device_id: deviceId }),

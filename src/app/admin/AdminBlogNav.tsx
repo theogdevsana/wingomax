@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FileText, Plus, List } from "lucide-react";
+import { getApiUrl } from "@/lib/api-utils";
 
 type BlogItem = { id: string; title: string; slug: string };
 
@@ -14,7 +15,7 @@ export default function AdminBlogNav({ onNavigate }: { onNavigate?: () => void }
 
   useEffect(() => {
     if (!isBlogSection) return;
-    fetch("/api/admin/blog")
+    fetch(getApiUrl("/api/admin/blog"))
       .then((r) => r.json())
       .then((data) => {
         if (data.status === "success") {

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, ReactNode } from "react";
 import { KeyRound, Lock, AlertCircle } from "lucide-react";
+import { getApiUrl } from "@/lib/api-utils";
 
 export default function SetupGate({ children }: { children: ReactNode }) {
   const [unlocked, setUnlocked] = useState(false);
@@ -19,7 +20,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
       }
 
       try {
-        const res = await fetch("/api/admin/setup/admins");
+        const res = await fetch(getApiUrl("/api/admin/setup/admins"));
         if (res.ok) {
           setUnlocked(true);
         } else {
@@ -41,7 +42,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
     setError("");
 
     try {
-      const res = await fetch("/api/admin/setup/verify", {
+      const res = await fetch(getApiUrl("/api/admin/setup/verify"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),

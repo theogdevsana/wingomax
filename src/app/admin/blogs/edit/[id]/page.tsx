@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import BlogForm, { emptyBlogForm, type BlogFormData } from "../../BlogForm";
 import styles from "../../blogs-admin.module.css";
+import { getApiUrl } from "@/lib/api-utils";
 
 export default function EditBlogPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,7 +13,7 @@ export default function EditBlogPage() {
 
   useEffect(() => {
     async function load() {
-      const res = await fetch(`/api/admin/blog/${id}`);
+      const res = await fetch(getApiUrl(`/api/admin/blog/${id}`));
       const data = await res.json();
       if (res.ok && data.status === "success") {
         const p = data.data;

@@ -9,6 +9,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { GAMES } from "@/lib/games";
 import HistoryCanvas from "./HistoryCanvas";
+import { getApiUrl } from "@/lib/api-utils";
 
 interface HistoryItem {
   issueNumber: string;
@@ -86,7 +87,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     }
   }, [router, game]);
 
-  const historyApi = "/api/history";
+  const historyApi = getApiUrl("/api/history");
 
   const fetchHistory = async () => {
     if (isAuthChecking || !game) return;
@@ -165,7 +166,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     const clientTimeout = setTimeout(() => controller.abort(), 2800);
 
     try {
-      const res = await fetch("/api/predict", { signal: controller.signal });
+      const res = await fetch(getApiUrl("/api/predict"), { signal: controller.signal });
       clearTimeout(clientTimeout);
       const data = await res.json();
 
