@@ -87,13 +87,19 @@ export async function POST(req: Request) {
     });
 
     const cookieStore = await cookies();
-    cookieStore.set('auth_token', token, {
+    const cookieOptions: any = {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
       maxAge: 2 * 60 * 60 
-    });
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+      cookieOptions.domain = '.wingosignals.xyz';
+    }
+
+    cookieStore.set('auth_token', token, cookieOptions);
 
     return NextResponse.json({
       status: 'success',
