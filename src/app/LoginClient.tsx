@@ -81,6 +81,7 @@ export default function LoginPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: enteredKey, device_id: deviceId }),
+        credentials: "include",
         signal: AbortSignal.timeout(10000),
       });
       let jsonResponse: any;
@@ -106,7 +107,7 @@ export default function LoginPage() {
         
         // Wait a bit for toast to be seen before redirecting
         setTimeout(() => {
-          window.location.href = "/dashboard?t=" + Date.now();
+          router.push("/dashboard");
         }, 1500);
       } else {
         const errorToast = getLoginErrorToast(jsonResponse);

@@ -20,7 +20,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const key = localStorage.getItem("login_key");
     if (!key) {
-      window.location.replace("/");
+      router.replace("/");
     } else {
       setIsAuthChecking(false);
     }

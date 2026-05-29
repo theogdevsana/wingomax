@@ -58,6 +58,7 @@ export default function LoginForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: enteredKey, device_id: deviceId }),
+        credentials: "include",
         signal: AbortSignal.timeout(10000),
       });
       
