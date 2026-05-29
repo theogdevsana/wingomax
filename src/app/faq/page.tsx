@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     canonical: '/faq',
   },
 };
-
+ 
 import connectMongo from '@/lib/mongodb';
 import Settings from '@/lib/models/Settings';
 
