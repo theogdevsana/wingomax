@@ -24,8 +24,10 @@ export async function middleware(request: NextRequest) {
   const isApiDomain = isDev ? hostname.startsWith('api.') : (hostname === apiDomain);
 
   // --- CORS Setup ---
+  const origin = request.headers.get('origin') || '*';
   const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
   };
