@@ -23,6 +23,8 @@ export async function proxy(request: NextRequest) {
   const isAdminDomain = isDev ? hostname.startsWith('admin.') : (hostname === adminDomain);
   const isApiDomain = isDev ? hostname.startsWith('api.') : (hostname === apiDomain);
 
+  console.log(`[PROXY] Request - Host: ${hostname}, Path: ${pathname}, isDev: ${isDev}, isMain: ${isMainDomain}, isAdmin: ${isAdminDomain}, isApi: ${isApiDomain}`);
+
   // --- CORS Setup ---
   const origin = request.headers.get('origin') || '*';
   const corsHeaders = {
