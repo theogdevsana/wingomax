@@ -178,7 +178,9 @@ export function validateLoginCredentials(
 export function validateLicenseLogin(
   key: string,
   device_id: string
-): { valid: boolean; errors: string[]; sanitized?: { key: string; device_id: string } } {
+): 
+  | { valid: true; errors: string[]; sanitized: { key: string; device_id: string } }
+  | { valid: false; errors: string[]; sanitized?: never } {
   const errors: string[] = [];
 
   // Check for empty values
