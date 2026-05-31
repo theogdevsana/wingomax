@@ -3,6 +3,8 @@ import { cookies } from 'next/headers';
 import connectToDatabase from '@/lib/mongodb';
 import License from '@/lib/models/License';
 import { generateToken } from '@/lib/jwt';
+import { validateLicenseLogin } from '@/lib/security';
+import { licenseLoginLimiter } from '@/lib/rate-limiter';
 
 export async function GET() {
   return NextResponse.json({ status: 'info', msg: 'WingoSignals API is running. Please use POST for login requests.' });
@@ -12,18 +14,40 @@ export async function POST(req: Request) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1';
 
   try {
+    // Rate limiting check
+    if (!licenseLoginLimiter.isAllowed(ip)) {
+      return NextResponse.json(
+        {
+          status: 'error',
+          msg: 'Too many login attempts. Please try again later.',
+          retryAfter: licenseLoginLimiter.getResetTime(ip)
+        },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
     const { key, device_id } = body;
 
-    // 1. Check Payload
-    if (!key || !device_id) {
-      return NextResponse.json({ status: 'error', msg: 'Key and Device ID are required' }, { status: 400 });
+    // 1. Check Payload and validate/sanitize
+    const validation = validateLicenseLogin(key, device_id);
+    if (!validation.valid) {
+      return NextResponse.json(
+        {
+          status: 'error',
+          msg: validation.errors[0] || 'Invalid credentials'
+        },
+        { status: 400 }
+      );
     }
+
+    const { sanitized } = validation;
+
 
 
     await connectToDatabase();
 
-    const license = await License.findOne({ key });
+    const license = await License.findOne({ key: sanitized.key });
 
     if (!license) {
       return NextResponse.json({ status: 'error', msg: 'Invalid License Key' }, { status: 401 });
@@ -70,9 +94,9 @@ export async function POST(req: Request) {
 
     // Device binding logic
     if (!license.deviceId) {
-      license.deviceId = device_id;
+      license.deviceId = sanitized.device_id;
       await license.save();
-    } else if (license.deviceId !== device_id) {
+    } else if (license.deviceId !== sanitized.device_id) {
       return NextResponse.json({ status: 'error', msg: 'Key is already bound to another device' }, { status: 403 });
     }
 
@@ -82,7 +106,7 @@ export async function POST(req: Request) {
 
     const token = generateToken({
       licenseId: license._id.toString(),
-      deviceId: device_id,
+      deviceId: sanitized.device_id,
       role: 'user'
     });
 
@@ -101,6 +125,9 @@ export async function POST(req: Request) {
 
     cookieStore.set('auth_token', token, cookieOptions);
 
+    // Reset rate limiter on successful login
+    licenseLoginLimiter.reset(ip);
+
     return NextResponse.json({
       status: 'success',
       data: {
@@ -118,6 +145,7 @@ export async function POST(req: Request) {
         msg: 'Database Connection Error. Please ensure your IP is whitelisted in MongoDB Atlas.' 
       }, { status: 500 });
     }
+    // Don't leak error details to client
     return NextResponse.json({ status: 'error', msg: 'Internal Server Error' }, { status: 500 });
   }
 

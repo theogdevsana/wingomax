@@ -7,6 +7,7 @@ import styles from "./page.module.css";
 import { getLoginErrorToast } from "@/lib/login-errors";
 import BackgroundSvg from "@/components/BackgroundSvg";
 import { getApiUrl } from "@/lib/api-utils";
+import { validateLicenseKey } from "@/lib/security";
 
 const Toast = dynamic(() => import("@/components/Toast"), { ssr: false });
 
@@ -64,6 +65,8 @@ export default function LoginPage() {
   const handleLogin = async () => {
     if (isLoading) return;
     const enteredKey = loginKey.trim();
+    
+    // Client-side validation
     if (!enteredKey) {
       setToast({
         message: "Key Required",
@@ -73,6 +76,15 @@ export default function LoginPage() {
       return;
     }
 
+    // Validate key format
+    if (!validateLicenseKey(enteredKey)) {
+      setToast({
+        message: "Invalid Key Format",
+        subText: "License key must be 10-255 characters (alphanumeric, hyphens, underscores)",
+        type: "warning",
+      });
+      return;
+    }
 
     setIsLoading(true);
     try {

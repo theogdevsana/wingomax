@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Lock, User, KeyRound, AlertCircle } from "lucide-react";
 import { getApiUrl } from "@/lib/api-utils";
+import { validateLoginCredentials } from "@/lib/security";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -21,11 +22,20 @@ export default function AdminLogin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError("");
 
+    // Client-side validation
+    const validation = validateLoginCredentials(username, password);
+    if (!validation.valid) {
+      setError(validation.errors[0] || "Invalid input");
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
-      const res = await fetch(getApiUrl("/v1/admin/login"), { credentials: 'include', 
+      const res = await fetch(getApiUrl("/v1/admin/login"), { 
+        credentials: 'include', 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -40,6 +50,7 @@ export default function AdminLogin() {
         // Using '/admin' directly would result in /admin/admin (double prefix)
         router.push("/");
       } else {
+        // Don't reveal if username exists or not
         setError(data.msg || "Invalid credentials");
       }
     } catch (err) {

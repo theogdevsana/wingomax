@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import styles from "@/app/page.module.css";
 import { getLoginErrorToast } from "@/lib/login-errors";
 import { getApiUrl } from "@/lib/api-utils";
+import { validateLicenseKey } from "@/lib/security";
 
 const Toast = dynamic(() => import("@/components/Toast"), { ssr: false });
 
@@ -42,10 +43,22 @@ export default function LoginForm() {
   const handleLogin = async () => {
     if (isLoading) return;
     const enteredKey = loginKey.trim();
+    
+    // Client-side validation
     if (!enteredKey) {
       setToast({
         message: "Key Required",
         subText: "Please enter your login key !",
+        type: "warning",
+      });
+      return;
+    }
+
+    // Validate key format
+    if (!validateLicenseKey(enteredKey)) {
+      setToast({
+        message: "Invalid Key Format",
+        subText: "License key must be 10-255 characters (alphanumeric, hyphens, underscores)",
         type: "warning",
       });
       return;
