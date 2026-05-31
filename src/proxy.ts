@@ -36,11 +36,15 @@ export async function proxy(request: NextRequest) {
     return NextResponse.json({}, { status: 200, headers: corsHeaders });
   }
 
-  // 1. Route Blocking Rule: Prevent main domain from accessing admin or api-panel routes directly
+  // 1. Route Blocking Rule: Prevent main domain from accessing admin, api-panel, or v1 routes directly
   if (isMainDomain) {
-    if (pathname.startsWith('/admin') || pathname.startsWith('/api-panel')) {
+    if (
+      pathname.startsWith('/admin') ||
+      pathname.startsWith('/api-panel') ||
+      (!isDev && pathname.startsWith('/v1/'))
+    ) {
       console.log(`[PROXY] Blocking direct route ${pathname} on main domain`);
-      return new NextResponse(null, { status: 404 });
+      return NextResponse.rewrite(new URL('/404', request.url));
     }
   }
 
