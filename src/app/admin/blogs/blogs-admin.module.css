@@ -1,39 +1,33 @@
 .root {
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 14px;
+  line-height: 1.5;
   color: #334155;
 }
 
 .root h1 {
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
 }
 
 .root h2 {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 700;
 }
 
 .root h3 {
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 600;
-}
-
-.root p,
-.root label {
-  font-size: 11px;
 }
 
 .root input,
 .root textarea,
 .root select {
-  font-size: 11px !important;
-  padding: 0.4rem 0.6rem !important;
+  padding: 0.4rem 0.6rem;
 }
 
 .root :global(.note-editor) {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .root :global(.note-toolbar) {
