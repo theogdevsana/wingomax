@@ -772,8 +772,8 @@ export default function DownloadClient() {
                   </div>
                   <div style={{ padding: "18px", display: "flex", flexDirection: "column", gap: "8px", flex: 1 }}>
                     <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--accent2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{post.date}</span>
-                    <h3 style={{ fontSize: "15px", fontWeight: 800, color: "var(--text1)", lineHeight: 1.3, margin: 0 }}>{post.title}</h3>
-                    <p style={{ fontSize: "13px", color: "var(--text2)", lineHeight: 1.6, margin: 0, flex: 1 }}>{post.description}</p>
+                    <h3 style={{ fontSize: "15px", fontWeight: 800, color: "var(--text1)", lineHeight: 1.3, margin: 0, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{post.title}</h3>
+                    <p style={{ fontSize: "13px", color: "var(--text2)", lineHeight: 1.6, margin: 0, flex: 1, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{post.description}</p>
                     <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--accent2)", display: "flex", alignItems: "center", gap: "4px", marginTop: "8px" }}>
                       Read More <Icons.ArrowRight />
                     </span>
