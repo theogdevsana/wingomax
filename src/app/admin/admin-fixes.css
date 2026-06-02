@@ -28,7 +28,7 @@
   background: #f8fafc;
 }
 
-/* Summernote fullscreen - covers entire viewport */
+/* Summernote fullscreen - black background, white text */
 .note-fullscreen {
   position: fixed !important;
   top: 0 !important;
@@ -38,15 +38,50 @@
   width: 100vw !important;
   height: 100vh !important;
   z-index: 9999 !important;
-  background: #fff !important;
+  background: #0f0f0f !important;
   margin: 0 !important;
 }
 .note-fullscreen .note-editable {
+  background: #0f0f0f !important;
+  color: #e0e0e0 !important;
   height: calc(100vh - 100px) !important;
   min-height: calc(100vh - 100px) !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+.note-fullscreen .note-toolbar {
+  background: #1a1a1a !important;
+  border-bottom: 1px solid #333 !important;
+}
+.note-fullscreen .note-toolbar .note-btn {
+  color: #ccc !important;
+  background: transparent !important;
+  border-color: #333 !important;
+}
+.note-fullscreen .note-toolbar .note-btn:hover {
+  color: #fff !important;
+  background: #333 !important;
 }
 .note-fullscreen-backdrop {
   display: none !important;
+}
+
+/* Code view (HTML) - dark theme with syntax colors */
+.note-codable {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+  font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  padding: 16px !important;
+  tab-size: 2 !important;
+}
+.note-editor.note-frame .note-codable textarea {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+  font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
 }
 
 /* Hide scrollbar for side menu */
