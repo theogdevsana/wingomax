@@ -132,15 +132,15 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 .blog-detail-header { max-width:1152px; margin:0 auto; padding:32px 16px 0; }
 .blog-detail-body { max-width:1152px; margin:32px auto 0; padding:0 16px; }
 
-.blog-detail-nav { display:flex; align-items:center; gap:8px; font-size:10px; font-weight:700; color:#94a3b8; letter-spacing:0.1em; margin-bottom:24px; white-space:nowrap; overflow:hidden; width:100%; }
-.blog-detail-nav a { color:#94a3b8; text-decoration:none; display:flex; align-items:center; gap:4px; transition:color 0.2s; flex-shrink:0; font-size:10px; font-weight:700; letter-spacing:0.1em; }
+.blog-detail-nav { display:flex; align-items:center; gap:8px; font-size:10px; font-weight:800; color:#475569; letter-spacing:0.05em; margin-bottom:24px; white-space:nowrap; overflow:hidden; width:100%; }
+.blog-detail-nav a { color:#475569; text-decoration:none; display:flex; align-items:center; gap:4px; transition:color 0.2s; flex-shrink:0; font-size:10px; font-weight:800; letter-spacing:0.05em; }
 .blog-detail-nav a:hover { color:#4f46e5; }
-.blog-detail-nav-sep { flex-shrink:0; }
-.blog-detail-nav-current { color:#1e293b; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10px; font-weight:700; letter-spacing:0.1em; }
+.blog-detail-nav-sep { flex-shrink:0; color:#94a3b8; }
+.blog-detail-nav-current { color:#1e293b; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10px; font-weight:800; letter-spacing:0.05em; }
 
 .blog-detail-meta { display:flex; align-items:center; gap:8px; }
 .blog-detail-badge { padding:4px 8px; background:#eef2ff; color:#4f46e5; border-radius:8px; font-size:10px; font-weight:900; letter-spacing:0.05em; }
-.blog-detail-date { font-size:12px; font-weight:900; color:#94a3b8; }
+.blog-detail-date { font-size:12px; font-weight:800; color:#475569; }
 .blog-detail-title { font-size:20px; font-weight:700; color:#1e293b; letter-spacing:-0.025em; line-height:1.2; margin-bottom:32px; text-transform:capitalize; }
 .blog-detail-author-bar { display:flex; align-items:center; gap:24px; padding-top:16px; border-top:1px solid #f8fafc; margin-top:24px; flex-wrap:wrap; }
 .blog-detail-author-info { display:flex; align-items:center; gap:8px; }
