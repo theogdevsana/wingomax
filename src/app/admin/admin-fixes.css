@@ -21,10 +21,32 @@
 #blog-editor-scope .note-editable {
   font-size: 13px;
   line-height: 1.5;
+  min-height: 200px;
 }
 
 #blog-editor-scope .note-toolbar {
   background: #f8fafc;
+}
+
+/* Summernote fullscreen - covers entire viewport */
+.note-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+  background: #fff !important;
+  margin: 0 !important;
+}
+.note-fullscreen .note-editable {
+  height: calc(100vh - 100px) !important;
+  min-height: calc(100vh - 100px) !important;
+}
+.note-fullscreen-backdrop {
+  display: none !important;
 }
 
 /* Hide scrollbar for side menu */

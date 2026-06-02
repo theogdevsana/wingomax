@@ -150,22 +150,22 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
 
       <div className="space-y-6">
         {/* Main Details Card */}
-        <div className={`${styles.card} p-5 space-y-5 shadow-sm`}>
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-2">
+        <div className={`${styles.card} p-4 shadow-sm`}>
+          <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
             <h2 className="text-sm font-bold text-slate-800">Basic Info</h2>
-            <label className="flex items-center gap-2 text-xs font-bold text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 cursor-pointer hover:bg-slate-100 transition-colors">
+            <label className="flex items-center gap-1.5 text-xs font-bold text-slate-600 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100 cursor-pointer hover:bg-slate-100 transition-colors">
               <input
                 type="checkbox"
                 checked={form.published}
                 onChange={(e) => setForm((f) => ({ ...f, published: e.target.checked }))}
-                className="w-4 h-4 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500"
+                className="w-3.5 h-3.5 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500"
               />
               Published
             </label>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3">
           <div>
-            <label className="font-bold text-slate-700">Title *</label>
+            <label className="font-bold text-slate-700 text-xs">Title *</label>
             <input
               type="text"
               value={form.title}
@@ -178,22 +178,22 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                   metaTitle: f.metaTitle || title,
                 }));
               }}
-              className="w-full mt-1 rounded-lg border border-slate-200"
+              className="w-full mt-0.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm"
               required
             />
           </div>
           <div>
-            <label className="font-bold text-slate-700">Slug *</label>
+            <label className="font-bold text-slate-700 text-xs">Slug *</label>
             <input
               type="text"
               value={form.slug}
               onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
-              className="w-full mt-1 rounded-lg border border-slate-200 font-mono"
+              className="w-full mt-0.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm font-mono"
               required
             />
           </div>
           <div className="md:col-span-2">
-            <label className="font-bold text-slate-700">Description *</label>
+            <label className="font-bold text-slate-700 text-xs">Description *</label>
             <textarea
               value={form.description}
               onChange={(e) =>
@@ -204,47 +204,46 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                 }))
               }
               rows={2}
-              className="w-full mt-1 rounded-lg border border-slate-200 resize-none"
+              className="w-full mt-0.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm resize-none"
               required
             />
           </div>
           <div>
-            <label className="font-bold text-slate-700">Date</label>
+            <label className="font-bold text-slate-700 text-xs">Date</label>
             <input
               type="text"
               value={form.date}
               onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
-              className="w-full mt-1 rounded-lg border border-slate-200"
+              className="w-full mt-0.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm"
             />
           </div>
           <div>
-            <label className="font-bold text-slate-700">Author</label>
+            <label className="font-bold text-slate-700 text-xs">Author</label>
             <input
               type="text"
               value={form.author}
               onChange={(e) => setForm((f) => ({ ...f, author: e.target.value }))}
-              className="w-full mt-1 rounded-lg border border-slate-200"
+              className="w-full mt-0.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm"
             />
           </div>
           <div>
-            <label className="font-bold text-slate-700">Featured image *</label>
+            <label className="font-bold text-slate-700 text-xs">Featured image *</label>
             <input
               type="text"
               value={form.image}
               onChange={(e) => setForm((f) => ({ ...f, image: e.target.value }))}
               onBlur={(e) => setForm((f) => ({ ...f, image: resolveBlogImage(e.target.value) }))}
-              className="w-full mt-1 rounded-lg border border-slate-200 font-mono"
+              className="w-full mt-0.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm font-mono"
               required
             />
-            <p className={styles.cdnHint}>{cdnPathHint()}</p>
           </div>
           <div>
-            <label className="font-bold text-slate-700">Image alt</label>
+            <label className="font-bold text-slate-700 text-xs">Image alt</label>
             <input
               type="text"
               value={form.imageAlt}
               onChange={(e) => setForm((f) => ({ ...f, imageAlt: e.target.value }))}
-              className="w-full mt-1 rounded-lg border border-slate-200"
+              className="w-full mt-0.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm"
             />
           </div>
         </div>
