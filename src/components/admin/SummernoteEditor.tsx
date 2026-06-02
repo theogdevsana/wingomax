@@ -66,6 +66,11 @@ export default function SummernoteEditor({
   useEffect(() => {
     loadCSS("https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css");
     loadCSS("https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css");
+    loadCSS("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css");
+    loadJS("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js");
+    loadJS("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js");
+    loadJS("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js");
+    loadJS("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js");
 
     const initEditor = () => {
       const el = editorRef.current;

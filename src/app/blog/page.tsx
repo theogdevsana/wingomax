@@ -77,8 +77,8 @@ export default async function BlogListing() {
 .blog-card-body { padding:12px; display:flex; flex-direction:column; flex:1; }
 .blog-card-meta { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
 .blog-card-date { padding:2px 8px; background:rgba(16,185,129,0.1); color:#10b981; border-radius:9999px; font-size:10px; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; }
-.blog-card-heading { font-size:16px; font-weight:700; margin-bottom:8px; color:#4a6ef2; line-height:1.25; transition:color 0.2s; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.blog-card-desc { margin:0; font-size:12px; color:#64748b; line-height:1.625; flex:1; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.blog-card-heading { font-size:16px; font-weight:700; margin-bottom:8px; color:#4a6ef2; line-height:1.25; transition:color 0.2s; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-clamp:2; }
+.blog-card-desc { margin:0; font-size:12px; color:#64748b; line-height:1.625; flex:1; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-clamp:2; }
 @media (min-width:768px) { .blog-listing-title { font-size:30px; } .blog-listing-subtitle { font-size:14px; } .blog-listing-grid { grid-template-columns:1fr 1fr; } }
 `;
 

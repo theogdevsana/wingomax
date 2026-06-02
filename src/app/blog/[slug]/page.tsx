@@ -140,7 +140,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
 .blog-detail-meta { display:flex; align-items:center; gap:8px; }
 .blog-detail-badge { padding:4px 8px; background:#eef2ff; color:#4f46e5; border-radius:8px; font-size:10px; font-weight:900; letter-spacing:0.05em; }
-.blog-detail-date { font-size:12px; font-weight:700; color:#94a3b8; }
+.blog-detail-date { font-size:12px; font-weight:900; color:#94a3b8; }
 .blog-detail-title { font-size:20px; font-weight:700; color:#1e293b; letter-spacing:-0.025em; line-height:1.2; margin-bottom:32px; text-transform:capitalize; }
 .blog-detail-author-bar { display:flex; align-items:center; gap:24px; padding-top:16px; border-top:1px solid #f8fafc; margin-top:24px; flex-wrap:wrap; }
 .blog-detail-author-info { display:flex; align-items:center; gap:8px; }
