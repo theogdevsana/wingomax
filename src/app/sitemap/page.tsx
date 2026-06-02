@@ -11,6 +11,22 @@ export const metadata: Metadata = {
   alternates: { canonical: "/sitemap" },
 };
 
+const detailCss = `
+.sitemap-main { min-height:100vh; background:#f8fafc; }
+.sitemap-wrap { max-width:768px; margin:0 auto; padding:0 16px; padding-top:48px; padding-bottom:48px; }
+.sitemap-header { text-align:center; margin-bottom:40px; }
+.sitemap-title { font-size:24px; font-weight:700; color:#1e293b; letter-spacing:-0.025em; margin-bottom:8px; }
+.sitemap-subtitle { font-size:12px; color:#475569; font-weight:500; }
+.sitemap-section-wrap { display:flex; flex-direction:column; gap:32px; }
+.sitemap-section-title { font-size:14px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:12px; }
+.sitemap-card { background:#fff; border-radius:12px; box-shadow:0 1px 3px rgba(0,0,0,0.1); border:1px solid #e2e8f0; }
+.sitemap-card-inner { }
+.sitemap-link { display:block; padding:12px 16px; font-size:14px; font-weight:500; color:#4f46e5; text-decoration:none; transition:all 0.2s; }
+.sitemap-link:hover { color:#3730a3; background:#f8fafc; }
+.sitemap-link + .sitemap-link { border-top:1px solid #f1f5f9; }
+@media (min-width:768px) { .sitemap-title { font-size:30px; } .sitemap-subtitle { font-size:14px; } }
+`;
+
 export default async function SitemapPage() {
   const blogPosts = await getAllBlogPosts();
 
@@ -59,27 +75,26 @@ export default async function SitemapPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <div className="max-w-3xl mx-auto px-4 py-12">
-        <div className="text-center mb-10">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight mb-2">Sitemap</h1>
-          <p className="text-xs md:text-sm text-slate-600 font-medium">Browse all pages on Wingo Signal</p>
+    <main className="sitemap-main">
+      <style>{detailCss}</style>
+      <div className="sitemap-wrap">
+        <div className="sitemap-header">
+          <h1 className="sitemap-title">Sitemap</h1>
+          <p className="sitemap-subtitle">Browse all pages on Wingo Signal</p>
         </div>
 
-        <div className="space-y-8">
+        <div className="sitemap-section-wrap">
           {sections.map((section) => (
             <div key={section.title}>
-              <h2 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">{section.title}</h2>
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 divide-y divide-slate-100">
-                {section.links.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="block px-4 py-3 text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:bg-slate-50 transition-colors no-underline"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
+              <h2 className="sitemap-section-title">{section.title}</h2>
+              <div className="sitemap-card">
+                <div className="sitemap-card-inner">
+                  {section.links.map((link) => (
+                    <Link key={link.href} href={link.href} className="sitemap-link">
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
