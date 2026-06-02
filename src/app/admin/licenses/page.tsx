@@ -91,20 +91,20 @@ export default function CreateLicense() {
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-12">
       <div>
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">License Management</h1>
+        <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">License management</h1>
         <p className="text-sm md:text-base text-slate-500 mt-1 font-medium">Create and manage access keys for users.</p>
       </div>
 
       {/* Generate Key Section */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm">
         <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-          <Key className="text-blue-600" /> Generate New Key
+          <Key className="text-blue-600" /> Generate new key
         </h3>
 
         <div className="space-y-6 max-w-xl">
           <div>
             <label className="block text-sm font-bold text-slate-700 mb-2">
-              Subscription Plan
+              Subscription plan
             </label>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {[
@@ -125,11 +125,11 @@ export default function CreateLicense() {
                   }`}
                 >
                   {opt.popular && (
-                    <div className="absolute top-0 right-0 bg-blue-500 text-white text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-bl-lg">
+                    <div className="absolute top-0 right-0 bg-blue-500 text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg">
                       Popular
                     </div>
                   )}
-                  <div className={`text-[10px] font-black uppercase tracking-widest mb-0.5 ${duration === opt.value ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-500'}`}>
+                  <div className={`text-[10px] font-black tracking-widest mb-0.5 ${duration === opt.value ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-500'}`}>
                     {opt.tier}
                   </div>
                   <div className={`text-base font-black tracking-tight ${duration === opt.value ? 'text-slate-900' : 'text-slate-700'}`}>
@@ -154,7 +154,7 @@ export default function CreateLicense() {
               <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <Plus size={24} /> Create License Key
+                <Plus size={24} /> Create license key
               </>
             )}
           </button>
@@ -168,8 +168,8 @@ export default function CreateLicense() {
 
         {generatedLicense && (
           <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 animate-in fade-in slide-in-from-bottom-4">
-            <h4 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">
-              Success! Key Generated
+            <h4 className="text-sm font-bold text-slate-500 mb-4">
+              Success! Key generated
             </h4>
             
             <div className="flex items-center gap-4 mb-6">
@@ -201,7 +201,7 @@ export default function CreateLicense() {
       
       {/* Search and Filters */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h2 className="text-xl font-bold text-slate-800">Existing Licenses</h2>
+        <h2 className="text-xl font-bold text-slate-800">Existing licenses</h2>
         <div className="flex gap-4">
           <input 
             type="text" 
@@ -228,11 +228,11 @@ export default function CreateLicense() {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/50 border-bottom border-slate-100">
-                <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-slate-500">License Key</th>
-                <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-slate-500">Status</th>
-                <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-slate-500">Device</th>
-                <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-slate-500">Expires At</th>
-                <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-slate-500 text-right">Actions</th>
+                <th className="px-6 py-4 text-xs font-black text-slate-500">License key</th>
+                <th className="px-6 py-4 text-xs font-black text-slate-500">Status</th>
+                <th className="px-6 py-4 text-xs font-black text-slate-500">Device</th>
+                <th className="px-6 py-4 text-xs font-black text-slate-500">Expires at</th>
+                <th className="px-6 py-4 text-xs font-black text-slate-500 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -265,13 +265,13 @@ export default function CreateLicense() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${
+                      <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black tracking-tight ${
                         lic.status === 'active' ? 'bg-indigo-50 text-indigo-600 border border-indigo-100' :
                         lic.status === 'expired' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
                         'bg-amber-50 text-amber-600 border border-amber-100'
                       }`}>
                         {lic.status === 'active' ? <ShieldCheck size={12} /> : <ShieldBan size={12} />}
-                        {lic.status}
+                        {lic.status.charAt(0).toUpperCase() + lic.status.slice(1)}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -326,7 +326,7 @@ export default function CreateLicense() {
         <PlanGuide 
           days={7} 
           price="499" 
-          title="Weekly Access" 
+          title="Weekly access" 
           icon={<Clock className="text-blue-600" size={24} />}
           bg="bg-white" 
           border="border-blue-100" 
@@ -335,7 +335,7 @@ export default function CreateLicense() {
         <PlanGuide 
           days={15} 
           price="1,499" 
-          title="Fortnightly Access" 
+          title="Fortnightly access" 
           icon={<Clock className="text-purple-600" size={24} />}
           bg="bg-white" 
           border="border-purple-100" 
@@ -344,7 +344,7 @@ export default function CreateLicense() {
         <PlanGuide 
           days={30} 
           price="1,999" 
-          title="Monthly Premium" 
+          title="Monthly premium" 
           icon={<Clock className="text-indigo-600" size={24} />}
           bg="bg-white" 
           border="border-indigo-100" 
@@ -365,8 +365,8 @@ function PlanGuide({ days, price, title, icon, bg, border, accent }: { days: num
         <div className="p-3 bg-slate-50 rounded-2xl group-hover:scale-110 transition-transform">
           {icon}
         </div>
-        <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter text-white ${accent}`}>
-          {days === 30 ? "Best Value" : "Plan"}
+        <div className={`px-3 py-1 rounded-full text-[10px] font-black tracking-tighter text-white ${accent}`}>
+          {days === 30 ? "Best value" : "Plan"}
         </div>
       </div>
 
@@ -382,8 +382,8 @@ function PlanGuide({ days, price, title, icon, bg, border, accent }: { days: num
 
       <div className="space-y-3 pt-6 border-t border-slate-100">
         {[
-          "Single Device Access",
-          "All Premium Features",
+          "Single device access",
+          "All premium features",
           "24/7 Priority Support"
         ].map((feat, i) => (
           <div key={i} className="flex items-center gap-2 text-xs font-bold text-slate-600">

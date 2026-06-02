@@ -48,6 +48,8 @@ export async function POST(req: Request) {
       metaTitle,
       metaDescription,
       metaKeywords,
+      articleSection,
+      tags,
     } = body;
 
     if (!title?.trim() || !description?.trim() || !content?.trim() || !image?.trim()) {
@@ -90,6 +92,8 @@ export async function POST(req: Request) {
       metaTitle: metaTitle?.trim() || trimmedTitle,
       metaDescription: metaDescription?.trim() || description.trim(),
       metaKeywords: metaKeywords?.trim() || '',
+      articleSection: articleSection?.trim() || '',
+      tags: Array.isArray(tags) ? tags.filter((t: any) => t && typeof t === 'string') : [],
     });
 
     return NextResponse.json({

@@ -16,6 +16,8 @@ export interface BlogPost {
   metaTitle?: string;
   metaDescription?: string;
   metaKeywords?: string;
+  articleSection?: string;
+  tags?: string[];
 }
 
 export const BLOG_POSTS: BlogPost[] = [

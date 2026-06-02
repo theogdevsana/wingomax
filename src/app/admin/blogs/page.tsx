@@ -97,7 +97,7 @@ export default function AdminBlogsListPage() {
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   <Link
-                    href={`/blog/${post.slug}`}
+                    href={`https://wingosignals.xyz/blog/${post.slug}`}
                     target="_blank"
                     className={styles.btnGhost}
                     title="View"

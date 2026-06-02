@@ -1,14 +1,22 @@
 import { getAllBlogPosts } from '@/lib/blog-data';
+import type { BlogPost } from '@/lib/blogs';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
-  const BLOG_POSTS = await getAllBlogPosts();
-  
+  let BLOG_POSTS: BlogPost[];
+  try {
+    BLOG_POSTS = await getAllBlogPosts();
+  } catch {
+    BLOG_POSTS = [];
+  }
+
   const items = BLOG_POSTS.map(post => `
     <item>
-      <title>${post.title.replace(/&/g, '&amp;')}</title>
+      <title>${(post.title || '').replace(/&/g, '&amp;')}</title>
       <link>${baseUrl}/blog/${post.slug}</link>
-      <description>${post.description.replace(/&/g, '&amp;')}</description>
+      <description>${(post.description || '').replace(/&/g, '&amp;')}</description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       <guid>${baseUrl}/blog/${post.slug}</guid>
       <enclosure url="${baseUrl}${post.image}" length="0" type="image/png" />
@@ -31,6 +39,7 @@ export async function GET() {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate',
     },
   });
 }

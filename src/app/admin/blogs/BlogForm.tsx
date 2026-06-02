@@ -28,6 +28,8 @@ export type BlogFormData = {
   metaTitle: string;
   metaDescription: string;
   metaKeywords: string;
+  articleSection: string;
+  tags: string[];
 };
 
 export function emptyBlogForm(): BlogFormData {
@@ -49,6 +51,8 @@ export function emptyBlogForm(): BlogFormData {
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
+    articleSection: "",
+    tags: [],
   };
 }
 
@@ -85,6 +89,8 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
       metaTitle: form.metaTitle.trim() || form.title.trim(),
       metaDescription: form.metaDescription.trim() || form.description.trim(),
       faqs: form.faqs.filter((f) => f.question.trim() && f.answer.trim()),
+      articleSection: form.articleSection.trim(),
+      tags: form.tags.filter(t => t.trim()),
     };
 
     try {
@@ -287,6 +293,36 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                 className="w-full mt-1.5 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
               />
             </div>
+            <div>
+              <label className="font-bold text-slate-700 text-xs">Article section (schema category)</label>
+              <input
+                type="text"
+                value={form.articleSection}
+                onChange={(e) => setForm((f) => ({ ...f, articleSection: e.target.value }))}
+                placeholder="e.g. How To, Guide, Comparison"
+                className="w-full mt-1.5 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+              />
+            </div>
+            <div>
+              <label className="font-bold text-slate-700 text-xs">Tags (comma separated)</label>
+              <input
+                type="text"
+                value={form.tags.join(", ")}
+                onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value.split(",").map(t => t.trim()).filter(Boolean) }))}
+                placeholder="wingo signal, color prediction, 91club, tiranga"
+                className="w-full mt-1.5 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+              />
+              {form.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {form.tags.map((tag, i) => (
+                    <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded-lg text-[10px] font-bold">
+                      {tag}
+                      <button type="button" onClick={() => setForm((f) => ({ ...f, tags: f.tags.filter((_, j) => j !== i) }))} className="hover:text-red-500 leading-none">&times;</button>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -317,7 +353,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                   </button>
                   <div className="pr-10 space-y-3">
                     <div>
-                      <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Question {i + 1}</label>
+                       <label className="text-[10px] font-bold text-slate-500 mb-1 block">Question {i + 1}</label>
                       <input
                         placeholder="e.g. How does Wingo Signal work?"
                         value={faq.question}
@@ -330,7 +366,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Answer</label>
+                       <label className="text-[10px] font-bold text-slate-500 mb-1 block">Answer</label>
                       <textarea
                         placeholder="Provide a clear, helpful answer..."
                         value={faq.answer}

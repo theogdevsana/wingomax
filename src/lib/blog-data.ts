@@ -17,6 +17,8 @@ function mapDoc(doc: {
   metaTitle?: string;
   metaDescription?: string;
   metaKeywords?: string;
+  articleSection?: string;
+  tags?: string[];
 }): BlogPost {
   return {
     title: doc.title,
@@ -31,6 +33,8 @@ function mapDoc(doc: {
     metaTitle: doc.metaTitle || undefined,
     metaDescription: doc.metaDescription || undefined,
     metaKeywords: doc.metaKeywords || undefined,
+    articleSection: doc.articleSection || undefined,
+    tags: doc.tags?.length ? doc.tags : undefined,
   };
 }
 
@@ -53,6 +57,8 @@ async function seedFromStaticIfEmpty() {
       metaTitle: post.title,
       metaDescription: post.description,
       metaKeywords: '',
+      articleSection: post.articleSection ?? '',
+      tags: post.tags ?? [],
     }))
   );
 }
@@ -88,6 +94,8 @@ export async function getAllBlogPostsAdmin() {
     metaTitle: doc.metaTitle ?? '',
     metaDescription: doc.metaDescription ?? '',
     metaKeywords: doc.metaKeywords ?? '',
+    articleSection: doc.articleSection ?? '',
+    tags: doc.tags ?? [],
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt,
   }));
@@ -121,6 +129,8 @@ export async function getBlogPostById(id: string) {
     metaTitle: doc.metaTitle ?? '',
     metaDescription: doc.metaDescription ?? '',
     metaKeywords: doc.metaKeywords ?? '',
+    articleSection: doc.articleSection ?? '',
+    tags: doc.tags ?? [],
   };
 }
 

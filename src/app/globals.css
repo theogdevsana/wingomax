@@ -6,18 +6,14 @@
   font-display: swap;
 }
 
+@theme {
+  --font-sans: var(--font-nunito);
+  --font-mono: var(--font-nunito);
+}
+
 :root {
   --background: #f8faff;
   --foreground: #171717;
-}
-
-@layer base {
-  @theme {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font-nunito);
-    --font-mono: var(--font-nunito);
-  }
 }
 
 @media (prefers-color-scheme: dark) {

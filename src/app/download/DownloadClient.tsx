@@ -210,7 +210,7 @@ const PLATFORMS = [
 ];
 
 const STEPS = [
-  { n: "01", title: "Create Your Account", body: "Sign up in under 60 seconds. No documents, no identity checks. Just an email or mobile number and you are in." },
+  { n: "01", title: "Contact on Telegram", body: "Reach out on Telegram to purchase your license key. Our support team will guide you through the process and activate your access instantly." },
   { n: "02", title: "Select Your Platform", body: "Choose from 91Club, Tiranga, BDG Win, 82 Lottery, or any of the 10+ supported platforms. Switch freely at any time." },
   { n: "03", title: "Receive Live Signals", body: "The AI generates your colour and number prediction in real time before each round. Results refresh automatically, just follow the signal." },
   { n: "04", title: "Track & Improve", body: "Your in-app history dashboard records every signal and outcome so you can monitor your win rate and spot your strongest session times." },

@@ -127,351 +127,439 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     { name: post.title, item: `/blog/${slug}` }
   ];
 
+  const detailCss = `
+.blog-detail-main { min-height:100vh; background:#f8fafc; padding-bottom:80px; overflow:hidden; }
+.blog-detail-header { max-width:1152px; margin:0 auto; padding:32px 16px 0; }
+.blog-detail-body { max-width:1152px; margin:32px auto 0; padding:0 16px; }
+
+.blog-detail-nav { display:flex; align-items:center; gap:8px; font-size:10px; font-weight:700; color:#94a3b8; letter-spacing:0.1em; margin-bottom:24px; white-space:nowrap; overflow:hidden; width:100%; }
+.blog-detail-nav a { color:#94a3b8; text-decoration:none; display:flex; align-items:center; gap:4px; transition:color 0.2s; flex-shrink:0; font-size:10px; font-weight:700; letter-spacing:0.1em; }
+.blog-detail-nav a:hover { color:#4f46e5; }
+.blog-detail-nav-sep { flex-shrink:0; }
+.blog-detail-nav-current { color:#1e293b; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10px; font-weight:700; letter-spacing:0.1em; }
+
+.blog-detail-meta { display:flex; align-items:center; gap:8px; }
+.blog-detail-badge { padding:4px 8px; background:#eef2ff; color:#4f46e5; border-radius:8px; font-size:10px; font-weight:900; letter-spacing:0.05em; }
+.blog-detail-date { font-size:12px; font-weight:700; color:#94a3b8; }
+.blog-detail-title { font-size:20px; font-weight:700; color:#1e293b; letter-spacing:-0.025em; line-height:1.2; margin-bottom:32px; text-transform:capitalize; }
+.blog-detail-author-bar { display:flex; align-items:center; gap:24px; padding-top:16px; border-top:1px solid #f8fafc; margin-top:24px; flex-wrap:wrap; }
+.blog-detail-author-info { display:flex; align-items:center; gap:8px; }
+.blog-detail-avatar { width:32px; height:32px; border-radius:50%; background:#4f46e5; display:flex; align-items:center; justify-content:center; color:#fff; font-size:10px; font-weight:900; flex-shrink:0; }
+.blog-detail-author-detail { display:flex; flex-direction:column; }
+.blog-detail-author-name { font-size:12px; font-weight:900; color:#1e293b; }
+.blog-detail-author-label { font-size:10px; font-weight:700; color:#94a3b8; }
+.blog-detail-reading-info { display:flex; align-items:center; gap:8px; }
+.blog-detail-reading-icon { width:32px; height:32px; border-radius:50%; background:#f8fafc; display:flex; align-items:center; justify-content:center; color:#94a3b8; flex-shrink:0; }
+.blog-detail-reading-text { display:flex; flex-direction:column; }
+.blog-detail-reading-time { font-size:12px; font-weight:900; color:#1e293b; }
+.blog-detail-reading-label { font-size:10px; font-weight:700; color:#94a3b8; }
+
+.blog-detail-image-wrap { border-radius:24px; overflow:hidden; box-shadow:0 25px 50px -12px rgba(199,210,254,0.5); margin-bottom:40px; border:1px solid #fff; }
+.blog-detail-image { width:100%; height:auto; object-fit:cover; display:block; }
+
+.blog-detail-grid { display:grid; grid-template-columns:1fr; gap:48px; }
+
+.blog-detail-sidebar { display:none; }
+
+.blog-detail-next-section { margin-top:64px; padding-top:48px; border-top:1px solid #f1f5f9; }
+.blog-detail-next-label { font-size:12px; font-weight:700; color:#94a3b8; text-transform:capitalize; letter-spacing:0.1em; margin-bottom:32px; }
+.blog-detail-next-grid { display:grid; grid-template-columns:1fr; gap:24px; }
+.blog-detail-next-card { overflow:hidden; background:#fff; border-radius:24px; border:1px solid #f1f5f9; transition:all 0.3s; display:flex; flex-direction:column; text-decoration:none; }
+.blog-detail-next-card:hover { border-color:#4f46e5; box-shadow:0 20px 25px -5px rgba(238,242,255,0.5); }
+.blog-detail-next-img-wrap { aspect-ratio:16/9; overflow:hidden; position:relative; }
+.blog-detail-next-img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; display:block; }
+.blog-detail-next-card:hover .blog-detail-next-img { transform:scale(1.1); }
+.blog-detail-next-img-badge { position:absolute; top:16px; left:16px; padding:4px 8px; background:rgba(255,255,255,0.9); backdrop-filter:blur(4px); color:#4f46e5; border-radius:8px; font-size:10px; font-weight:900; letter-spacing:0.05em; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+.blog-detail-next-body { padding:20px; }
+.blog-detail-next-title { font-size:14px; font-weight:700; color:#1e293b; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; transition:color 0.2s; line-height:1.625; }
+.blog-detail-next-card:hover .blog-detail-next-title { color:#4f46e5; }
+
+.blog-detail-sidebar-sticky { position:sticky; top:96px; display:flex; flex-direction:column; gap:24px; }
+
+.blog-detail-premium-card { background:linear-gradient(135deg,#0f172a,#1e1b4b); color:#fff; border:1px solid #1e293b; border-radius:24px; padding:24px; box-shadow:0 20px 25px -5px rgba(79,70,229,0.1); overflow:hidden; position:relative; }
+.blog-detail-premium-blur-1 { position:absolute; top:0; right:0; width:160px; height:160px; background:rgba(99,102,241,0.1); border-radius:50%; margin-right:-40px; margin-top:-40px; filter:blur(64px); pointer-events:none; }
+.blog-detail-premium-blur-2 { position:absolute; left:-40px; bottom:-40px; width:128px; height:128px; background:rgba(6,182,212,0.1); border-radius:50%; filter:blur(64px); pointer-events:none; }
+.blog-detail-premium-inner { position:relative; z-index:10; }
+.blog-detail-premium-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.blog-detail-premium-title-group { display:flex; align-items:center; gap:10px; }
+.blog-detail-premium-icon { width:36px; height:36px; background:rgba(79,70,229,0.3); border:1px solid rgba(99,102,241,0.3); border-radius:12px; display:flex; align-items:center; justify-content:center; color:#818cf8; flex-shrink:0; }
+.blog-detail-premium-label { font-size:9px; font-weight:900; color:#818cf8; text-transform:uppercase; letter-spacing:0.1em; }
+.blog-detail-premium-name { font-size:14px; font-weight:900; color:#fff; line-height:1.25; }
+.blog-detail-premium-live { display:flex; align-items:center; gap:6px; padding:4px 8px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.125); color:#34d399; border-radius:8px; font-size:9px; font-weight:900; letter-spacing:0.1em; }
+.blog-detail-premium-dot { width:6px; height:6px; border-radius:50%; background:#34d399; flex-shrink:0; }
+.blog-detail-premium-desc { font-size:12px; color:#94a3b8; line-height:1.625; margin-bottom:20px; }
+.blog-detail-premium-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:20px; }
+.blog-detail-premium-stat { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:12px; text-align:center; }
+.blog-detail-premium-stat-value { font-size:16px; font-weight:900; color:#a5b4fc; }
+.blog-detail-premium-stat-label { font-size:9px; font-weight:700; color:#64748b; margin-top:2px; }
+.blog-detail-premium-features { display:flex; flex-direction:column; gap:10px; }
+.blog-detail-premium-feature { display:flex; align-items:center; gap:10px; }
+.blog-detail-premium-feature-icon { flex-shrink:0; color:#818cf8; }
+.blog-detail-premium-feature-text { font-size:11px; font-weight:700; color:#cbd5e1; }
+
+.blog-detail-models-card { background:#fff; border:1px solid #f1f5f9; border-radius:24px; padding:24px; box-shadow:0 1px 2px rgba(0,0,0,0.05); overflow:hidden; position:relative; }
+.blog-detail-models-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #f8fafc; flex-wrap:wrap; gap:8px; }
+.blog-detail-models-title { font-size:12px; font-weight:900; color:#1e293b; letter-spacing:0.1em; display:flex; align-items:center; gap:8px; }
+.blog-detail-models-title-icon { color:#4f46e5; flex-shrink:0; }
+.blog-detail-models-status { display:flex; align-items:center; gap:6px; padding:2px 8px; background:#eef2ff; border-radius:8px; font-size:9px; font-weight:700; color:#6366f1; }
+.blog-detail-models-status-dot { width:6px; height:6px; border-radius:50%; background:#6366f1; }
+.blog-detail-model-row { display:flex; align-items:center; justify-content:space-between; padding:12px; border-radius:16px; background:#f8fafc; border:1px solid rgba(241,245,249,0.5); gap:8px; flex-wrap:wrap; }
+.blog-detail-model-row-highlight { background:#eef2ff; border-color:rgba(199,210,254,0.375); }
+.blog-detail-model-info { display:flex; flex-direction:column; gap:2px; }
+.blog-detail-model-name { font-size:10px; font-weight:900; color:#334155; }
+.blog-detail-model-stream { font-size:9px; font-weight:700; color:#94a3b8; }
+.blog-detail-model-highlight-name { font-size:10px; font-weight:900; color:#4338ca; }
+.blog-detail-model-highlight-stream { font-size:9px; font-weight:700; color:#818cf8; }
+.blog-detail-model-accuracy { display:flex; align-items:center; gap:8px; }
+.blog-detail-model-accuracy-value { font-size:12px; font-weight:900; color:#059669; }
+.blog-detail-model-accuracy-dot { width:6px; height:6px; border-radius:50%; background:#10b981; flex-shrink:0; }
+.blog-detail-model-accuracy-dot-pulse { width:6px; height:6px; border-radius:50%; background:#6366f1; flex-shrink:0; }
+
+.blog-detail-support-card { background:#fff; border:1px solid #f1f5f9; border-radius:24px; padding:24px; box-shadow:0 1px 2px rgba(0,0,0,0.05); overflow:hidden; position:relative; }
+.blog-detail-support-blur { position:absolute; top:0; right:0; width:80px; height:80px; background:#f0f9ff; border-radius:50%; margin-right:-24px; margin-top:-24px; transition:transform 0.5s; pointer-events:none; }
+.blog-detail-support-card:hover .blog-detail-support-blur { transform:scale(1.1); }
+.blog-detail-support-inner { position:relative; z-index:10; }
+.blog-detail-support-icon { width:40px; height:40px; background:#f0f9ff; border:1px solid #e0f2fe; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#0ea5e9; margin-bottom:16px; }
+.blog-detail-support-title { font-size:12px; font-weight:900; color:#1e293b; letter-spacing:0.1em; margin-bottom:4px; }
+.blog-detail-support-desc { font-size:12px; color:#64748b; line-height:1.625; margin-bottom:20px; }
+.blog-detail-support-agent { display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border:1px solid #f1f5f9; border-radius:16px; margin-bottom:16px; }
+.blog-detail-support-agent-avatar { width:36px; height:36px; border-radius:50%; background:#0ea5e9; display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:900; box-shadow:0 1px 3px rgba(0,0,0,0.1); flex-shrink:0; position:relative; }
+.blog-detail-support-agent-status { position:absolute; bottom:0; right:0; width:10px; height:10px; border-radius:50%; background:#10b981; border:2px solid #fff; }
+.blog-detail-support-agent-info { display:flex; flex-direction:column; }
+.blog-detail-support-agent-name { font-size:11px; font-weight:900; color:#1e293b; }
+.blog-detail-support-agent-role { font-size:9px; font-weight:700; color:#94a3b8; }
+.blog-detail-support-btn { display:flex; width:100%; background:#229ED9; color:#fff; padding:14px 0; border-radius:16px; font-size:10px; font-weight:900; text-transform:uppercase; letter-spacing:0.1em; text-decoration:none; align-items:center; justify-content:center; gap:8px; box-shadow:0 10px 15px -3px rgba(14,165,233,0.2); transition:all 0.3s; border:none; cursor:pointer; }
+.blog-detail-support-btn:hover { background:#1a8bbf; transform:scale(1.02); }
+.blog-detail-support-btn:active { transform:scale(0.98); }
+
+.blog-detail-trending-card { background:#fff; border:1px solid #f1f5f9; border-radius:24px; padding:24px; box-shadow:0 1px 2px rgba(0,0,0,0.05); }
+.blog-detail-trending-title { font-size:12px; font-weight:900; color:#1e293b; text-transform:capitalize; letter-spacing:0.1em; margin-bottom:24px; display:flex; align-items:center; gap:8px; }
+.blog-detail-trending-title-icon { color:#4f46e5; flex-shrink:0; }
+.blog-detail-trending-list { display:flex; flex-direction:column; gap:16px; }
+.blog-detail-trending-item { display:flex; gap:16px; padding:8px; border-radius:16px; border:1px solid transparent; transition:all 0.3s; text-decoration:none; }
+.blog-detail-trending-item:hover { background:#f8fafc; border-color:rgba(241,245,249,0.5); }
+.blog-detail-trending-num { background:#f8fafc; color:#94a3b8; font-size:10px; font-weight:900; width:32px; height:32px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.2s,color 0.2s; }
+.blog-detail-trending-item:hover .blog-detail-trending-num { background:#eef2ff; color:#4f46e5; }
+.blog-detail-trending-content { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.blog-detail-trending-tag { font-size:9px; font-weight:900; color:#4f46e5; text-transform:uppercase; letter-spacing:0.1em; }
+.blog-detail-trending-post-title { font-size:12px; font-weight:700; color:#334155; transition:color 0.2s; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.625; }
+.blog-detail-trending-item:hover .blog-detail-trending-post-title { color:#4f46e5; }
+
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+@media (min-width:768px) {
+  .blog-detail-header { padding-top:48px; }
+  .blog-detail-body { margin-top:48px; }
+  .blog-detail-title { font-size:30px; }
+}
+@media (min-width:1024px) {
+  .blog-detail-grid { grid-template-columns:8fr 4fr; }
+  .blog-detail-sidebar { display:block; }
+  .blog-detail-next-grid { grid-template-columns:1fr 1fr; }
+}
+`;
+
   return (
-    <main className="min-h-screen bg-slate-50 pb-20">
-      <JsonLd breadcrumbs={breadcrumbs} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
-      {faqSchema && (
+    <>
+      <style>{detailCss}</style>
+      <main className="blog-detail-main">
+        <JsonLd breadcrumbs={breadcrumbs} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
         />
-      )}
-      {/* Article Header & Image - Blended with Background */}
-      <div className="max-w-6xl mx-auto px-4 pt-8 md:pt-12">
-        {/* Breadcrumbs - Fixed to Single Line with Truncation */}
-        <nav className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-slate-400 tracking-widest mb-6 whitespace-nowrap overflow-hidden w-full" aria-label="Breadcrumb">
-          <Link href="/blog" className="hover:text-indigo-600 flex items-center gap-1 transition-colors shrink-0">
-            <ArrowLeft size={12} /> Blog
-          </Link>
-          <span className="shrink-0">/</span>
-          <span className="text-slate-800 truncate">{post.title}</span>
-        </nav>
+        {faqSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          />
+        )}
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-black tracking-wider">
-              Article
-            </span>
-            <span className="text-xs font-bold text-slate-400">Last Updated: {post.date}</span>
+        <div className="blog-detail-header">
+          <nav className="blog-detail-nav" aria-label="Breadcrumb">
+            <Link href="/blog">
+              <ArrowLeft size={12} /> Blog
+            </Link>
+            <span className="blog-detail-nav-sep">/</span>
+            <span className="blog-detail-nav-current">{post.title}</span>
+          </nav>
+
+          <div className="blog-detail-meta">
+            <span className="blog-detail-badge">Article</span>
+            <span className="blog-detail-date">Last Updated: {post.date}</span>
           </div>
 
-          <h1 className="text-xl md:text-3xl font-bold text-slate-800 tracking-tight leading-[1.2] mb-8 capitalize">
-            {post.title}
-          </h1>
+          <h1 className="blog-detail-title">{post.title}</h1>
 
-          <div className="flex items-center gap-6 pt-4 border-t border-slate-50 mt-6">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[10px] font-black">
-                {post.author.charAt(0)}
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-black text-slate-800">{post.author}</span>
-                <span className="text-[10px] font-bold text-slate-400">Author</span>
+          <div className="blog-detail-author-bar">
+            <div className="blog-detail-author-info">
+              <div className="blog-detail-avatar">{post.author.charAt(0)}</div>
+              <div className="blog-detail-author-detail">
+                <span className="blog-detail-author-name">{post.author}</span>
+                <span className="blog-detail-author-label">Author</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400">
+            <div className="blog-detail-reading-info">
+              <div className="blog-detail-reading-icon">
                 <Clock size={14} />
               </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-black text-slate-800">{readingTime} Min</span>
-                <span className="text-[10px] font-bold text-slate-400">Read Time</span>
+              <div className="blog-detail-reading-text">
+                <span className="blog-detail-reading-time">{readingTime} Min</span>
+                <span className="blog-detail-reading-label">Read Time</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-6xl mx-auto px-4 mt-8 md:mt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Main Content */}
-          <article className="lg:col-span-8">
-            <div className="rounded-3xl overflow-hidden shadow-2xl shadow-indigo-100 mb-10 border border-white">
-              <Image
-                src={post.image}
-                alt={post.imageAlt || post.title}
-                className="w-full h-auto object-cover"
-                width={800}
-                height={450}
-                quality={95}
-                priority
-                style={{ height: 'auto' }}
-              />
-            </div>
+        <div className="blog-detail-body">
+          <div className="blog-detail-grid">
+            <article>
+              <div className="blog-detail-image-wrap">
+                <Image
+                  src={post.image}
+                  alt={post.imageAlt || post.title}
+                  className="blog-detail-image"
+                  width={800}
+                  height={450}
+                  quality={95}
+                  priority
+                  style={{ height: 'auto' }}
+                />
+              </div>
 
-            <TableOfContents content={contentWithDynamicLinks} />
+              <TableOfContents content={contentWithDynamicLinks} />
 
-            <div className="mt-8">
               <ContentRenderer html={contentWithDynamicLinks} />
-            </div>
 
-            <SocialShare title={post.title} url={fullUrl} />
+              <SocialShare title={post.title} url={fullUrl} />
 
-            {post.faqs && post.faqs.length > 0 && (
-              <section className="mt-16 pt-12 border-t border-slate-100">
-                <h2 className="text-xl font-bold text-slate-800 mb-8 capitalize tracking-tight flex items-center gap-3">
-                  <span className="w-8 h-8 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                    <Shield size={18} />
-                  </span>
-                  Frequently Asked Questions
-                </h2>
-                <div className="space-y-4">
-                  {post.faqs.map((faq, index) => (
-                    <FAQItem key={index} question={faq.question} answer={faq.answer} />
+              {post.faqs && post.faqs.length > 0 && (
+                <section className="blog-detail-next-section" style={{ marginTop: '64px', paddingTop: '48px', borderTop: '1px solid #f1f5f9' }}>
+                  <h2 className="blog-detail-next-label" style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <span style={{ width: '32px', height: '32px', borderRadius: '12px', background: '#eef2ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4f46e5', flexShrink: 0 }}>
+                      <Shield size={18} />
+                    </span>
+                    Frequently Asked Questions
+                  </h2>
+                  <div>
+                    {post.faqs.map((faq, index) => (
+                      <FAQItem key={index} question={faq.question} answer={faq.answer} />
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              <div className="blog-detail-next-section">
+                <h3 className="blog-detail-next-label">Continue Reading</h3>
+                <div className="blog-detail-next-grid">
+                  {otherPosts.slice(0, 2).map((other) => (
+                    <Link href={`/blog/${other.slug}`} key={other.slug} className="blog-detail-next-card">
+                      <div className="blog-detail-next-img-wrap">
+                        <Image
+                          src={other.image}
+                          alt={other.title}
+                          width={400}
+                          height={225}
+                          className="blog-detail-next-img"
+                        />
+                        <span className="blog-detail-next-img-badge">Next Article</span>
+                      </div>
+                      <div className="blog-detail-next-body">
+                        <h4 className="blog-detail-next-title">{other.title}</h4>
+                      </div>
+                    </Link>
                   ))}
                 </div>
-              </section>
-            )}
-
-            {/* Next Post Navigation */}
-            <div className="mt-16 pt-12 border-t border-slate-100">
-              <h3 className="text-xs font-bold text-slate-400 capitalize tracking-widest mb-8">Continue Reading</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {otherPosts.slice(0, 2).map((other) => (
-                  <Link href={`/blog/${other.slug}`} key={other.slug} className="group overflow-hidden bg-white rounded-3xl border border-slate-100 hover:border-indigo-600 transition-all hover:shadow-xl hover:shadow-indigo-50/50 flex flex-col">
-                    <div className="aspect-[16/9] overflow-hidden relative">
-                      <Image
-                        src={other.image}
-                        alt={other.title}
-                        width={400}
-                        height={225}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="px-2 py-1 bg-white/90 backdrop-blur-sm text-indigo-600 rounded-lg text-[10px] font-black tracking-wider shadow-sm">
-                          Next Article
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h4 className="text-sm font-bold text-slate-800 line-clamp-2 group-hover:text-indigo-600 transition-colors leading-relaxed">
-                        {other.title}
-                      </h4>
-                    </div>
-                  </Link>
-                ))}
               </div>
-            </div>
-          </article>
+            </article>
 
-          {/* Sidebar */}
-          <aside className="lg:col-span-4 hidden lg:block">
-            <div className="sticky top-24 space-y-6">
-              {/* About Neural AI — Premium Info Card */}
-              <div className="bg-gradient-to-br from-slate-900 to-indigo-950 text-white border border-slate-800 rounded-3xl p-6 shadow-xl shadow-indigo-950/20 overflow-hidden relative">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full -mr-10 -mt-10 blur-2xl pointer-events-none" />
-                <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
-
-                <div className="relative z-10">
-                  {/* Header row */}
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 bg-indigo-600/30 border border-indigo-500/30 rounded-xl flex items-center justify-center text-indigo-400">
-                        <Cpu size={18} className="animate-pulse" />
+            <aside className="blog-detail-sidebar">
+              <div className="blog-detail-sidebar-sticky">
+                <div className="blog-detail-premium-card">
+                  <div className="blog-detail-premium-blur-1" />
+                  <div className="blog-detail-premium-blur-2" />
+                  <div className="blog-detail-premium-inner">
+                    <div className="blog-detail-premium-header">
+                      <div className="blog-detail-premium-title-group">
+                        <div className="blog-detail-premium-icon">
+                          <Cpu size={18} />
+                        </div>
+                        <div>
+                          <p className="blog-detail-premium-label">About This Tool</p>
+                          <h3 className="blog-detail-premium-name">Wingo Signal AI</h3>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-[9px] font-black text-indigo-400 uppercase tracking-widest">About This Tool</p>
-                        <h3 className="text-sm font-black text-white leading-tight">Wingo Signal AI</h3>
+                      <span className="blog-detail-premium-live">
+                        <span className="blog-detail-premium-dot" style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+                        LIVE
+                      </span>
+                    </div>
+
+                    <p className="blog-detail-premium-desc">
+                      Wingo Signal tracks live game patterns using advanced data analysis and years of historical results. Instead of random guesses, the system studies color and number trends in real time and sends fast Telegram alerts based on calculated probability and pattern behavior.
+                    </p>
+
+                    <div className="blog-detail-premium-stats">
+                      <div className="blog-detail-premium-stat">
+                        <p className="blog-detail-premium-stat-value">95.4%</p>
+                        <p className="blog-detail-premium-stat-label">Accuracy</p>
+                      </div>
+                      <div className="blog-detail-premium-stat">
+                        <p className="blog-detail-premium-stat-value" style={{ color: '#34d399' }}>50K+</p>
+                        <p className="blog-detail-premium-stat-label">Users</p>
+                      </div>
+                      <div className="blog-detail-premium-stat">
+                        <p className="blog-detail-premium-stat-value" style={{ color: '#22d3ee' }}>1.2s</p>
+                        <p className="blog-detail-premium-stat-label">Alert Speed</p>
                       </div>
                     </div>
-                    <span className="flex items-center gap-1.5 px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg text-[9px] font-black tracking-widest">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
-                      LIVE
-                    </span>
-                  </div>
 
-                  {/* Description */}
-                  <p className="text-xs text-slate-400 leading-relaxed mb-5">
-                    Wingo Signal tracks live game patterns using advanced data analysis and years of historical results. Instead of random guesses, the system studies color and number trends in real time and sends fast Telegram alerts based on calculated probability and pattern behavior.
-                  </p>
-
-                  {/* Key stats row */}
-                  <div className="grid grid-cols-3 gap-2 mb-5">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
-                      <p className="text-base font-black text-indigo-300">95.4%</p>
-                      <p className="text-[9px] font-bold text-slate-500 mt-0.5">Accuracy</p>
-                    </div>
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
-                      <p className="text-base font-black text-emerald-400">50K+</p>
-                      <p className="text-[9px] font-bold text-slate-500 mt-0.5">Users</p>
-                    </div>
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
-                      <p className="text-base font-black text-cyan-400">1.2s</p>
-                      <p className="text-[9px] font-bold text-slate-500 mt-0.5">Alert Speed</p>
-                    </div>
-                  </div>
-
-                  {/* Feature list */}
-                  <div className="space-y-2.5">
-                    <div className="flex items-center gap-2.5">
-                      <CheckCircle2 size={13} className="text-indigo-400 shrink-0" />
-                      <span className="text-[11px] font-bold text-slate-300">Multi-timeframe pattern scanner</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <CheckCircle2 size={13} className="text-indigo-400 shrink-0" />
-                      <span className="text-[11px] font-bold text-slate-300">Real-time Telegram webhook delivery</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <CheckCircle2 size={13} className="text-indigo-400 shrink-0" />
-                      <span className="text-[11px] font-bold text-slate-300">24/7 neural depth scanning</span>
+                    <div className="blog-detail-premium-features">
+                      <div className="blog-detail-premium-feature">
+                        <CheckCircle2 size={13} className="blog-detail-premium-feature-icon" />
+                        <span className="blog-detail-premium-feature-text">Multi-timeframe pattern scanner</span>
+                      </div>
+                      <div className="blog-detail-premium-feature">
+                        <CheckCircle2 size={13} className="blog-detail-premium-feature-icon" />
+                        <span className="blog-detail-premium-feature-text">Real-time Telegram webhook delivery</span>
+                      </div>
+                      <div className="blog-detail-premium-feature">
+                        <CheckCircle2 size={13} className="blog-detail-premium-feature-icon" />
+                        <span className="blog-detail-premium-feature-text">24/7 neural depth scanning</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* AI Prediction Models — Accuracy Card */}
-              <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm overflow-hidden relative">
-                <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-50">
-                  <h3 className="text-xs font-black text-slate-800 tracking-widest flex items-center gap-2">
-                    <Zap size={15} className="text-indigo-600" fill="currentColor" />
-                    AI Prediction Models
+                <div className="blog-detail-models-card">
+                  <div className="blog-detail-models-header">
+                    <h3 className="blog-detail-models-title">
+                      <Zap size={15} className="blog-detail-models-title-icon" />
+                      AI Prediction Models
+                    </h3>
+                    <div className="blog-detail-models-status">
+                      <span className="blog-detail-models-status-dot" style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+                      Running
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="blog-detail-model-row" style={{ marginBottom: '12px' }}>
+                      <div className="blog-detail-model-info">
+                        <span className="blog-detail-model-name">Color Pattern Model</span>
+                        <span className="blog-detail-model-stream">Wingo 1-Min Stream</span>
+                      </div>
+                      <div className="blog-detail-model-accuracy">
+                        <span className="blog-detail-model-accuracy-value">96.1%</span>
+                        <span className="blog-detail-model-accuracy-dot" />
+                      </div>
+                    </div>
+
+                    <div className="blog-detail-model-row" style={{ marginBottom: '12px' }}>
+                      <div className="blog-detail-model-info">
+                        <span className="blog-detail-model-name">Number Sequence Model</span>
+                        <span className="blog-detail-model-stream">Wingo 3-Min Stream</span>
+                      </div>
+                      <div className="blog-detail-model-accuracy">
+                        <span className="blog-detail-model-accuracy-value">94.7%</span>
+                        <span className="blog-detail-model-accuracy-dot" />
+                      </div>
+                    </div>
+
+                    <div className="blog-detail-model-row" style={{ marginBottom: '12px' }}>
+                      <div className="blog-detail-model-info">
+                        <span className="blog-detail-model-name">Trend Reversal Model</span>
+                        <span className="blog-detail-model-stream">Wingo 5-Min Stream</span>
+                      </div>
+                      <div className="blog-detail-model-accuracy">
+                        <span className="blog-detail-model-accuracy-value">95.4%</span>
+                        <span className="blog-detail-model-accuracy-dot" />
+                      </div>
+                    </div>
+
+                    <div className="blog-detail-model-row blog-detail-model-row-highlight">
+                      <div className="blog-detail-model-info">
+                        <span className="blog-detail-model-highlight-name">Deep Seed Analyzer</span>
+                        <span className="blog-detail-model-highlight-stream">All Timeframes</span>
+                      </div>
+                      <div className="blog-detail-model-accuracy">
+                        <span className="blog-detail-model-accuracy-value" style={{ color: '#4f46e5' }}>93.8%</span>
+                        <span className="blog-detail-model-accuracy-dot-pulse" style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="blog-detail-support-card" style={{ cursor: 'default' }}>
+                  <div className="blog-detail-support-blur" />
+                  <div className="blog-detail-support-inner">
+                    <div className="blog-detail-support-icon">
+                      <MessageSquare size={18} />
+                    </div>
+                    <h3 className="blog-detail-support-title">VIP Support Desk</h3>
+                    <p className="blog-detail-support-desc">
+                      Key issues, activation help, or direct access? Our support team is live on Telegram 24/7.
+                    </p>
+
+                    <div className="blog-detail-support-agent">
+                      <div className="blog-detail-support-agent-avatar">
+                        W
+                        <span className="blog-detail-support-agent-status" style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+                      </div>
+                      <div className="blog-detail-support-agent-info">
+                        <span className="blog-detail-support-agent-name">ᨒ Wingo Signals 📍</span>
+                        <span className="blog-detail-support-agent-role">Official channel</span>
+                      </div>
+                    </div>
+
+                    <Link
+                      href={telegramLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blog-detail-support-btn"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                      </svg>
+                      Open Telegram
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="blog-detail-trending-card">
+                  <h3 className="blog-detail-trending-title">
+                    <TrendingUp size={16} className="blog-detail-trending-title-icon" />
+                    Trending Reads
                   </h3>
-                  <div className="flex items-center gap-1.5 px-2 py-0.5 bg-indigo-50 rounded-lg text-[9px] font-bold text-indigo-500">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-                    Running
-                  </div>
-                </div>
+                  <div className="blog-detail-trending-list">
+                    {otherPosts.map((trending, index) => {
+                      let tag = "Guide";
+                      if (trending.slug.includes("free-vs-paid")) tag = "Comparison";
+                      else if (trending.slug.includes("activation")) tag = "Setup";
+                      else if (trending.slug.includes("strategy") || trending.slug.includes("tips")) tag = "Advanced";
+                      else if (trending.slug.includes("how-to-use")) tag = "Tutorial";
 
-                <div className="space-y-3">
-                  {/* Model row */}
-                  <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100/50">
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-[10px] font-black text-slate-700">Color Pattern Model</span>
-                      <span className="text-[9px] font-bold text-slate-400">Wingo 1-Min Stream</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-black text-emerald-600">96.1%</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    </div>
-                  </div>
-
-                  {/* Model row */}
-                  <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100/50">
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-[10px] font-black text-slate-700">Number Sequence Model</span>
-                      <span className="text-[9px] font-bold text-slate-400">Wingo 3-Min Stream</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-black text-emerald-600">94.7%</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    </div>
-                  </div>
-
-                  {/* Model row */}
-                  <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100/50">
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-[10px] font-black text-slate-700">Trend Reversal Model</span>
-                      <span className="text-[9px] font-bold text-slate-400">Wingo 5-Min Stream</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-black text-emerald-600">95.4%</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    </div>
-                  </div>
-
-                  {/* Model row */}
-                  <div className="flex items-center justify-between p-3 rounded-2xl bg-indigo-50 border border-indigo-100/60">
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-[10px] font-black text-indigo-700">Deep Seed Analyzer</span>
-                      <span className="text-[9px] font-bold text-indigo-400">All Timeframes</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-black text-indigo-600">93.8%</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping" />
-                    </div>
+                      return (
+                        <Link
+                          href={`/blog/${trending.slug}`}
+                          key={trending.slug}
+                          className="blog-detail-trending-item"
+                        >
+                          <div className="blog-detail-trending-num">0{index + 1}</div>
+                          <div className="blog-detail-trending-content">
+                            <span className="blog-detail-trending-tag">{tag}</span>
+                            <h4 className="blog-detail-trending-post-title">{trending.title}</h4>
+                          </div>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
-
-              {/* Premium Support / Telegram Desk */}
-              <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm overflow-hidden relative group">
-                <div className="absolute top-0 right-0 w-20 h-20 bg-sky-50 rounded-full -mr-6 -mt-6 transition-transform duration-500 group-hover:scale-110" />
-
-                <div className="relative z-10">
-                  <div className="w-10 h-10 bg-sky-50 border border-sky-100 rounded-xl flex items-center justify-center text-sky-500 mb-4">
-                    <MessageSquare size={18} fill="currentColor" />
-                  </div>
-
-                  <h3 className="text-xs font-black text-slate-800 tracking-widest mb-1">VIP Support Desk</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed mb-5">
-                    Key issues, activation help, or direct access? Our support team is live on Telegram 24/7.
-                  </p>
-
-                  {/* Agent card */}
-                  <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-2xl mb-4">
-                    <div className="w-9 h-9 rounded-full bg-sky-500 flex items-center justify-center text-white text-[11px] font-black shadow-sm shrink-0 relative">
-                      W
-                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white animate-pulse" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[11px] font-black text-slate-800">ᨒ Wingo Signals 📍</span>
-                      <span className="text-[9px] font-bold text-slate-400">Official channel</span>
-                    </div>
-                  </div>
-
-
-
-                  {/* Telegram button */}
-                  <Link
-                    href={telegramLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-[#229ED9] hover:bg-[#1a8bbf] text-white py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg shadow-sky-100 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
-                    </svg>
-                    Open Telegram
-                  </Link>
-                </div>
-              </div>
-
-              {/* Trending Sidebar */}
-              <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm">
-                <h3 className="text-xs font-black text-slate-800 capitalize tracking-widest mb-6 flex items-center gap-2">
-                  <TrendingUp size={16} className="text-indigo-600" />
-                  Trending Reads
-                </h3>
-                <div className="space-y-4">
-                  {otherPosts.map((trending, index) => {
-                    // Match category tag
-                    let tag = "Guide";
-                    if (trending.slug.includes("free-vs-paid")) tag = "Comparison";
-                    else if (trending.slug.includes("activation")) tag = "Setup";
-                    else if (trending.slug.includes("strategy") || trending.slug.includes("tips")) tag = "Advanced";
-                    else if (trending.slug.includes("how-to-use")) tag = "Tutorial";
-
-                    return (
-                      <Link
-                        href={`/blog/${trending.slug}`}
-                        key={trending.slug}
-                        className="flex gap-4 p-2 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100/50 group transition-all duration-300"
-                      >
-                        <div className="bg-slate-50 text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 text-[10px] font-black w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors">
-                          0{index + 1}
-                        </div>
-                        <div className="flex flex-col gap-1 min-w-0">
-                          <span className="text-[9px] font-black text-indigo-600 uppercase tracking-widest">
-                            {tag}
-                          </span>
-                          <h4 className="text-xs font-bold text-slate-700 group-hover:text-indigo-600 transition-colors line-clamp-2 leading-relaxed">
-                            {trending.title}
-                          </h4>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </aside>
+            </aside>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 

@@ -57,7 +57,7 @@ export default function UsersPage() {
   return (
     <div className="max-w-[1600px] mx-auto space-y-6 md:space-y-8 pb-12">
       <div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">License Database</h1>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">License database</h1>
         <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-1 font-medium">Manage all generated access keys and users.</p>
       </div>
 
@@ -115,7 +115,7 @@ export default function UsersPage() {
                   />
 
                   {/* Status Badge */}
-                  <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[9px] sm:text-[10px] font-black tracking-widest uppercase shadow-sm z-10 ${badgeClass}`}>
+                  <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[9px] sm:text-[10px] font-black shadow-sm z-10 ${badgeClass}`}>
                     {badgeText}
                   </div>
 
@@ -178,25 +178,25 @@ export default function UsersPage() {
                       isBanned ? (
                         <button 
                           onClick={() => handleAction(user._id, 'unban')}
-                          className="flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white text-[10px] sm:text-xs font-black tracking-wider transition-all active:scale-95 shadow-sm border border-emerald-100/50"
+                          className="flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border border-emerald-100/50"
                         >
-                          <ShieldCheck size={12} /> UNBAN
+                          <ShieldCheck size={12} /> Unban
                         </button>
                       ) : (
                         <button 
                           onClick={() => handleAction(user._id, 'ban')}
-                          className="flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white text-[10px] sm:text-xs font-black tracking-wider transition-all active:scale-95 shadow-sm border border-amber-100/50"
+                          className="flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border border-amber-100/50"
                         >
-                          <ShieldBan size={12} /> BAN
+                          <ShieldBan size={12} /> Ban
                         </button>
                       )
                     )}
                     
                     <button 
                       onClick={() => handleAction(user._id, 'delete')}
-                      className={`flex items-center justify-center gap-1 py-1.5 px-2 rounded text-[10px] sm:text-xs font-black tracking-wider transition-all active:scale-95 shadow-sm border ${isExpired ? 'flex-1 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border-red-100/50' : 'bg-red-50 text-red-500 hover:bg-red-500 hover:text-white border-red-100/50'}`}
+                      className={`flex items-center justify-center gap-1 py-1.5 px-2 rounded text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border ${isExpired ? 'flex-1 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border-red-100/50' : 'bg-red-50 text-red-500 hover:bg-red-500 hover:text-white border-red-100/50'}`}
                     >
-                      <Trash2 size={12} /> {isExpired ? 'DEL' : ''}
+                      <Trash2 size={12} /> {isExpired ? 'Delete' : ''}
                     </button>
                   </div>
                 </div>

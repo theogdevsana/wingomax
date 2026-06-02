@@ -111,7 +111,7 @@ export default async function AdminDashboard() {
                   </div>
                   <div className="flex flex-col items-end">
                     <span className="text-lg font-black text-slate-900">{admin.count}</span>
-                    <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">Keys</span>
+                    <span className="text-xs text-slate-500 font-medium">Keys</span>
                   </div>
                 </div>
               ))
@@ -147,7 +147,7 @@ function StatCard({ title, value, icon, negative = false, color = "#007AFF" }: {
       
       <div className="relative z-10 flex items-center justify-between">
         <div>
-          <h4 className="text-slate-400 font-bold text-[10px] sm:text-xs uppercase tracking-wider mb-0.5">{title}</h4>
+          <h4 className="text-slate-400 font-bold text-[10px] sm:text-xs mb-0.5">{title}</h4>
           <p className={`text-2xl sm:text-3xl font-black tracking-tight ${negative ? 'text-red-500' : 'text-slate-800'}`}>
             {value}
           </p>

@@ -8,10 +8,10 @@ import { nunito } from "@/lib/fonts";
 export const metadata: Metadata = {
   metadataBase: new URL('https://wingosignals.xyz'),
   title: {
-    default: "Wingo Signal - #1 WinGo Prediction & Color Prediction Tool 2024",
+    default: "Wingo Signal - #1 AI Color Prediction Tool for 91Club & Tiranga 2026",
     template: "%s | Wingo Signal"
   },
-  description: "Official Wingo Signal tool for 1-minute, 3-minute, and 5-minute prediction. Get accurate color and number predictions for Wingo with 95% accuracy.",
+  description: "Official Wingo Signal AI color prediction tool for 91Club, Tiranga, BDG Win & 10+ platforms. Get 95%+ accurate 1-min, 3-min & 5-min signals — no download needed. Trusted by 50,000+ users.",
   keywords: [
     "wingo signal", "wingo prediction", "color prediction tool",
     "91club prediction", "tiranga prediction tool", "wingo signals telegram",
@@ -81,6 +81,7 @@ export const metadata: Metadata = {
 };
 
 import { OrganizationSchema } from "@/components/JsonLd";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({
@@ -104,25 +105,27 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Wingo Signal" />
-        {/* PWA Service Worker Registration */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/pwabuilder-sw.js').then(function(res) {
-                    console.log('PWA Service Worker registered successfully: ', res.scope);
-                  }).catch(function(err) {
-                    console.log('PWA Service Worker registration failed: ', err);
-                  });
-                });
-              }
-            `
-          }}
-        />
       </head>
 
       <body className="h-full flex flex-col font-sans">
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-LVMJXEXXFH" strategy="afterInteractive" />
+        <Script id="gtag-init" strategy="afterInteractive" dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-LVMJXEXXFH');
+          `,
+        }} />
+        <Script id="sw-reg" strategy="afterInteractive" dangerouslySetInnerHTML={{
+          __html: `
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/pwabuilder-sw.js');
+              });
+            }
+          `,
+        }} />
         {children}
         <Analytics />
       </body>

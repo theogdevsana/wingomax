@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./history.module.css";
-import { ArrowLeft, Loader2, Timer } from "lucide-react";
+import { ArrowLeft, Loader2, Timer, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -75,6 +75,10 @@ export default function HistoryClient({ slug }: { slug: string }) {
   const [shuffleTick, setShuffleTick] = useState(0);
   const [isAuthChecking, setIsAuthChecking] = useState(true);
   const [lastPredictedPeriod, setLastPredictedPeriod] = useState<string>("");
+  
+  // BottomSheet states for skip action
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [bottomSheetMessage, setBottomSheetMessage] = useState("");
 
   useEffect(() => {
     const key = localStorage.getItem("login_key");
@@ -155,11 +159,14 @@ export default function HistoryClient({ slug }: { slug: string }) {
     setIsAnimating(true);
     setLastPredictedPeriod(currentPeriod);
     setPrediction(null);
+    setShowBottomSheet(false);
 
     const ANIMATION_MS = 3000;
     const startTime = Date.now();
 
     let finalVal: number | null = null;
+    let isSkipped = false;
+    let skipMsg = "";
 
     // 8.5s client timeout — safety net if server is slow
     const controller = new AbortController();
@@ -171,11 +178,19 @@ export default function HistoryClient({ slug }: { slug: string }) {
       const data = await res.json();
 
       if (data?.predictionResult) {
-        const { gameType, period, prediction: apiPred } = data.predictionResult;
+        const { gameType, period, prediction: apiPred, skipped, skipReason } = data.predictionResult;
         const expectedGameType = selectedGame === "1 Min" ? "Wingo 1 Min" : "Wingo 30 Sec";
 
-        if (gameType === expectedGameType && period === currentPeriod) {
-          finalVal = apiPred.toUpperCase() === "BIG" ? 7 : 2;
+        const apiPeriodSuffix = String(period).slice(-4);
+        const localPeriodSuffix = String(currentPeriod).slice(-4);
+
+        if (gameType === expectedGameType && apiPeriodSuffix === localPeriodSuffix) {
+          if (skipped || apiPred?.toUpperCase() === "SKIP") {
+            isSkipped = true;
+            skipMsg = skipReason || "Prediction skipped for this period.";
+          } else {
+            finalVal = apiPred.toUpperCase() === "BIG" ? 7 : 2;
+          }
         } else {
           console.log("Mismatch. API Period:", period, "Local:", currentPeriod);
         }
@@ -183,6 +198,17 @@ export default function HistoryClient({ slug }: { slug: string }) {
     } catch (err) {
       clearTimeout(clientTimeout);
       console.error("Prediction API Fetch Error:", err);
+    }
+
+    if (isSkipped) {
+      setIsAnimating(false);
+      setPrediction(null);
+      setBottomSheetMessage(skipMsg);
+      setShowBottomSheet(true);
+      setTimeout(() => {
+        setShowBottomSheet(false);
+      }, 3000);
+      return;
     }
 
     if (finalVal === null) {
@@ -468,6 +494,48 @@ export default function HistoryClient({ slug }: { slug: string }) {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {showBottomSheet && (
+          <>
+            <motion.div
+              className={styles.bottomSheetBackdrop}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowBottomSheet(false)}
+            />
+            <motion.div
+              className={styles.bottomSheet}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 250 }}
+            >
+              <div className={styles.bottomSheetHeader}>
+                <h3 className={styles.bottomSheetTitle}>Prediction Skipped</h3>
+                <button
+                  className={styles.bottomSheetCloseBtn}
+                  onClick={() => setShowBottomSheet(false)}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <div className={styles.bottomSheetContent}>
+                <p className={styles.bottomSheetMessage}>
+                  {bottomSheetMessage || "This round has been skipped by the AI prediction system."}
+                </p>
+                <button
+                  className={styles.bottomSheetOkBtn}
+                  onClick={() => setShowBottomSheet(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

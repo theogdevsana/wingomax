@@ -31,6 +31,8 @@ export default function EditBlogPage() {
           metaTitle: p.metaTitle ?? "",
           metaDescription: p.metaDescription ?? "",
           metaKeywords: p.metaKeywords ?? "",
+          articleSection: p.articleSection ?? "",
+          tags: p.tags ?? [],
         });
       }
     }

@@ -60,7 +60,7 @@ export default function AdminBlogNav({ onNavigate }: { onNavigate?: () => void }
             : "text-slate-600 hover:bg-slate-50"
         }`}
       >
-        <List size={14} /> All Blogs
+        <List size={14} /> All blogs
       </Link>
 
       <Link
@@ -72,12 +72,12 @@ export default function AdminBlogNav({ onNavigate }: { onNavigate?: () => void }
             : "text-slate-600 hover:bg-slate-50"
         }`}
       >
-        <Plus size={14} /> New Post
+        <Plus size={14} /> New post
       </Link>
 
       {posts.length > 0 && (
         <div className="mt-2 pl-7 pr-2 max-h-48 overflow-y-auto space-y-0.5">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-2 mb-1">
+          <p className="text-[10px] font-bold text-slate-400 px-2 mb-1">
             Posts
           </p>
           {posts.map((post) => {

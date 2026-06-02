@@ -90,7 +90,7 @@ function RevenueCard({ title, amount, icon, color = "#007AFF" }: { title: string
 
       <div className="relative z-10 flex items-center justify-between">
         <div>
-          <h4 className="text-slate-400 font-bold text-[11px] uppercase tracking-wider mb-1">{title}</h4>
+          <h4 className="text-slate-400 font-bold text-[11px] mb-1">{title}</h4>
           <p className="text-2xl md:text-3xl font-black tracking-tight text-slate-900">₹{amount.toLocaleString()}</p>
         </div>
         <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-50 group-hover:shadow-md transition-all">

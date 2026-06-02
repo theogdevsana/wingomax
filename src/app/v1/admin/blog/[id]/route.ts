@@ -62,6 +62,8 @@ export async function PUT(
     if (body.metaTitle !== undefined) post.metaTitle = body.metaTitle.trim();
     if (body.metaDescription !== undefined) post.metaDescription = body.metaDescription.trim();
     if (body.metaKeywords !== undefined) post.metaKeywords = body.metaKeywords.trim();
+    if (body.articleSection !== undefined) post.articleSection = body.articleSection.trim();
+    if (body.tags !== undefined) post.tags = Array.isArray(body.tags) ? body.tags.filter((t: any) => t && typeof t === 'string') : [];
 
     if (body.slug !== undefined) {
       const newSlug = (body.slug.trim() || slugifyTitle(post.title)).toLowerCase();

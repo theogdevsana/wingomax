@@ -1,8 +1,16 @@
 import { getAllBlogPosts } from '@/lib/blog-data';
+import type { BlogPost } from '@/lib/blogs';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
-  const BLOG_POSTS = await getAllBlogPosts();
+  let BLOG_POSTS: BlogPost[];
+  try {
+    BLOG_POSTS = await getAllBlogPosts();
+  } catch {
+    BLOG_POSTS = [];
+  }
   
   const games = [
     '82_lottery', '91club', 'bdg_win', 'bgd_game', 'goa_game', 

@@ -19,6 +19,8 @@ export interface IBlogPost extends Document {
   metaTitle: string;
   metaDescription: string;
   metaKeywords: string;
+  articleSection: string;
+  tags: string[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -46,6 +48,8 @@ const BlogPostSchema = new Schema(
     metaTitle: { type: String, default: '' },
     metaDescription: { type: String, default: '' },
     metaKeywords: { type: String, default: '' },
+    articleSection: { type: String, default: '' },
+    tags: { type: [String], default: [] },
   },
   { timestamps: true }
 );

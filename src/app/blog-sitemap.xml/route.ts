@@ -1,13 +1,21 @@
 import { getAllBlogPosts } from '@/lib/blog-data';
+import type { BlogPost } from '@/lib/blogs';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const baseUrl = 'https://wingosignals.xyz';
-  const BLOG_POSTS = await getAllBlogPosts();
+  let BLOG_POSTS: BlogPost[];
+  try {
+    BLOG_POSTS = await getAllBlogPosts();
+  } catch {
+    BLOG_POSTS = [];
+  }
 
   const urls = BLOG_POSTS.map(post => `
   <url>
     <loc>${baseUrl}/blog/${post.slug}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    <lastmod>${new Date(post.date).toISOString()}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>`).join('');

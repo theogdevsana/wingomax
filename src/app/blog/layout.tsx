@@ -13,8 +13,11 @@ export default async function BlogLayout({
   const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
 
   return (
-    <BlogLayoutClient telegramLink={telegramLink}>
-      {children}
-    </BlogLayoutClient>
+    <>
+      <BlogLayoutClient telegramLink={telegramLink}>
+        {children}
+      </BlogLayoutClient>
+    </>
   );
 }
+

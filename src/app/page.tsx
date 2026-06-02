@@ -3,9 +3,9 @@ import DownloadClient from "./download/DownloadClient";
 import JsonLd from "@/components/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Download Wingo Signal - #1 AI Color Prediction Tool 2026 | Free Access",
+  title: "Wingo Signal - Free AI Color Prediction Tool for 91Club & Tiranga 2026",
   description:
-    "Download Wingo Signal — the most accurate AI-powered color prediction tool for 91Club, Tiranga, BDG Win, 82 Lottery & 10+ platforms. Get 95%+ accuracy signals for 30-sec, 1-min, 3-min & 5-min Wingo rounds. No APK needed — works in your browser instantly. Join 50,000+ users.",
+    "Wingo Signal is the #1 AI color prediction tool for 91Club, Tiranga & BDG Win. Get 95%+ accurate Wingo signals (30s-5min) instantly in your browser. No download needed. Trusted by 50,000+ users.",
   keywords: [
     "wingo signal download",
     "wingo prediction tool download",
@@ -57,9 +57,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://wingosignals.xyz",
     siteName: "Wingo Signal",
-    title: "Download Wingo Signal - #1 AI Wingo Prediction Tool 2026 | 95%+ Accuracy",
+    title: "Wingo Signal - Free AI Color Prediction Tool | 95%+ Accuracy for 91Club & Tiranga",
     description:
-      "Get free access to Wingo Signal — the most trusted AI color prediction platform for 91Club, Tiranga, BDG Win & 10+ platforms. 95%+ accuracy. No APK download required. Works on any device.",
+      "Wingo Signal - the #1 AI color prediction tool for 91Club, Tiranga & BDG Win. Get 95%+ accurate Wingo signals instantly in your browser. No APK required. 50,000+ users.",
     images: [
       {
         url: "https://wingosignals.xyz/logo/hero_main.png",
@@ -73,9 +73,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Download Wingo Signal - AI Prediction Tool 2026 | 95%+ Accuracy",
+    title: "Wingo Signal - Free AI Color Prediction Tool | 95%+ Accuracy",
     description:
-      "Download & use Wingo Signal free — AI-powered predictions for 91Club, Tiranga, BDG Win and 10+ platforms. 50,000+ users trust us daily. No APK required.",
+      "Wingo Signal — AI-powered color predictions for 91Club, Tiranga & BDG Win. 95%+ accuracy. No download needed. Trusted by 50,000+ users daily.",
     images: ["https://wingosignals.xyz/logo/hero_main.png"],
     creator: "@enzosrs",
   },
@@ -121,6 +121,14 @@ const faqData = [
   {
     question: "Do I need to download an app?",
     answer: "No download is needed. Wingo Signal runs entirely in your browser. Open wingosignals.xyz on any device, Android, iPhone, tablet, or desktop, and start immediately."
+  },
+  {
+    question: "How do I get a license key for Wingo Signal?",
+    answer: "Contact our support team on Telegram to purchase your license key. Once activated, your access works instantly across all devices — no installation or APK required."
+  },
+  {
+    question: "Is Wingo Signal free to use?",
+    answer: "Yes, Wingo Signal offers a free tier that gives you access to live predictions with real time signals. Premium plans are available for users who want additional features, dedicated support, and higher priority access."
   },
 ];
 

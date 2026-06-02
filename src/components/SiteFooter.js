@@ -36,8 +36,16 @@ export default function SiteFooter({ className = "" }) {
 
   return (
     <>
+      <style>{`
+        .sf-mobile { display: block; background: #111827; border-top: 1px solid #374151; padding: 28px 20px; }
+        .sf-desktop { display: none; background: #111827; border-top: 1px solid #374151; padding: 52px 24px 32px; }
+        @media (min-width: 769px) {
+          .sf-mobile { display: none; }
+          .sf-desktop { display: block; }
+        }
+      `}</style>
       {/* Mobile Footer */}
-      <footer className={`md:hidden ${className}`} style={{ background: "#111827", borderTop: "1px solid var(--border)", padding: "28px 20px" }}>
+      <footer className={`sf-mobile ${className}`}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "18px" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
             <Image src="/logo/main_logo.png" alt="Wingo Signal" width={120} height={24} style={{ objectFit: "contain" }} priority />
@@ -61,7 +69,7 @@ export default function SiteFooter({ className = "" }) {
       </footer>
 
       {/* Desktop Footer */}
-      <footer className={`hidden md:block ${className}`} style={{ background: "#111827", borderTop: "1px solid var(--border)", padding: "52px 24px 32px" }}>
+      <footer className={`sf-desktop ${className}`}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "48px", marginBottom: "48px" }}>
             {/* Brand */}
