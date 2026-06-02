@@ -4,7 +4,7 @@ import { useState } from "react";
 import { HelpCircle, ChevronLeft, Plus, Minus } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import Footer from "@/components/Footer";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function FAQClient({ telegramLink }) {
   const [openIndex, setOpenIndex] = useState(0);
@@ -146,7 +146,7 @@ export default function FAQClient({ telegramLink }) {
           </a>
         </div>
       </main>
-      <Footer className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
+      <SiteFooter className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
     </div>
   );
 }

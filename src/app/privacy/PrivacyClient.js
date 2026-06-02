@@ -3,7 +3,7 @@
 import { Shield, FileText, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Footer from "@/components/Footer";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function PrivacyClient({ telegramLink }) {
   const sections = [
@@ -139,7 +139,7 @@ export default function PrivacyClient({ telegramLink }) {
           <a href={telegramLink} style={{ color: "#8b5cf6", fontWeight: "800", textDecoration: "none", marginTop: "12px", display: "inline-block", fontSize: "1.1rem" }}>Contact Support →</a>
         </div>
       </main>
-      <Footer className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
+      <SiteFooter className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
     </div>
   );
 }

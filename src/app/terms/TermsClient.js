@@ -3,7 +3,7 @@
 import { Shield, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Footer from "@/components/Footer";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function TermsClient({ telegramLink }) {
   const sections = [
@@ -157,7 +157,7 @@ export default function TermsClient({ telegramLink }) {
           <a href={telegramLink} style={{ color: "#10b981", fontWeight: "800", textDecoration: "none", marginTop: "12px", display: "inline-block", fontSize: "1.1rem" }}>Contact Support →</a>
         </div>
       </main>
-      <Footer className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
+      <SiteFooter className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
     </div>
   );
 }

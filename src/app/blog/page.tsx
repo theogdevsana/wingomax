@@ -61,7 +61,7 @@ export default async function BlogListing() {
               <div className="p-3 flex flex-col grow">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-[10px] uppercase tracking-wider font-bold">
-                    {post.date}
+                    Last Updated: {post.date}
                   </span>
                 </div>
                 <h3 className="text-base font-bold mb-2 text-[#4a6ef2] leading-tight transition-colors line-clamp-2">

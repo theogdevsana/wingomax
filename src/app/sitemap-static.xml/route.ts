@@ -3,10 +3,14 @@ export async function GET() {
   
   const pages = [
     '',
+    '/login',
+    '/about',
     '/faq',
     '/privacy',
     '/refund',
-    '/terms'
+    '/terms',
+    '/subscribe',
+    '/free-fire-rewards',
   ];
 
   const urls = pages.map(p => `

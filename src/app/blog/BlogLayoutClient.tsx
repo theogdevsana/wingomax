@@ -13,7 +13,7 @@ const PREDICTION_PAGES = [
   { label: 'Wingo 5 Min', href: '/wingo-5-minute-prediction', icon: Timer },
 ];
 
-import Footer from '@/components/Footer';
+import SiteFooter from '@/components/SiteFooter';
 
 export default function BlogLayoutClient({
   children,
@@ -152,7 +152,7 @@ export default function BlogLayoutClient({
         {children}
       </main>
 
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

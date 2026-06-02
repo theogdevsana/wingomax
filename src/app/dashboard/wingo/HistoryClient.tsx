@@ -186,6 +186,11 @@ export default function HistoryClient({ slug }: { slug: string }) {
     }
 
     if (finalVal === null) {
+      if (selectedGame === "1 Min") {
+        setIsAnimating(false);
+        setPrediction(null);
+        return;
+      }
       finalVal = Math.floor(Math.random() * 10);
     }
 

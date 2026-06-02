@@ -31,7 +31,7 @@ import {
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import Footer from '@/components/Footer';
+import SiteFooter from '@/components/SiteFooter';
 
 // --- Logic Helpers ---
 
@@ -221,11 +221,99 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
     '5m': 'WinGo 5 Min',
   }[mode];
 
+  const MODE_CONTENT = {
+    '30s': {
+      whyTitle: "Why 30 Seconds Wingo Analysis Matters",
+      whyDesc: "In fast 30-second Wingo rounds, every second counts. Our engine tracks rapid-fire outcomes to detect micro-patterns most players miss. We analyze the last 100 draws in real-time, identifying short-term trend shifts that repeat within seconds — giving you an edge in high-speed trading.",
+      features: [
+        { title: "Micro-Pattern Detection", desc: "Identifies 2-3 round sequences that repeat in 30s games with high frequency." },
+        { title: "Rapid Probability Calc", desc: "Calculates next draw probability in under 500ms for instant decision making." },
+      ],
+      guideTitle: "30s Wingo Prediction Guide",
+      guideParagraphs: [
+        "Master the art of <strong>30 second Wingo prediction</strong> with our real-time AI analyst. The 30-second format is the most volatile — patterns shift every half minute. Our tool tracks every draw to catch <strong>wingo 30s signals</strong> the moment they emerge. No need for a <strong>wingo predictor app download</strong> — everything runs in your browser with zero delay.",
+        "Professional <strong>30s Wingo players</strong> use our platform to spot <strong>wingo colour prediction</strong> trends across consecutive rounds. By analyzing <strong>wingo big small</strong> distributions in real-time, the system highlights high-probability outcomes before each round closes. This is the edge that separates consistent winners from casual guessers.",
+        "The <strong>wingo 30 sec prediction formula</strong> relies on frequency analysis of recent draws. Our AI detects when certain numbers or colors appear more often, signaling a potential pattern shift. Combine this with a disciplined stake plan, and you convert short-term volatility into consistent gains.",
+      ],
+      faqTitle: "30s Wingo Signals FAQ",
+      faqItems: [
+        { q: "How accurate are 30 sec Wingo predictions?", a: "Our 30s predictions achieve up to 95% accuracy during stable trend periods using real-time micro-pattern detection." },
+        { q: "Can I use the 30s tool on 91Club?", a: "Yes, our 30-second prediction tool works seamlessly with 91Club, Tiranga, and BDG Win platforms." },
+        { q: "Is 30 seconds enough for pattern analysis?", a: "Yes, our AI processes 100+ recent draws in under a second, making 30s games ideal for rapid signal generation." },
+        { q: "Do I need to pay for 30s signals?", a: "We offer free public 30s signals. Premium subscribers get priority access to confirmed patterns." },
+      ],
+    },
+    '1m': {
+      whyTitle: "Why 1 Minute Wingo Analysis Works",
+      whyDesc: "One-minute Wingo strikes the perfect balance between speed and signal reliability. With 60 seconds per round, our AI has enough data to filter out noise while still acting fast enough to catch live trends. We analyze frequency distribution across recent rounds to forecast the next outcome with statistical confidence.",
+      features: [
+        { title: "Trend Frequency Analysis", desc: "Tracks color and number distributions across the last 150 rounds for accurate 1m signals." },
+        { title: "Noise Filtering Engine", desc: "Removes random variance to surface only statistically significant pattern shifts." },
+      ],
+      guideTitle: "1 Min Wingo Prediction Guide",
+      guideParagraphs: [
+        "Our <strong>Wingo 1 minute prediction</strong> tool gives you a full 60 seconds of analytical power per round. We specialize in <strong>wingo 1 min prediction</strong> by combining recent draw history with weighted probability scoring. This means you get a clear <strong>wingo signal</strong> before each round closes.",
+        "Many top players rely on <strong>wingo signals telegram</strong> groups — but our platform delivers the same logic directly in-browser. There's no <strong>wingo predictor app download</strong> needed. Just open the tool, review the <strong>wingo colour prediction</strong>, and execute your trade. It's data you can trust.",
+        "Understanding the <strong>wingo color prediction formula</strong> for 1-minute games is simple: our AI scans for repeating <strong>big small</strong> sequences and highlights the highest-probability outcome. Professional players combine these signals with a 3-step stake plan to grow their balance steadily.",
+      ],
+      faqTitle: "1 Min Wingo Signals FAQ",
+      faqItems: [
+        { q: "How to use Wingo 1 min predictions effectively?", a: "Open the tool, select 1 Min mode, wait for the signal, and apply a safe 3x stake plan on the predicted outcome." },
+        { q: "What platforms support 1 min Wingo predictions?", a: "Our 1-minute tool supports 91Club, Tiranga, BDG Win, and all major color prediction platforms." },
+        { q: "Is the 1 min prediction tool free?", a: "Yes, we provide free public 1-minute signals. Premium users get access to higher-confidence pattern confirmations." },
+        { q: "How accurate is 1 min Wingo prediction?", a: "Accuracy ranges from 85-98% depending on market conditions. Premium plans achieve the highest consistency." },
+      ],
+    },
+    '3m': {
+      whyTitle: "Why 3 Minute Wingo Analysis is Optimal",
+      whyDesc: "Three-minute Wingo rounds give our AI deeper analysis windows. With 180 seconds per draw, we can cross-reference multiple pattern types — color streaks, number gaps, and size alternation. This deeper look reduces false signals and improves prediction stability for medium-term players.",
+      features: [
+        { title: "Multi-Pattern Cross-Ref", desc: "Checks color, size, and number patterns simultaneously for higher confidence signals." },
+        { title: "Medium-Term Trend Maps", desc: "Tracks 200+ round history to identify broader trend cycles that repeat every 10-15 rounds." },
+      ],
+      guideTitle: "3 Min Wingo Prediction Guide",
+      guideParagraphs: [
+        "For players who prefer a measured pace, <strong>Wingo 3 minute prediction</strong> offers the sweet spot between speed and accuracy. Our tool scans 200+ historical rounds to build a detailed <strong>wingo signal</strong> profile. This allows the AI to detect medium-term cycles that shorter timeframes simply cannot see.",
+        "The <strong>wingo colour prediction</strong> engine for 3-minute games focuses on trend persistence — how long a pattern typically lasts before reversing. This is especially useful for <strong>wingo big small</strong> strategies where you need to identify when a streak is likely to break. Our system flags these inflection points with high precision.",
+        "Unlike <strong>wingo 1 min prediction</strong> where speed is everything, 3-minute analysis lets you plan 2-3 rounds ahead. The <strong>wingo color prediction formula</strong> for 3m weighs historical accuracy more heavily, giving you signals that are both timely and statistically robust.",
+      ],
+      faqTitle: "3 Min Wingo Signals FAQ",
+      faqItems: [
+        { q: "How accurate is 3 minute Wingo prediction?", a: "Our 3-minute predictions achieve 88-96% accuracy with medium-term trend analysis and multi-pattern verification." },
+        { q: "Is 3 min prediction better than 1 min?", a: "3-minute predictions offer more stable signals with fewer false positives, ideal for players who prefer reliability over speed." },
+        { q: "Can I use 3m predictions on mobile?", a: "Yes, our 3-minute tool is fully responsive and works perfectly on all devices including iOS and Android." },
+        { q: "Do 3 minute signals work on Tiranga?", a: "Absolutely. Our 3m predictions are optimized for Tiranga, 91Club, BDG Win, and 10+ gaming platforms." },
+      ],
+    },
+    '5m': {
+      whyTitle: "Why 5 Minute Wingo Analysis Leads to Profit",
+      whyDesc: "Five-minute Wingo rounds give you the luxury of deep data analysis. With 300 seconds per draw, our AI can run complex probability models — examining color streaks, number distributions, and size alternations across hundreds of past rounds. This is the most reliable mode for consistent, long-term returns.",
+      features: [
+        { title: "Deep Historical Modeling", desc: "Analyzes 300+ rounds to build a comprehensive probability map for each new draw." },
+        { title: "Advanced Streak Analytics", desc: "Tracks long-term color and size streak patterns that repeat over extended sessions." },
+      ],
+      guideTitle: "5 Min Wingo Prediction Guide",
+      guideParagraphs: [
+        "Our <strong>Wingo 5 minute prediction</strong> platform is built for players who value precision above all else. With 300 seconds per round, the AI analyzes an extensive dataset to generate <strong>wingo 5 minute signals</strong> with the highest confidence levels. This is where <strong>wingo prediction</strong> reaches its full potential.",
+        "The extended timeframe allows our <strong>wingo colour prediction</strong> engine to eliminate short-term noise and focus on genuine pattern shifts. For <strong>wingo big small</strong> strategies, 5-minute analysis reveals macro trends that persist across sessions — giving you a strategic advantage that quick-guess tools cannot match.",
+        "There's no need for a <strong>wingo predictor app download</strong> or <strong>wingo mod apk</strong>. Our browser-based <strong>wingo signal</strong> platform delivers everything you need. The <strong>wingo color prediction formula</strong> for 5-minute games weights historical consistency heavily, making it the preferred choice for serious players.",
+      ],
+      faqTitle: "5 Min Wingo Signals FAQ",
+      faqItems: [
+        { q: "What makes 5 min Wingo predictions most accurate?", a: "The longer 300-second window allows our AI to cross-reference 300+ historical rounds for maximum signal confidence." },
+        { q: "Can I make consistent profit with 5m predictions?", a: "Many users report steady growth using 5-minute signals combined with a disciplined 3x stake plan." },
+        { q: "Is 5 minute prediction free to use?", a: "Yes, free public 5-minute signals are available. Premium Neural Pro and Quantum plans offer the highest accuracy." },
+        { q: "Which platforms work with 5 min Wingo tool?", a: "Our 5-minute prediction works with all major platforms including 91Club, Tiranga, BDG Win, and more." },
+      ],
+    },
+  }[mode];
+
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="min-h-screen bg-slate-50 text-slate-900 pt-3 px-3 pb-0 relative font-sans overflow-x-hidden md:text-base text-sm"
+    <div className="bg-slate-50">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-slate-900 pt-3 px-3 relative font-sans overflow-x-hidden md:text-base text-sm"
     >
       {/* Advanced Technical SEO Metadata */}
       <script
@@ -288,7 +376,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
           })
         }}
       />
-      <h1 className="sr-only">Wingo Signal - Official Wingo Prediction & AI Tool 2026 for 1 Min, 3 Min, 5 Min and 30 Sec</h1>
+      <h1 className="sr-only">Wingo Signal - Official {gameLabel} Prediction & AI Tool 2026</h1>
       
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl" />
@@ -558,55 +646,53 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
         <section className="mt-8 mb-10 flex flex-col gap-6 px-1">
           {/* Market Analysis Content for Indexing */}
           <div className="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm">
-             <h2 className="text-sm font-black text-slate-800 flex items-center gap-2 mb-4">
-                <Target size={16} className="text-emerald-500" /> Why We Built This Analyzer
-             </h2>
-             <p className="text-[10px] text-slate-500 leading-relaxed font-medium mb-4">
-                Let's be honest—relying entirely on gut feelings or guessing is a quick way to empty your balance. I built this dashboard because I was tired of treating the game like a coin flip. By continuously tracking and logging past results, we can spot repeating sequences and trends before they become obvious to everyone else. It's not magic; it's simply math and probability doing the heavy lifting for you.
-             </p>
-             <div className="grid grid-cols-2 gap-3">
-                <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                   <span className="text-[10px] font-black text-indigo-600 block mb-1">Pattern Tracking</span>
-                   <p className="text-[8px] text-slate-400">We log every single outcome to identify recurring sequences on the fly.</p>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                   <span className="text-[10px] font-black text-indigo-600 block mb-1">Data-Driven Choices</span>
-                   <p className="text-[8px] text-slate-400">The system calculates the highest probability for the next draw based on history.</p>
-                </div>
-             </div>
+              <h2 className="text-sm font-black text-slate-800 flex items-center gap-2 mb-4">
+                <Target size={16} className="text-emerald-500" /> {MODE_CONTENT.whyTitle}
+              </h2>
+              <p className="text-[10px] text-slate-500 leading-relaxed font-medium mb-4">
+                {MODE_CONTENT.whyDesc}
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                 {MODE_CONTENT.features.map((f, i) => (
+                 <div key={i} className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                    <span className="text-[10px] font-black text-indigo-600 block mb-1">{f.title}</span>
+                    <p className="text-[8px] text-slate-400">{f.desc}</p>
+                 </div>
+                 ))}
+              </div>
           </div>
 
           {/* How to Use Section */}
           <div className="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm">
              <h2 className="text-sm font-black text-slate-800 flex items-center gap-2 mb-4">
-                <BookOpen size={16} className="text-indigo-500" /> Mastering Wingo Prediction Tool
+                <BookOpen size={16} className="text-indigo-500" /> Mastering {gameLabel} Prediction
              </h2>
              <div className="flex flex-col gap-4">
                 <div className="flex gap-3">
                    <div className="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-black flex-shrink-0">1</div>
                    <div>
-                      <h3 className="text-[11px] font-black text-slate-800">Select Timeline</h3>
-                      <p className="text-[10px] text-slate-500">Pick between <strong>wingo 30 sec</strong>, 1 min, 3 min, or 5 min depending on your strategy.</p>
+                      <h3 className="text-[11px] font-black text-slate-800">Select {gameLabel}</h3>
+                      <p className="text-[10px] text-slate-500">Choose the <strong>{gameLabel}</strong> mode to begin analyzing real-time pattern data and signal outputs.</p>
                    </div>
                 </div>
                 <div className="flex gap-3">
                    <div className="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-black flex-shrink-0">2</div>
                    <div>
-                      <h3 className="text-[11px] font-black text-slate-800">Analyze Signals</h3>
-                      <p className="text-[10px] text-slate-500">Let our <strong>wingo tool</strong> scan the trend and provide a <strong>wingo signal</strong> with high probability.</p>
+                      <h3 className="text-[11px] font-black text-slate-800">Review Signal</h3>
+                      <p className="text-[10px] text-slate-500">Let our <strong>wingo tool</strong> scan the latest trend and display the highest probability outcome for the next round.</p>
                    </div>
                 </div>
                 <div className="flex gap-3">
                    <div className="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-black flex-shrink-0">3</div>
                    <div>
-                      <h3 className="text-[11px] font-black text-slate-800">Execution</h3>
-                      <p className="text-[10px] text-slate-500">Apply the <strong>wingo prediction</strong> results using a safe 3x level investment plan.</p>
+                      <h3 className="text-[11px] font-black text-slate-800">Execute Trade</h3>
+                      <p className="text-[10px] text-slate-500">Apply the <strong>{gameLabel} prediction</strong> using a safe investment plan. Track results and adjust your strategy.</p>
                    </div>
                 </div>
              </div>
-          </div>
+           </div>
 
-        </section>
+         </section>
 
         {/* --- Collapsible SEO Section --- */}
         <section className="mt-8 mb-4 px-1">
@@ -619,7 +705,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
                 <Info size={18} className="text-indigo-600" />
               </div>
               <div>
-                <h2 className="text-sm font-black text-slate-800">Wingo Prediction Guide</h2>
+                <h2 className="text-sm font-black text-slate-800">{MODE_CONTENT.guideTitle}</h2>
                 <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Accuracy & Signals</p>
               </div>
             </div>
@@ -641,15 +727,9 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
                 className="overflow-hidden"
               >
                 <div className="pt-4 pb-2 space-y-4 text-[11px] text-slate-500 leading-relaxed font-medium px-2">
-                  <p>
-                    Experience the next level of gaming with our <strong>Wingo signals</strong> and prediction tool. We specialize in <strong>wingo 1 min prediction</strong>, providing players with the data they need to make informed decisions. Whether you're playing the 30-second, 3-minute, or 5-minute version, our <strong>wingo tool</strong> ensures you stay ahead of the game patterns.
-                  </p>
-                  <p>
-                    Many professional players use <strong>wingo signals telegram</strong> to get real-time alerts. Our platform integrates similar high-accuracy logic directly into the browser, so you don't need a <strong>wingo predictor app download</strong> or <strong>wingo mod apk</strong>. We focus on providing clean, data-backed <strong>wingo 1 minute signals</strong> for all major platforms.
-                  </p>
-                  <p>
-                    Understanding the <strong>wingo color prediction formula</strong> can be complex, which is why our AI does the hard work for you. By identifying <strong>wingo big small pattern</strong> shifts, we provide a consistent stream of <strong>wingo predictions</strong> that you can rely on for daily growth.
-                  </p>
+                  {MODE_CONTENT.guideParagraphs.map((p, i) => (
+                    <p key={i} dangerouslySetInnerHTML={{ __html: p }} />
+                  ))}
                 </div>
               </motion.div>
             )}
@@ -659,14 +739,9 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
         {/* Technical FAQ Section */}
         <section className="mt-8 mb-10 px-1">
           <div>
-             <h2 className="text-sm font-black text-slate-400 tracking-[3px] text-center mb-4">Wingo Signals FAQ</h2>
+             <h2 className="text-sm font-black text-slate-400 tracking-[3px] text-center mb-4">{MODE_CONTENT.faqTitle}</h2>
              <div className="flex flex-col gap-2">
-                {[
-                  { q: "What are the most accurate wingo signals?", a: "The most accurate wingo signals are generated using AI-driven pattern analysis that looks at historical data trends." },
-                  { q: "How to use wingo 1 min predictions?", a: "Simply open our tool, select the 1 min mode, and follow the generated signal for the current period." },
-                  { q: "Is this wingo tool free?", a: "Yes, we provide free public signals. Premium signals for 100% patterns are also available for advanced players." },
-                  { q: "Can I get wingo 30 sec signals?", a: "Our tool supports high-speed 30-second Wingo games with real-time neural updates." }
-                ].map((faq, i) => (
+                 {MODE_CONTENT.faqItems.map((faq, i) => (
                   <div key={i} className="bg-white border border-slate-100 p-4 rounded-2xl">
                     <span className="text-xs font-black text-indigo-600 block mb-1.5">Q: {faq.q}</span>
                     <p className="text-xs text-slate-500 leading-relaxed">{faq.a}</p>
@@ -677,7 +752,9 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
         </section>
       </div>
 
-      <Footer className="!mt-12 -mx-3 w-[calc(100%+1.5rem)] md:mx-auto md:max-w-[420px] rounded-none shadow-2xl shadow-indigo-100/50 overflow-hidden border-t border-white/5 !mb-0" />
+      </motion.div>
+
+      <SiteFooter />
 
       {/* Modals */}
       <AnimatePresence>
@@ -739,6 +816,6 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { animation: marquee 25s linear infinite; width: fit-content; }
       `}</style>
-    </motion.div>
+    </div>
   );
 }

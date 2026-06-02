@@ -3,7 +3,7 @@
 import { RefreshCcw, ChevronLeft, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Footer from "@/components/Footer";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function RefundClient({ telegramLink }) {
   const sections = [
@@ -152,7 +152,7 @@ export default function RefundClient({ telegramLink }) {
           </div>
         </div>
       </main>
-      <Footer className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
+      <SiteFooter className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
     </div>
   );
 }

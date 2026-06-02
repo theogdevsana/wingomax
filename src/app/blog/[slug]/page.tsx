@@ -156,7 +156,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <span className="px-2 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-black tracking-wider">
               Article
             </span>
-            <span className="text-xs font-bold text-slate-400">{post.date}</span>
+            <span className="text-xs font-bold text-slate-400">Last Updated: {post.date}</span>
           </div>
 
           <h1 className="text-xl md:text-3xl font-bold text-slate-800 tracking-tight leading-[1.2] mb-8 capitalize">
