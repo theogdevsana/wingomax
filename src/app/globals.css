@@ -1,10 +1,10 @@
+@import "tailwindcss";
+
 @font-face {
   font-family: 'ESS1';
   src: url('/font/ess1.ttf') format('truetype');
   font-display: swap;
 }
-
-@import "tailwindcss";
 
 :root {
   --background: #f8faff;
