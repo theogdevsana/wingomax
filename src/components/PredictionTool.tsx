@@ -309,11 +309,11 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
   }[mode];
 
   return (
-    <div className="bg-slate-50">
+    <div className="bg-slate-50 overflow-x-hidden">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="text-slate-900 pt-3 px-3 relative font-sans overflow-x-hidden md:text-base text-sm"
+        className="text-slate-900 pt-3 px-3 relative font-sans md:text-base text-sm"
     >
       {/* Advanced Technical SEO Metadata */}
       <script

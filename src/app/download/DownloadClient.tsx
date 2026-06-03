@@ -278,7 +278,7 @@ export default function DownloadClient() {
     <>
 
 
-      <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text1)", fontFamily: "var(--font-nunito), system-ui, sans-serif" }}>
+      <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text1)", fontFamily: "var(--font-nunito), system-ui, sans-serif", overflowX: "hidden" }}>
 
         {/* ── JSON-LD ─────────────────────────────────────────────────────── */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{
