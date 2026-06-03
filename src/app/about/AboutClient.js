@@ -188,7 +188,7 @@ export default function AboutClient({ telegramLink }) {
                 style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "12px 24px", background: "#24A1DE", color: "#fff", borderRadius: "10px", fontWeight: 800, fontSize: "14px", textDecoration: "none" }}>
                 <Users size={18} /> Join Telegram Channel
               </a>
-              <a href={`https://t.me/enzosrs`} target="_blank" rel="noopener noreferrer"
+              <a href={telegramLink} target="_blank" rel="noopener noreferrer"
                 style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "12px 24px", background: "#f5f0ff", color: "#7D39EB", borderRadius: "10px", fontWeight: 800, fontSize: "14px", textDecoration: "none" }}>
                 Contact Support
               </a>

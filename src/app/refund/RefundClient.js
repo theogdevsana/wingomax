@@ -143,8 +143,8 @@ export default function RefundClient({ telegramLink }) {
         <div style={{ marginTop: "64px", padding: "32px 24px", borderTop: "2px solid rgba(0,0,0,0.05)", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
           <p style={{ color: "#64748b", fontSize: "1.05rem", fontWeight: "600", margin: "0" }}>Have a refund request or questions? Reach out officially.</p>
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", justifyContent: "center", marginTop: "8px" }}>
-            <a href="https://t.me/enzosrs" target="_blank" rel="noopener noreferrer" style={{ color: "#ef4444", fontWeight: "800", textDecoration: "none", fontSize: "1.1rem" }}>
-              Contact Support (@enzosrs) →
+            <a href={telegramLink} target="_blank" rel="noopener noreferrer" style={{ color: "#ef4444", fontWeight: "800", textDecoration: "none", fontSize: "1.1rem" }}>
+              Contact Support →
             </a>
             <a href="https://t.me/+stsY5CXgrkM2MWY1" target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb", fontWeight: "800", textDecoration: "none", fontSize: "1.1rem" }}>
               Join Telegram Channel →

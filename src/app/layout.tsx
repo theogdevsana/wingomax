@@ -83,12 +83,18 @@ export const metadata: Metadata = {
 import { OrganizationSchema } from "@/components/JsonLd";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
+import connectMongo from '@/lib/mongodb';
+import Settings from '@/lib/models/Settings';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await connectMongo();
+  const settings = await Settings.findOne({});
+  const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
+
   return (
     <html
       lang="en"
@@ -96,7 +102,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <head>
-        <OrganizationSchema telegramLink="https://t.me/enzosrs" />
+        <OrganizationSchema telegramLink={telegramLink} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* PWA Manifest & Meta Tags */}
