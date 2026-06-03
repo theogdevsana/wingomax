@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   description:
     "Wingo Signal is the #1 AI color prediction tool for 91Club, Tiranga & BDG Win. Get 95%+ accurate Wingo signals (30s-5min) instantly in your browser. No download needed. Trusted by 50,000+ users.",
   keywords: [
+    "wingo signal",
+    "wingo signals",
+    "wingo signal prediction",
+    "wingo colour prediction",
+    "wingo prediction",
     "wingo signal download",
     "wingo prediction tool download",
     "wingo predictor app",
