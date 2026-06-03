@@ -98,7 +98,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunito.variable} h-full antialiased`}
+      className={`${nunito.variable} antialiased`}
       data-scroll-behavior="smooth"
     >
       <head>
@@ -113,7 +113,7 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Wingo Signal" />
       </head>
 
-      <body className="h-full flex flex-col font-sans">
+      <body className="flex flex-col font-sans">
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-LVMJXEXXFH" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive" dangerouslySetInnerHTML={{
           __html: `

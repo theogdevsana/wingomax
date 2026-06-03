@@ -101,6 +101,7 @@ export default function PrivacyClient({ telegramLink }) {
   ];
 
   return (
+    <>
     <div style={{ minHeight: "100vh", padding: "24px 16px 0", overflowX: "hidden" }}>
       <main style={{ maxWidth: "800px", margin: "0 auto" }}>
         
@@ -139,7 +140,8 @@ export default function PrivacyClient({ telegramLink }) {
           <a href={telegramLink} style={{ color: "#8b5cf6", fontWeight: "800", textDecoration: "none", marginTop: "12px", display: "inline-block", fontSize: "1.1rem" }}>Contact Support →</a>
         </div>
       </main>
-      <SiteFooter className="!mt-12 -mx-4 w-[calc(100%+2rem)]" />
     </div>
+    <SiteFooter />
+    </>
   );
 }
