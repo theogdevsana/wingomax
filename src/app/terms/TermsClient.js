@@ -119,7 +119,7 @@ export default function TermsClient({ telegramLink }) {
   ];
 
   return (
-    <div style={{ minHeight: "100vh", padding: "24px 16px 0" }}>
+    <div style={{ minHeight: "100vh", padding: "24px 16px 0", overflowX: "hidden" }}>
       <main style={{ maxWidth: "800px", margin: "0 auto" }}>
         
         <Link href="/dashboard" style={{ display: "flex", alignItems: "center", gap: "6px", color: "#64748b", fontSize: "0.85rem", fontWeight: "600", marginBottom: "32px", textDecoration: "none" }}>

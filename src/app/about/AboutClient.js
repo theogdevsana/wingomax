@@ -28,7 +28,7 @@ const techStack = [
 export default function AboutClient({ telegramLink }) {
   return (
     <>
-      <main>
+      <main style={{overflowX:"hidden"}}>
         {/* Back button top-left */}
         <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px 24px 0" }}>
           <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#007AFF", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>
