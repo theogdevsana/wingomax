@@ -241,23 +241,16 @@ const TRUST_BADGES = [
 
 // ─── Component ─────────────────────────────────────────────────────────────────
 
-export default function DownloadClient() {
+export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }: { telegramLink?: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [telegramLink, setTelegramLink] = useState("https://t.me/enzosrs");
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    fetch('/v1/settings').then(r => r.json()).then(d => {
-      if (d?.data?.subscription_link) setTelegramLink(d.data.subscription_link);
-    }).catch(() => {});
   }, []);
 
   useEffect(() => {
