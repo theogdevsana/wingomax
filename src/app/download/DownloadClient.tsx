@@ -408,7 +408,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
               { label: "3 Min", href: "/wingo-3-minute-prediction", color: "#FF9500" },
               { label: "5 Min", href: "/wingo-5-minute-prediction", color: "#34C759" },
             ].map((item) => (
-              <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} style={{
+              <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)} style={{
                 display: "flex", alignItems: "center", gap: "12px",
                 padding: "12px 14px", borderRadius: "12px",
                 textDecoration: "none", color: "#3C3C43",
@@ -419,7 +419,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
                   <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                 </svg>
                 {item.label}
-              </Link>
+              </a>
             ))}
           </nav>
 
