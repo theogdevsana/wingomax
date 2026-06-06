@@ -13,7 +13,7 @@ export async function GET() {
     }
 
     // 2. Fetch Prediction from External API with 2.5s timeout
-    const externalApiUrl = 'https://api.nexapk.in/v1/getdeta.php?action=getPrediction&key=enzo';
+    const externalApiUrl = 'https://api.nexapk.in/myapp/user/api.php?action=getPrediction&key=enzo';
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 

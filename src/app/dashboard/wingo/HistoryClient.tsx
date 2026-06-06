@@ -212,12 +212,7 @@ export default function HistoryClient({ slug }: { slug: string }) {
     }
 
     if (finalVal === null) {
-      if (selectedGame === "1 Min") {
-        setIsAnimating(false);
-        setPrediction(null);
-        return;
-      }
-      finalVal = Math.floor(Math.random() * 10);
+      finalVal = Math.random() >= 0.5 ? 7 : 2;
     }
 
     const elapsed = Date.now() - startTime;
@@ -458,26 +453,28 @@ export default function HistoryClient({ slug }: { slug: string }) {
             alt="AI Prediction" 
             style={{ width: '100%', height: 'auto', display: 'block' }} 
           />
-          <div style={{ position: 'absolute', top: '12px', left: '16px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
-            <span style={{ color: '#000', fontSize: '14px', fontWeight: 'bold' }}>AI Prediction</span>
-            <span style={{ color: '#333', fontSize: '10px', lineHeight: '1.2' }}>
+          <div style={{ position: 'absolute', top: 'clamp(6px, 2.5vw, 12px)', left: 'clamp(8px, 3.5vw, 16px)', display: 'flex', flexDirection: 'column', gap: 'clamp(1px, 0.5vw, 2px)' }}>
+            <span style={{ color: '#000', fontSize: 'clamp(10px, 3vw, 14px)', fontWeight: 'bold' }}>AI Prediction</span>
+            <span style={{ color: '#333', fontSize: 'clamp(7px, 2.2vw, 10px)', lineHeight: '1.2' }}>
               Get highly accurate predictions based<br/>
               on our advanced AI algorithms.
             </span>
           </div>
-          <div style={{ position: 'absolute', bottom: '12px', left: '16px' }}>
+          <div style={{ position: 'absolute', bottom: 'clamp(6px, 2.5vw, 12px)', left: 'clamp(8px, 3.5vw, 16px)' }}>
             <button 
               className={styles.predictBtn}
               onClick={handlePredict}
               disabled={isAnimating || lastPredictedPeriod === currentPeriod}
               style={{ 
-                padding: '0 30px', 
-                height: '36px', 
-                fontSize: '12px',
+                padding: '0 clamp(12px, 5vw, 30px)', 
+                height: 'clamp(22px, 6vw, 36px)', 
+                fontSize: 'clamp(8px, 2vw, 12px)',
+                borderRadius: 'clamp(2px, 0.8vw, 4px)',
                 background: timerBg,
                 boxShadow: selectedGame === '30sec' ? '0 6px 20px rgba(120,16,210,0.35)' : '0 6px 20px rgba(0,122,255,0.3)',
                 cursor: (isAnimating || lastPredictedPeriod === currentPeriod) ? 'not-allowed' : 'pointer',
-                opacity: (isAnimating || lastPredictedPeriod === currentPeriod) ? 0.7 : 1
+                opacity: (isAnimating || lastPredictedPeriod === currentPeriod) ? 0.7 : 1,
+                ['--clip-size' as any]: 'clamp(4px, 1.2vw, 15px)'
               }}
             >
               {lastPredictedPeriod === currentPeriod && !isAnimating ? "Predicted" : "Predict"}
