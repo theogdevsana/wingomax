@@ -12,8 +12,8 @@ export async function GET() {
       return NextResponse.json({ status: 'error', msg: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. Fetch Prediction from External API with 2.5s timeout
-    const externalApiUrl = 'https://api.nexapk.in/myapp/user/api.php?action=getPrediction&key=enzo';
+    // 2. Fetch Prediction from External API
+    const externalApiUrl = 'https://cloud-apis.com/v2/predict';
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 
@@ -39,13 +39,11 @@ export async function GET() {
       const { predictionResult } = data;
 
       const cleanResult = {
-        gameType: predictionResult.gameType,
         period: predictionResult.period,
         prediction: predictionResult.prediction,
         status: predictionResult.status,
-        confidence: predictionResult.confidence,
-        skipped: predictionResult.skipped,
-        skipReason: predictionResult.skipReason,
+        skipped: Boolean(predictionResult.skipped),
+        skipReason: predictionResult.skipReason || "",
       };
 
       return NextResponse.json({ predictionResult: cleanResult });

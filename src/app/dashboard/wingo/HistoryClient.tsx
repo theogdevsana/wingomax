@@ -18,6 +18,14 @@ interface HistoryItem {
   premium: string;
 }
 
+interface CloudHistoryItem {
+  period: string;
+  number: number | string;
+  color?: string;
+  colour?: string;
+  size?: string;
+}
+
 const PERIODS_MAP: Record<"30sec" | "1 Min", number> = {
   "30sec": 30,
   "1 Min": 60
@@ -99,7 +107,15 @@ export default function HistoryClient({ slug }: { slug: string }) {
       const periodParam = selectedGame === "30sec" ? "30s" : "1m";
       const res = await fetch(`${historyApi}/${periodParam}`, { credentials: 'include' });
       const data = await res.json();
-      if (data?.status === "success" && data?.data?.data?.list) {
+      if (Array.isArray(data?.history)) {
+        const list = data.history.map((item: CloudHistoryItem) => ({
+          issueNumber: item.period,
+          number: String(item.number),
+          colour: item.color || item.colour || "",
+          premium: item.size || "",
+        }));
+        setHistoryData(list);
+      } else if (data?.status === "success" && data?.data?.data?.list) {
         const list = data.data.data.list;
         setHistoryData(list);
       }
@@ -183,8 +199,10 @@ export default function HistoryClient({ slug }: { slug: string }) {
 
         const apiPeriodSuffix = String(period).slice(-4);
         const localPeriodSuffix = String(currentPeriod).slice(-4);
+        const gameMatches = !gameType || gameType === expectedGameType;
+        const periodMatches = !period || apiPeriodSuffix === localPeriodSuffix;
 
-        if (gameType === expectedGameType && apiPeriodSuffix === localPeriodSuffix) {
+        if (gameMatches && periodMatches) {
           if (skipped || apiPred?.toUpperCase() === "SKIP") {
             isSkipped = true;
             skipMsg = skipReason || "Prediction skipped for this period.";

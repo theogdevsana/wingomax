@@ -2,6 +2,12 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 
+function getCloudHistoryPeriod(period: string) {
+  const normalized = period.toLowerCase();
+  if (["30", "30s", "30sec", "30secs"].includes(normalized)) return "30";
+  return "1m";
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ period: string }> }
@@ -15,19 +21,25 @@ export async function GET(
   }
 
   const { period } = await params;
-  const targetPeriod = period || "1m";
-  const api = `https://acxdev.us.cc/api/GetGameHistory?period=${targetPeriod}`;
+  const targetPeriod = getCloudHistoryPeriod(period || "1m");
+  const api = `https://cloud-apis.com/history/${targetPeriod}`;
 
   try {
     const res = await fetch(api, {
       headers: {
         "Content-Type": "application/json",
       },
-      next: { revalidate: 10 }, // Cache for 10 seconds to improve performance
+      cache: "no-store",
     });
+
+    if (!res.ok) {
+      return NextResponse.json({ success: false, message: "Failed to fetch data" }, { status: 502 });
+    }
+
     const data = await res.json();
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json({ status: "error", message: "Failed to fetch data" }, { status: 500 });
+    console.error("History API Error:", error);
+    return NextResponse.json({ success: false, message: "Failed to fetch data" }, { status: 500 });
   }
 }
