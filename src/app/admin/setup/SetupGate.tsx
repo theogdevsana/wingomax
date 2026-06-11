@@ -65,7 +65,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
 
   if (checking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7]">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--admin-bg)]">
         <div className="w-8 h-8 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
       </div>
     );
@@ -73,18 +73,17 @@ export default function SetupGate({ children }: { children: ReactNode }) {
 
   if (!unlocked) {
     return (
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#F5F5F7] p-4">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-400/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-400/20 rounded-full blur-3xl" />
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[var(--admin-bg)] p-4">
+        <div className="absolute inset-x-0 top-0 h-2 bg-blue-600" />
 
-        <div className="relative z-10 w-full max-w-md bg-white/80 backdrop-blur-xl border border-white/50 p-8 rounded-[2rem] shadow-2xl">
+        <div className="admin-panel relative z-10 w-full max-w-md p-6 sm:p-8 shadow-2xl">
           <div className="flex justify-center mb-6">
-            <div className="w-16 h-16 bg-gradient-to-tr from-slate-700 to-slate-900 rounded-2xl shadow-lg flex items-center justify-center">
+            <div className="w-16 h-16 bg-slate-900 rounded-2xl shadow-lg flex items-center justify-center">
               <Lock className="text-white" size={32} />
             </div>
           </div>
 
-          <h1 className="text-3xl font-black text-center text-slate-900 tracking-tight mb-2">
+          <h1 className="admin-title text-center mb-2">
             Setup Access
           </h1>
           <p className="text-center text-slate-500 font-medium mb-8">
@@ -109,7 +108,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
                   placeholder="Enter setup password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-medium text-slate-900"
+                  className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-medium text-slate-900"
                   required
                   autoFocus
                 />
@@ -119,7 +118,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-lg shadow-lg transition-all active:scale-[0.98] flex items-center justify-center disabled:opacity-70"
+              className="admin-action w-full py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-lg shadow-lg transition-all active:scale-[0.98] flex items-center justify-center disabled:opacity-70"
             >
               {isLoading ? (
                 <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />

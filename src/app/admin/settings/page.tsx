@@ -55,13 +55,16 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900 mb-2">Platform Settings</h1>
-        <p className="text-slate-500">Manage global settings and links for the Wingo Signal platform.</p>
+    <div className="admin-page max-w-3xl">
+      <div className="admin-page-header">
+        <div>
+          <p className="admin-eyebrow">Configuration</p>
+          <h1 className="admin-title">Platform Settings</h1>
+          <p className="admin-subtitle">Manage global settings and links for the Wingo Signal platform.</p>
+        </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="admin-panel">
         <div className="p-6 border-b border-slate-100 bg-slate-50/50">
           <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
             <LinkIcon size={20} className="text-blue-500" />
@@ -91,7 +94,7 @@ export default function SettingsPage() {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span className="text-slate-400 sm:text-sm">🔗</span>
+                    <LinkIcon size={16} className="text-slate-400" />
                   </div>
                   <input
                     type="url"
@@ -99,7 +102,7 @@ export default function SettingsPage() {
                     value={telegramLink}
                     onChange={(e) => setTelegramLink(e.target.value)}
                     required
-                    className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all"
+                  className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all"
                     placeholder="https://t.me/yourtelegram"
                   />
                 </div>
@@ -112,7 +115,7 @@ export default function SettingsPage() {
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="admin-action bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isSaving ? (
                     <>

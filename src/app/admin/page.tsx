@@ -73,10 +73,13 @@ export default async function AdminDashboard() {
   const currentUsername = await getAuthUsername();
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 md:space-y-8">
-      <div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">Overview</h1>
-        <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-1 font-medium">Welcome back, <span className="font-bold text-blue-600">{currentUsername}</span>. Real-time statistics are loaded.</p>
+    <div className="admin-page space-y-6 md:space-y-8">
+      <div className="admin-page-header">
+        <div>
+          <p className="admin-eyebrow">Admin dashboard</p>
+          <h1 className="admin-title">Overview</h1>
+          <p className="admin-subtitle">Welcome back, <span className="font-black text-blue-700">{currentUsername}</span>. Real-time statistics are loaded.</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -88,9 +91,9 @@ export default async function AdminDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
         {/* Admin Key Generation Stats */}
-        <div className="bg-white rounded-[28px] p-6 md:p-8 border border-white shadow-xl">
+        <div className="admin-panel p-5 md:p-7">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-blue-50 rounded-2xl text-blue-600">
+            <div className="p-3 bg-blue-50 rounded-2xl text-blue-700">
               <ShieldAlert size={24} />
             </div>
             <div>
@@ -102,9 +105,9 @@ export default async function AdminDashboard() {
           <div className="space-y-4 mt-4">
             {stats.adminStatsArray.length > 0 ? (
               stats.adminStatsArray.map((admin, idx) => (
-                <div key={idx} className="flex justify-between items-center p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-100 transition-colors">
+                <div key={idx} className="admin-card flex justify-between items-center p-4 bg-slate-50/80">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 text-white flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black shadow-sm">
                       {admin.username.charAt(0).toUpperCase()}
                     </div>
                     <span className="font-bold text-slate-700">{admin.username}</span>
@@ -126,33 +129,23 @@ export default async function AdminDashboard() {
 }
 
 function StatCard({ title, value, icon, negative = false, color = "#007AFF" }: { title: string, value: string, icon: React.ReactNode, negative?: boolean, color?: string }) {
-  const blobColor = `${color}15`;
-  const blobColor2 = `${color}08`;
   const shadowColor = `${color}25`;
   
   return (
     <div 
-      className="bg-white rounded-2xl p-4 border border-slate-100 hover:border-transparent transition-all relative overflow-hidden group min-h-[110px] flex flex-col justify-center cursor-default"
+      className="admin-card bg-white p-4 relative overflow-hidden group min-h-[118px] flex flex-col justify-center cursor-default"
       style={{ boxShadow: `0 8px 24px -8px ${shadowColor}` }}
     >
-      {/* Decorative Blobs */}
-      <div 
-        className="absolute -top-8 -right-8 w-24 h-24 rounded-full pointer-events-none transition-transform duration-500 group-hover:scale-125" 
-        style={{ background: blobColor }}
-      />
-      <div 
-        className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full pointer-events-none transition-transform duration-500 group-hover:scale-110" 
-        style={{ background: blobColor2 }}
-      />
+      <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: color }} />
       
       <div className="relative z-10 flex items-center justify-between">
         <div>
-          <h4 className="text-slate-400 font-bold text-[10px] sm:text-xs mb-0.5">{title}</h4>
+          <h4 className="text-slate-500 font-black text-[10px] sm:text-xs mb-1 uppercase tracking-wide">{title}</h4>
           <p className={`text-2xl sm:text-3xl font-black tracking-tight ${negative ? 'text-red-500' : 'text-slate-800'}`}>
             {value}
           </p>
         </div>
-        <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-50 group-hover:shadow-md transition-all">
+        <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100 group-hover:shadow-md transition-all">
           {icon}
         </div>
       </div>

@@ -26,10 +26,13 @@ export default function RevenuePage() {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 pb-12">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Revenue Analytics</h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1 font-medium">Track your total sales and growth.</p>
+    <div className="admin-page space-y-8">
+      <div className="admin-page-header">
+        <div>
+          <p className="admin-eyebrow">Financials</p>
+          <h1 className="admin-title">Revenue Analytics</h1>
+          <p className="admin-subtitle">Track your total sales and growth.</p>
+        </div>
       </div>
 
       {isFetching ? (
@@ -69,31 +72,21 @@ export default function RevenuePage() {
 }
 
 function RevenueCard({ title, amount, icon, color = "#007AFF" }: { title: string, amount: number, icon: React.ReactNode, color?: string }) {
-  const blobColor = `${color}15`; 
-  const blobColor2 = `${color}08`;
   const shadowColor = `${color}25`;
 
   return (
     <div 
-      className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-all relative overflow-hidden group min-h-[120px] flex flex-col justify-center cursor-default"
+      className="admin-card bg-white p-5 relative overflow-hidden group min-h-[130px] flex flex-col justify-center cursor-default"
       style={{ boxShadow: `0 8px 24px -8px ${shadowColor}` }}
     >
-      {/* Decorative Blobs */}
-      <div 
-        className="absolute -top-8 -right-8 w-28 h-28 rounded-full pointer-events-none transition-transform duration-500 group-hover:scale-125" 
-        style={{ background: blobColor }}
-      />
-      <div 
-        className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full pointer-events-none transition-transform duration-500 group-hover:scale-110" 
-        style={{ background: blobColor2 }}
-      />
+      <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: color }} />
 
       <div className="relative z-10 flex items-center justify-between">
         <div>
-          <h4 className="text-slate-400 font-bold text-[11px] mb-1">{title}</h4>
+          <h4 className="text-slate-500 font-black text-[11px] mb-1 uppercase tracking-wide">{title}</h4>
           <p className="text-2xl md:text-3xl font-black tracking-tight text-slate-900">₹{amount.toLocaleString()}</p>
         </div>
-        <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-50 group-hover:shadow-md transition-all">
+        <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 group-hover:shadow-md transition-all">
           {icon}
         </div>
       </div>

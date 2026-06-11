@@ -89,14 +89,17 @@ export default function CreateLicense() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 pb-12">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">License management</h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1 font-medium">Create and manage access keys for users.</p>
+    <div className="admin-page space-y-8">
+      <div className="admin-page-header">
+        <div>
+          <p className="admin-eyebrow">Access control</p>
+          <h1 className="admin-title">License management</h1>
+          <p className="admin-subtitle">Create and manage access keys for users.</p>
+        </div>
       </div>
 
       {/* Generate Key Section */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm">
+      <div className="admin-panel p-5 md:p-7">
         <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
           <Key className="text-blue-600" /> Generate new key
         </h3>
@@ -118,9 +121,9 @@ export default function CreateLicense() {
                 <button
                   key={opt.value}
                   onClick={() => setDuration(opt.value)}
-                  className={`relative p-3 rounded-[1.25rem] border-2 text-left transition-all duration-300 overflow-hidden flex flex-col justify-center min-h-[72px] group ${
+                  className={`admin-action relative p-3 rounded-2xl border text-left transition-all duration-300 overflow-hidden flex flex-col justify-center min-h-[72px] group ${
                     duration === opt.value
-                      ? "border-blue-500 bg-blue-50/50 shadow-md ring-4 ring-blue-500/10 scale-[1.02] z-10"
+                      ? "border-blue-500 bg-blue-50/80 shadow-md ring-4 ring-blue-500/10 z-10"
                       : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm"
                   }`}
                 >
@@ -148,7 +151,7 @@ export default function CreateLicense() {
           <button
             onClick={handleCreate}
             disabled={isLoading}
-            className="w-full py-3.5 md:py-4 bg-[#007AFF] hover:bg-[#0066D6] text-white rounded-2xl font-bold text-base md:text-lg shadow-lg shadow-blue-500/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="admin-action w-full py-3.5 md:py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold text-base md:text-lg shadow-lg shadow-blue-500/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
@@ -167,18 +170,18 @@ export default function CreateLicense() {
         )}
 
         {generatedLicense && (
-          <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 animate-in fade-in slide-in-from-bottom-4">
+          <div className="mt-8 p-5 sm:p-6 bg-slate-50 rounded-2xl border border-slate-200 animate-in fade-in slide-in-from-bottom-4">
             <h4 className="text-sm font-bold text-slate-500 mb-4">
               Success! Key generated
             </h4>
             
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex-1 bg-white p-4 rounded-xl border border-slate-200 font-mono text-xl text-center tracking-widest text-slate-800 font-bold shadow-inner">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6">
+              <div className="flex-1 bg-white p-4 rounded-xl border border-slate-200 font-mono text-base sm:text-xl text-center tracking-widest text-slate-800 font-bold shadow-inner break-all">
                 {generatedLicense.key}
               </div>
               <button
                 onClick={() => copyToClipboard(generatedLicense.key)}
-                className="p-4 bg-white border border-slate-200 rounded-xl text-slate-600 hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50 transition-all active:scale-95"
+                className="admin-action p-4 bg-white border border-slate-200 rounded-xl text-slate-600 hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50 transition-all active:scale-95"
                 title="Copy to clipboard"
               >
                 {copied ? <CheckCircle2 className="text-blue-500" /> : <Copy />}
@@ -206,7 +209,7 @@ export default function CreateLicense() {
           <input 
             type="text" 
             placeholder="Search by key..." 
-            className="px-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            className="min-h-[42px] w-full md:w-auto px-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
             onChange={(e) => {
               const term = e.target.value.toLowerCase();
               // In a real app, this would filter the state or refetch
@@ -214,7 +217,7 @@ export default function CreateLicense() {
           />
           <button 
             onClick={fetchLicenses}
-            className="p-2 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
+            className="admin-action p-2 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
             title="Refresh List"
           >
             <Clock size={20} className="text-slate-600" />
@@ -223,7 +226,7 @@ export default function CreateLicense() {
       </div>
 
       {/* Licenses List */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="admin-panel">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -357,9 +360,9 @@ export default function CreateLicense() {
 
 function PlanGuide({ days, price, title, icon, bg, border, accent }: { days: number, price: string, title: string, icon: React.ReactNode, bg: string, border: string, accent: string }) {
   return (
-    <div className={`p-6 rounded-[2rem] border-2 ${border} ${bg} flex flex-col shadow-sm hover:shadow-md transition-all relative overflow-hidden group`}>
+    <div className={`admin-card p-5 md:p-6 border ${border} ${bg} flex flex-col relative overflow-hidden group`}>
       {/* Top Accent Bar */}
-      <div className={`absolute top-0 left-0 right-0 h-2 ${accent} opacity-80`} />
+      <div className={`absolute top-0 left-0 right-0 h-1.5 ${accent} opacity-90`} />
       
       <div className="flex justify-between items-start mb-6">
         <div className="p-3 bg-slate-50 rounded-2xl group-hover:scale-110 transition-transform">

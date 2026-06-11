@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { UserCircle, Clock, Smartphone, ShieldBan, ShieldCheck, Trash2, Key, Copy, CheckCircle2, RotateCcw } from "lucide-react";
+import { Clock, Smartphone, ShieldBan, ShieldCheck, Trash2, Key, Copy, CheckCircle2, RotateCcw } from "lucide-react";
 import { getApiUrl } from "@/lib/api-utils";
 
 export default function UsersPage() {
@@ -55,10 +55,13 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="max-w-[1600px] mx-auto space-y-6 md:space-y-8 pb-12">
-      <div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">License database</h1>
-        <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-1 font-medium">Manage all generated access keys and users.</p>
+    <div className="admin-page-wide space-y-6 md:space-y-8">
+      <div className="admin-page-header">
+        <div>
+          <p className="admin-eyebrow">User access</p>
+          <h1 className="admin-title">License database</h1>
+          <p className="admin-subtitle">Manage all generated access keys and users.</p>
+        </div>
       </div>
 
       <div>
@@ -67,7 +70,7 @@ export default function UsersPage() {
             <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
           </div>
         ) : licenses.length === 0 ? (
-          <div className="text-center p-12 bg-white rounded-3xl border border-slate-100 shadow-sm text-slate-500 font-medium">
+          <div className="admin-panel text-center p-12 text-slate-500 font-medium">
             No keys found. Generate keys from the License Keys page.
           </div>
         ) : (
@@ -81,38 +84,23 @@ export default function UsersPage() {
               let bgClass = "bg-[#F5F7FF] border-[#E0E7FF]"; // Soft Indigo (Active)
               let badgeClass = "bg-indigo-600 text-white shadow-indigo-100";
               let badgeText = "Active";
-              let blobFill = "rgba(79, 70, 229, 0.08)";
-              let blobFill2 = "rgba(79, 70, 229, 0.12)";
               let iconColor = "text-indigo-600";
 
               if (isBanned) {
                 bgClass = "bg-[#FFF9F2] border-[#FFE4CC]"; // Soft Amber (Banned)
                 badgeClass = "bg-amber-500 text-white shadow-amber-100";
                 badgeText = "Banned";
-                blobFill = "rgba(245, 158, 11, 0.08)";
-                blobFill2 = "rgba(245, 158, 11, 0.12)";
                 iconColor = "text-amber-600";
               } else if (isExpired) {
                 bgClass = "bg-[#FFF5F5] border-[#FEE2E2]"; // Soft Rose (Expired)
                 badgeClass = "bg-rose-500 text-white shadow-rose-100";
                 badgeText = "Expired";
-                blobFill = "rgba(244, 63, 94, 0.08)";
-                blobFill2 = "rgba(244, 63, 94, 0.12)";
                 iconColor = "text-rose-600";
               }
 
               return (
-                <div key={user._id} className={`aspect-video rounded-2xl border flex flex-col justify-between shadow-sm transition-all hover:shadow-md hover:-translate-y-1 relative overflow-hidden ${bgClass}`}>
-                  
-                  {/* Decorative Blobs - Subscription Style */}
-                  <div 
-                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full pointer-events-none transition-transform group-hover:scale-110" 
-                    style={{ background: blobFill }}
-                  />
-                  <div 
-                    className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full pointer-events-none transition-transform group-hover:scale-110" 
-                    style={{ background: blobFill2 }}
-                  />
+                <div key={user._id} className={`admin-card aspect-video rounded-2xl border flex flex-col justify-between relative overflow-hidden ${bgClass}`}>
+                  <div className="absolute inset-x-0 top-0 h-1" style={{ background: isBanned ? "#d97706" : isExpired ? "#dc2626" : "#4f46e5" }} />
 
                   {/* Status Badge */}
                   <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[9px] sm:text-[10px] font-black shadow-sm z-10 ${badgeClass}`}>
@@ -135,7 +123,7 @@ export default function UsersPage() {
                       </div>
                       <button 
                         onClick={() => copyToClipboard(user.key)}
-                        className="shrink-0 p-1.5 bg-white/60 hover:bg-white backdrop-blur-md rounded-md text-slate-600 transition-all shadow-sm border border-slate-100/50 flex items-center justify-center"
+                    className="admin-action shrink-0 p-1.5 bg-white/60 hover:bg-white backdrop-blur-md rounded-md text-slate-600 transition-all shadow-sm border border-slate-100/50 flex items-center justify-center"
                         title="Copy Key"
                       >
                         {copiedKey === user.key ? <CheckCircle2 size={12} className="text-green-600" /> : <Copy size={12} />}
@@ -167,7 +155,7 @@ export default function UsersPage() {
                     {isUsed && !isExpired && (
                       <button 
                         onClick={() => handleAction(user._id, 'reset')}
-                        className="flex items-center justify-center gap-1 p-1.5 rounded bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white transition-all active:scale-95 font-bold text-[10px] sm:text-xs group"
+                        className="admin-action flex items-center justify-center gap-1 p-1.5 rounded bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white transition-all active:scale-95 font-bold text-[10px] sm:text-xs group"
                         title="Reset Device"
                       >
                         <RotateCcw size={12} className="group-hover:-rotate-90 transition-transform duration-300" />
@@ -178,14 +166,14 @@ export default function UsersPage() {
                       isBanned ? (
                         <button 
                           onClick={() => handleAction(user._id, 'unban')}
-                          className="flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border border-emerald-100/50"
+                          className="admin-action flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border border-emerald-100/50"
                         >
                           <ShieldCheck size={12} /> Unban
                         </button>
                       ) : (
                         <button 
                           onClick={() => handleAction(user._id, 'ban')}
-                          className="flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border border-amber-100/50"
+                          className="admin-action flex items-center justify-center gap-1 flex-1 py-1.5 rounded bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border border-amber-100/50"
                         >
                           <ShieldBan size={12} /> Ban
                         </button>
@@ -194,7 +182,7 @@ export default function UsersPage() {
                     
                     <button 
                       onClick={() => handleAction(user._id, 'delete')}
-                      className={`flex items-center justify-center gap-1 py-1.5 px-2 rounded text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border ${isExpired ? 'flex-1 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border-red-100/50' : 'bg-red-50 text-red-500 hover:bg-red-500 hover:text-white border-red-100/50'}`}
+                      className={`admin-action flex items-center justify-center gap-1 py-1.5 px-2 rounded text-[10px] sm:text-xs font-black transition-all active:scale-95 shadow-sm border ${isExpired ? 'flex-1 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border-red-100/50' : 'bg-red-50 text-red-500 hover:bg-red-500 hover:text-white border-red-100/50'}`}
                     >
                       <Trash2 size={12} /> {isExpired ? 'Delete' : ''}
                     </button>

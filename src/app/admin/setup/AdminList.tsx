@@ -66,7 +66,7 @@ export default function AdminList({ refreshKey }: { refreshKey: number }) {
   };
 
   return (
-    <div className="w-full lg:w-1/2 bg-white/80 backdrop-blur-xl border border-white/50 p-8 rounded-[2rem] shadow-2xl h-[500px] flex flex-col">
+    <div className="admin-panel w-full lg:w-1/2 p-6 sm:p-8 shadow-2xl min-h-[420px] lg:h-[500px] flex flex-col">
       <h2 className="text-2xl font-black text-slate-900 mb-2">Existing Admins</h2>
       <p className="text-slate-500 font-medium mb-4">
         List of all admin accounts. You can delete any admin here.
@@ -87,10 +87,10 @@ export default function AdminList({ refreshKey }: { refreshKey: number }) {
           admins.map((admin) => (
             <div
               key={admin.id}
-              className="flex justify-between items-center p-4 bg-slate-50 rounded-2xl border border-slate-100"
+              className="admin-card flex justify-between items-center p-4 bg-slate-50"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 text-white flex items-center justify-center font-bold">
+                <div className="w-10 h-10 shrink-0 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black">
                   {admin.username.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0">
@@ -108,7 +108,7 @@ export default function AdminList({ refreshKey }: { refreshKey: number }) {
                 type="button"
                 onClick={() => handleDelete(admin.id, admin.username)}
                 disabled={deletingId === admin.id}
-                className="shrink-0 ml-3 p-2.5 rounded-xl text-red-500 hover:bg-red-50 border border-transparent hover:border-red-100 transition-colors disabled:opacity-50"
+                className="admin-action shrink-0 ml-3 p-2.5 rounded-xl text-red-500 hover:bg-red-50 border border-transparent hover:border-red-100 transition-colors disabled:opacity-50"
                 title={`Delete ${admin.username}`}
               >
                 {deletingId === admin.id ? (

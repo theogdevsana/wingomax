@@ -46,14 +46,14 @@ export default function SetupForm({
   };
 
   return (
-    <div className="relative z-10 w-full max-w-md bg-white/80 backdrop-blur-xl border border-white/50 p-8 rounded-[2rem] shadow-2xl">
+    <div className="admin-panel relative z-10 w-full max-w-md p-6 sm:p-8 shadow-2xl">
       <div className="flex justify-center mb-6">
-        <div className="w-16 h-16 bg-gradient-to-tr from-green-500 to-blue-500 rounded-2xl shadow-lg flex items-center justify-center">
+        <div className="w-16 h-16 bg-emerald-600 rounded-2xl shadow-lg shadow-emerald-600/20 flex items-center justify-center">
           <ShieldCheck className="text-white" size={32} />
         </div>
       </div>
 
-      <h1 className="text-3xl font-black text-center text-slate-900 tracking-tight mb-2">Setup Admin</h1>
+      <h1 className="admin-title text-center mb-2">Setup Admin</h1>
       <p className="text-center text-slate-500 font-medium mb-8">Create your admin account.</p>
 
       {error && (
@@ -78,7 +78,7 @@ export default function SetupForm({
               placeholder="Enter username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-medium text-slate-900"
+              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-medium text-slate-900"
               required
             />
           </div>
@@ -93,7 +93,7 @@ export default function SetupForm({
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-medium text-slate-900"
+              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-medium text-slate-900"
               required
             />
           </div>
@@ -102,7 +102,7 @@ export default function SetupForm({
         <button
           type="submit"
           disabled={isLoading || !!success}
-          className="w-full mt-4 py-4 bg-[#34C759] hover:bg-[#2EB350] text-white rounded-2xl font-bold text-lg shadow-lg shadow-green-500/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="admin-action w-full mt-4 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold text-lg shadow-lg shadow-emerald-500/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
