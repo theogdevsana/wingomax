@@ -24,7 +24,7 @@ export default function AdminLayoutClient({ children }: { children: ReactNode })
     pathname === '/admin/setup' || 
     pathname === '/setup'
   ) {
-    return <div className={`min-h-screen bg-[var(--admin-bg)] ${nunito.className}`}>{children}</div>;
+    return <div className={`min-h-[100dvh] bg-[var(--admin-bg)] ${nunito.className}`}>{children}</div>;
   }
 
   const handleLogout = async () => {
@@ -37,19 +37,19 @@ export default function AdminLayoutClient({ children }: { children: ReactNode })
   };
 
   return (
-    <div className={`admin-shell flex h-screen text-slate-900 overflow-hidden ${nunito.className}`}>
+    <div className={`admin-shell flex h-[100dvh] min-h-[100dvh] text-slate-900 overflow-hidden ${nunito.className}`}>
       
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
-          className="fixed inset-0 bg-slate-950/45 backdrop-blur-sm z-40 md:hidden transition-opacity" 
+          className="fixed inset-0 h-[100dvh] bg-slate-950/45 backdrop-blur-sm z-40 md:hidden transition-opacity" 
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside className={`admin-sidebar fixed inset-y-0 left-0 z-50 w-[280px] bg-white/95 border-r border-slate-200 flex flex-col transition-transform duration-300 ease-out md:relative md:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="p-5 border-b border-slate-100 flex justify-start items-center relative">
+      <aside className={`admin-sidebar fixed inset-y-0 left-0 z-50 h-[100dvh] max-h-[100dvh] w-[280px] bg-white/95 border-r border-slate-200 flex flex-col overflow-hidden transition-transform duration-300 ease-out md:relative md:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="shrink-0 p-5 border-b border-slate-100 flex justify-start items-center relative">
           <Link href="/admin" className="flex items-center pl-1">
             <div className="relative w-36 h-12">
               <Image 
@@ -66,7 +66,7 @@ export default function AdminLayoutClient({ children }: { children: ReactNode })
             <X size={24} />
           </button>
         </div>
-        <div className="px-5 pt-4">
+        <div className="shrink-0 px-5 pt-4">
           <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-3">
             <div className="flex items-center gap-2 text-blue-700">
               <Sparkles size={16} />
@@ -75,7 +75,7 @@ export default function AdminLayoutClient({ children }: { children: ReactNode })
             <p className="mt-1 text-xs font-semibold leading-5 text-slate-600">Manage keys, users, revenue, and site settings.</p>
           </div>
         </div>
-        <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto hide-scrollbar">
+        <nav className="min-h-0 flex-1 overscroll-contain p-4 space-y-1.5 overflow-y-auto hide-scrollbar">
           <NavItem href="/admin" icon={<Home size={19} />} label="Dashboard" onClick={() => setSidebarOpen(false)} />
           <NavItem href="/admin/licenses" icon={<Key size={19} />} label="License Keys" onClick={() => setSidebarOpen(false)} />
           <NavItem href="/admin/users" icon={<Users size={19} />} label="Users" onClick={() => setSidebarOpen(false)} />
@@ -84,7 +84,7 @@ export default function AdminLayoutClient({ children }: { children: ReactNode })
           <NavItem href="#" icon={<Gamepad2 size={19} />} label="Games" />
           <NavItem href="/admin/settings" icon={<Settings size={19} />} label="Settings" onClick={() => setSidebarOpen(false)} />
         </nav>
-        <div className="p-4 border-t border-slate-100 bg-slate-50/70">
+        <div className="shrink-0 p-4 border-t border-slate-100 bg-slate-50/70">
           <button 
             onClick={handleLogout}
             className="admin-action flex items-center gap-3 w-full p-3 rounded-xl text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors font-bold"
@@ -96,7 +96,7 @@ export default function AdminLayoutClient({ children }: { children: ReactNode })
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col h-screen overflow-hidden">
+      <main className="admin-main flex-1 flex flex-col h-[100dvh] min-w-0 overflow-hidden">
         {/* Top Header */}
         <header className="admin-header h-16 bg-white/88 border-b border-slate-200 flex items-center px-4 md:px-6 shrink-0">
           <div className="flex-1 flex items-center gap-3 min-w-0">

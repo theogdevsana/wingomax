@@ -139,6 +139,8 @@
 }
 
 .admin-shell {
+  height: 100vh;
+  min-height: 100vh;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(246, 247, 251, 0.96)),
     var(--admin-bg);
@@ -146,7 +148,14 @@
 }
 
 .admin-sidebar {
+  height: 100vh;
+  max-height: 100vh;
   box-shadow: 18px 0 48px rgba(15, 23, 42, 0.08);
+}
+
+.admin-main {
+  height: 100vh;
+  min-height: 100vh;
 }
 
 .admin-header {
@@ -288,6 +297,17 @@
 }
 
 @media (max-width: 767px) {
+  .admin-shell,
+  .admin-sidebar,
+  .admin-main {
+    height: 100vh;
+    min-height: 100vh;
+  }
+
+  .admin-sidebar {
+    max-height: 100vh;
+  }
+
   .admin-page,
   .admin-page-wide {
     padding-bottom: 32px;
@@ -311,6 +331,19 @@
   .admin-shell table th,
   .admin-shell table td {
     white-space: nowrap;
+  }
+}
+
+@supports (height: 100dvh) {
+  .admin-shell,
+  .admin-sidebar,
+  .admin-main {
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  .admin-sidebar {
+    max-height: 100dvh;
   }
 }
 
