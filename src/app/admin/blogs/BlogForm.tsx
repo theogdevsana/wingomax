@@ -135,7 +135,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
             <Link href="/admin/blogs" className={`${styles.btnGhost} bg-white border border-slate-200 hover:bg-slate-50 px-3 py-1.5 inline-flex items-center gap-1.5 transition-all shadow-sm rounded-lg`}>
               <ArrowLeft size={14} /> Back
             </Link>
-            <button type="submit" disabled={saving} className={`${styles.btnGreen} bg-indigo-600 hover:bg-indigo-700 px-4 py-1.5 shadow-md hover:shadow-lg transition-all rounded-lg`}>
+            <button type="submit" disabled={saving} className={`${styles.btnGreen} bg-[#7B5EA7] hover:brightness-110 px-4 py-1.5 shadow-md hover:shadow-lg transition-all rounded-2xl`}>
               {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
               {isEdit ? "Update" : "Publish"}
             </button>
@@ -158,7 +158,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                 type="checkbox"
                 checked={form.published}
                 onChange={(e) => setForm((f) => ({ ...f, published: e.target.checked }))}
-                className="w-3.5 h-3.5 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500"
+                className="w-3.5 h-3.5 rounded text-[#7B5EA7] border-slate-300 focus:ring-[#7B5EA7]"
               />
               Published
             </label>
@@ -273,7 +273,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                 value={form.metaTitle}
                 onChange={(e) => setForm((f) => ({ ...f, metaTitle: e.target.value }))}
                 placeholder={form.title || "Auto from title"}
-                className="w-full mt-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                className="w-full mt-1 rounded-2xl border border-black/[0.06] bg-gray-50/80 px-3 py-2 text-sm focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 transition-all"
               />
             </div>
             <div>
@@ -283,7 +283,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                 value={form.metaKeywords}
                 onChange={(e) => setForm((f) => ({ ...f, metaKeywords: e.target.value }))}
                 placeholder="wingo, prediction, signals"
-                className="w-full mt-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                className="w-full mt-1 rounded-2xl border border-black/[0.06] bg-gray-50/80 px-3 py-2 text-sm focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 transition-all"
               />
             </div>
             <div className="md:col-span-2">
@@ -293,7 +293,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                 onChange={(e) => setForm((f) => ({ ...f, metaDescription: e.target.value }))}
                 rows={2}
                 placeholder={form.description || "Auto from description"}
-                className="w-full mt-1 rounded-lg border border-slate-200 px-3 py-2 text-sm resize-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                className="w-full mt-1 rounded-2xl border border-black/[0.06] bg-gray-50/80 px-3 py-2 text-sm resize-none focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 transition-all"
               />
             </div>
             <div className="md:col-span-2">
@@ -303,12 +303,12 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                 value={form.tags.join(", ")}
                 onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value.split(",").map(t => t.trim()).filter(Boolean) }))}
                 placeholder="wingo signal, color prediction, 91club, tiranga"
-                className="w-full mt-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                className="w-full mt-1 rounded-2xl border border-black/[0.06] bg-gray-50/80 px-3 py-2 text-sm focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 transition-all"
               />
               {form.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mt-2">
                   {form.tags.map((tag, i) => (
-                    <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold">
+                    <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#7B5EA7]/10 text-[#7B5EA7] rounded-lg text-xs font-bold">
                       {tag}
                       <button type="button" onClick={() => setForm((f) => ({ ...f, tags: f.tags.filter((_, j) => j !== i) }))} className="hover:text-red-500 leading-none">&times;</button>
                     </span>
@@ -323,7 +323,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
         <div className={`${styles.card} p-5 shadow-sm`}>
           <div className="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
             <h2 className="text-sm font-bold text-slate-800">Frequently Asked Questions</h2>
-            <button type="button" onClick={addFaq} className="text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+            <button type="button" onClick={addFaq} className="text-xs font-bold text-[#7B5EA7] bg-[#7B5EA7]/10 hover:bg-[#7B5EA7]/15 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
               <Plus size={14} /> Add FAQ
             </button>
           </div>
@@ -335,7 +335,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
           ) : (
             <div className="space-y-3">
               {form.faqs.map((faq, i) => (
-                <div key={i} className="relative p-3 bg-white rounded-lg border border-slate-200 shadow-sm group hover:border-indigo-200 transition-all">
+                <div key={i} className="relative p-3 bg-white rounded-lg border border-slate-200 shadow-sm group hover:border-[#7B5EA7]/30 transition-all">
                   <button
                     type="button"
                     onClick={() => setForm((f) => ({ ...f, faqs: f.faqs.filter((_, j) => j !== i) }))}
@@ -355,7 +355,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                           faqs[i] = { ...faqs[i], question: e.target.value };
                           setForm((f) => ({ ...f, faqs }));
                         }}
-                        className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium text-slate-800"
+                        className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 transition-all font-medium text-slate-800"
                       />
                     </div>
                     <div>
@@ -369,7 +369,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
                           faqs[i] = { ...faqs[i], answer: e.target.value };
                           setForm((f) => ({ ...f, faqs }));
                         }}
-                        className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs resize-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-600"
+                        className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs resize-none focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 transition-all text-slate-600"
                       />
                     </div>
                   </div>

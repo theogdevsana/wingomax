@@ -78,22 +78,22 @@ export default async function AdminDashboard() {
         <div>
           <p className="admin-eyebrow">Admin dashboard</p>
           <h1 className="admin-title">Overview</h1>
-          <p className="admin-subtitle">Welcome back, <span className="font-black text-blue-700">{currentUsername}</span>. Real-time statistics are loaded.</p>
+          <p className="admin-subtitle">Welcome back, <span className="font-black text-[#7B5EA7]">{currentUsername}</span>. Real-time statistics are loaded.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Keys" value={stats.totalKeys.toString()} icon={<Key className="text-blue-600" size={24} />} color="#007AFF" />
-        <StatCard title="Used Devices" value={stats.totalUsed.toString()} icon={<Users className="text-purple-600" size={24} />} color="#AF52DE" />
-        <StatCard title="Banned Keys" value={stats.totalBanned.toString()} icon={<AlertOctagon className="text-red-600" size={24} />} negative={stats.totalBanned > 0} color="#FF3B30" />
-        <StatCard title="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} icon={<DollarSign className="text-emerald-500" size={24} />} color="#34C759" />
+        <StatCard title="Total Keys" value={stats.totalKeys.toString()} icon={<Key className="text-[#7B5EA7]" size={22} />} color="#7B5EA7" />
+        <StatCard title="Used Devices" value={stats.totalUsed.toString()} icon={<Users className="text-[#007AFF]" size={22} />} color="#007AFF" />
+        <StatCard title="Banned Keys" value={stats.totalBanned.toString()} icon={<AlertOctagon className="text-[#FF3B30]" size={22} />} negative={stats.totalBanned > 0} color="#FF3B30" />
+        <StatCard title="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} icon={<DollarSign className="text-[#34C759]" size={22} />} color="#34C759" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
         {/* Admin Key Generation Stats */}
         <div className="admin-panel p-5 md:p-7">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-blue-50 rounded-2xl text-blue-700">
+            <div className="p-3 bg-[#7B5EA7]/10 rounded-2xl text-[#7B5EA7]">
               <ShieldAlert size={24} />
             </div>
             <div>
@@ -107,7 +107,7 @@ export default async function AdminDashboard() {
               stats.adminStatsArray.map((admin, idx) => (
                 <div key={idx} className="admin-card flex justify-between items-center p-4 bg-slate-50/80">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black shadow-sm">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7B5EA7] to-[#9B7FBF] text-white flex items-center justify-center font-black shadow-sm">
                       {admin.username.charAt(0).toUpperCase()}
                     </div>
                     <span className="font-bold text-slate-700">{admin.username}</span>

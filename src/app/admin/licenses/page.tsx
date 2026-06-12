@@ -101,7 +101,7 @@ export default function CreateLicense() {
       {/* Generate Key Section */}
       <div className="admin-panel p-5 md:p-7">
         <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-          <Key className="text-blue-600" /> Generate new key
+          <Key className="text-[#7B5EA7]" /> Generate new key
         </h3>
 
         <div className="space-y-6 max-w-xl">
@@ -123,23 +123,23 @@ export default function CreateLicense() {
                   onClick={() => setDuration(opt.value)}
                   className={`admin-action relative p-3 rounded-2xl border text-left transition-all duration-300 overflow-hidden flex flex-col justify-center min-h-[72px] group ${
                     duration === opt.value
-                      ? "border-blue-500 bg-blue-50/80 shadow-md ring-4 ring-blue-500/10 z-10"
+                      ? "border-[#7B5EA7] bg-[#7B5EA7]/5 shadow-md ring-4 ring-[#7B5EA7]/10 z-10"
                       : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm"
                   }`}
                 >
-                  {opt.popular && (
-                    <div className="absolute top-0 right-0 bg-blue-500 text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg">
+                    {opt.popular && (
+                    <div className="absolute top-0 right-0 bg-[#7B5EA7] text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg">
                       Popular
                     </div>
                   )}
-                  <div className={`text-[10px] font-black tracking-widest mb-0.5 ${duration === opt.value ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-500'}`}>
+                  <div className={`text-[10px] font-black tracking-widest mb-0.5 ${duration === opt.value ? 'text-[#7B5EA7]' : 'text-slate-400 group-hover:text-slate-500'}`}>
                     {opt.tier}
                   </div>
                   <div className={`text-base font-black tracking-tight ${duration === opt.value ? 'text-slate-900' : 'text-slate-700'}`}>
                     {opt.days}
                   </div>
                   {duration === opt.value && (
-                    <div className="absolute bottom-2.5 right-2.5 text-blue-500">
+                    <div className="absolute bottom-2.5 right-2.5 text-[#7B5EA7]">
                       <CheckCircle2 size={16} className="drop-shadow-sm" />
                     </div>
                   )}
@@ -151,7 +151,7 @@ export default function CreateLicense() {
           <button
             onClick={handleCreate}
             disabled={isLoading}
-            className="admin-action w-full py-3.5 md:py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold text-base md:text-lg shadow-lg shadow-blue-500/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="admin-action w-full py-3.5 md:py-4 bg-[#7B5EA7] hover:brightness-110 text-white rounded-2xl font-bold text-base md:text-lg shadow-lg shadow-[#7B5EA7]/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
@@ -181,10 +181,10 @@ export default function CreateLicense() {
               </div>
               <button
                 onClick={() => copyToClipboard(generatedLicense.key)}
-                className="admin-action p-4 bg-white border border-slate-200 rounded-xl text-slate-600 hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50 transition-all active:scale-95"
+                className="admin-action p-4 bg-white border border-slate-200 rounded-xl text-slate-600 hover:text-[#7B5EA7] hover:border-[#7B5EA7] hover:bg-[#7B5EA7]/5 transition-all active:scale-95"
                 title="Copy to clipboard"
               >
-                {copied ? <CheckCircle2 className="text-blue-500" /> : <Copy />}
+                {copied ? <CheckCircle2 className="text-[#7B5EA7]" /> : <Copy />}
               </button>
             </div>
 
@@ -209,7 +209,7 @@ export default function CreateLicense() {
           <input 
             type="text" 
             placeholder="Search by key..." 
-            className="min-h-[42px] w-full md:w-auto px-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            className="min-h-[42px] w-full md:w-auto px-4 py-2 rounded-xl border border-black/[0.06] bg-white/80 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#7B5EA7]/20"
             onChange={(e) => {
               const term = e.target.value.toLowerCase();
               // In a real app, this would filter the state or refetch
@@ -261,7 +261,7 @@ export default function CreateLicense() {
                         </code>
                         <button 
                           onClick={() => copyToClipboard(lic.key, false)}
-                          className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors"
+                          className="p-1.5 text-slate-400 hover:text-[#7B5EA7] transition-colors"
                         >
                           <Copy size={14} />
                         </button>
@@ -269,7 +269,7 @@ export default function CreateLicense() {
                     </td>
                     <td className="px-6 py-4">
                       <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black tracking-tight ${
-                        lic.status === 'active' ? 'bg-indigo-50 text-indigo-600 border border-indigo-100' :
+                        lic.status === 'active' ? 'bg-[#7B5EA7]/10 text-[#7B5EA7] border border-[#7B5EA7]/10' :
                         lic.status === 'expired' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
                         'bg-amber-50 text-amber-600 border border-amber-100'
                       }`}>
@@ -279,7 +279,7 @@ export default function CreateLicense() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2 text-sm text-slate-600 font-bold">
-                        <Smartphone size={14} className={lic.deviceId ? "text-blue-500" : "text-slate-300"} />
+                        <Smartphone size={14} className={lic.deviceId ? "text-[#007AFF]" : "text-slate-300"} />
                         <span className="truncate max-w-[100px]">{lic.deviceId || "Unused"}</span>
                       </div>
                     </td>
@@ -330,10 +330,10 @@ export default function CreateLicense() {
           days={7} 
           price="499" 
           title="Weekly access" 
-          icon={<Clock className="text-blue-600" size={24} />}
+          icon={<Clock className="text-[#007AFF]" size={24} />}
           bg="bg-white" 
-          border="border-blue-100" 
-          accent="bg-blue-600"
+          border="border-[#007AFF]/10" 
+          accent="bg-[#007AFF]"
         />
         <PlanGuide 
           days={15} 
@@ -348,10 +348,10 @@ export default function CreateLicense() {
           days={30} 
           price="1,999" 
           title="Monthly premium" 
-          icon={<Clock className="text-indigo-600" size={24} />}
+          icon={<Clock className="text-[#7B5EA7]" size={24} />}
           bg="bg-white" 
-          border="border-indigo-100" 
-          accent="bg-indigo-600"
+          border="border-[#7B5EA7]/10" 
+          accent="bg-[#7B5EA7]"
         />
       </div>
     </div>

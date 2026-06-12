@@ -67,7 +67,7 @@ export default function UsersPage() {
       <div>
         {isFetching ? (
           <div className="flex justify-center p-12">
-            <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-[#7B5EA7]/20 border-t-[#7B5EA7] rounded-full animate-spin" />
           </div>
         ) : licenses.length === 0 ? (
           <div className="admin-panel text-center p-12 text-slate-500 font-medium">
@@ -82,9 +82,9 @@ export default function UsersPage() {
 
               // Soft Premium Palette (iOS Inspired)
               let bgClass = "bg-[#F5F7FF] border-[#E0E7FF]"; // Soft Indigo (Active)
-              let badgeClass = "bg-indigo-600 text-white shadow-indigo-100";
+              let badgeClass = "bg-[#7B5EA7] text-white shadow-[#7B5EA7]/10";
               let badgeText = "Active";
-              let iconColor = "text-indigo-600";
+              let iconColor = "text-[#7B5EA7]";
 
               if (isBanned) {
                 bgClass = "bg-[#FFF9F2] border-[#FFE4CC]"; // Soft Amber (Banned)
@@ -137,7 +137,7 @@ export default function UsersPage() {
                       </div>
                       
                       {isUsed ? (
-                        <div className="flex items-center gap-1 text-blue-700 bg-blue-100/70 backdrop-blur-md px-2 py-1 rounded shadow-[0_2px_10px_-4px_rgba(59,130,246,0.2)] border border-blue-50" title={user.deviceId}>
+                        <div className="flex items-center gap-1 text-[#007AFF] bg-[#007AFF]/10 backdrop-blur-md px-2 py-1 rounded shadow-[0_2px_10px_-4px_rgba(59,130,246,0.2)] border border-[#007AFF]/10" title={user.deviceId}>
                           <Smartphone size={12} />
                           <span className="truncate max-w-[50px] sm:max-w-[70px]">Used</span>
                         </div>
@@ -155,7 +155,7 @@ export default function UsersPage() {
                     {isUsed && !isExpired && (
                       <button 
                         onClick={() => handleAction(user._id, 'reset')}
-                        className="admin-action flex items-center justify-center gap-1 p-1.5 rounded bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white transition-all active:scale-95 font-bold text-[10px] sm:text-xs group"
+                        className="admin-action flex items-center justify-center gap-1 p-1.5 rounded bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF] hover:text-white transition-all active:scale-95 font-bold text-[10px] sm:text-xs group"
                         title="Reset Device"
                       >
                         <RotateCcw size={12} className="group-hover:-rotate-90 transition-transform duration-300" />

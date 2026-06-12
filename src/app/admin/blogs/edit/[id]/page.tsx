@@ -41,7 +41,7 @@ export default function EditBlogPage() {
   if (!initial) {
     return (
       <div className={`${styles.root} p-8 flex justify-center`}>
-        <Loader2 className="animate-spin text-blue-500" size={24} />
+        <Loader2 className="animate-spin text-[#7B5EA7]" size={24} />
       </div>
     );
   }

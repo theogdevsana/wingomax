@@ -64,7 +64,7 @@ export default function AdminBlogsListPage() {
       <div className={styles.card}>
         {loading ? (
           <div className="p-8 flex justify-center">
-            <Loader2 className="animate-spin text-blue-500" size={22} />
+            <Loader2 className="animate-spin text-[#7B5EA7]" size={22} />
           </div>
         ) : posts.length === 0 ? (
           <p className="p-8 text-center text-slate-500">No posts yet.</p>
@@ -106,7 +106,7 @@ export default function AdminBlogsListPage() {
                   </Link>
                   <Link
                     href={`/admin/blogs/edit/${post.id}`}
-                    className={`${styles.btnGhost} text-blue-600`}
+                    className={`${styles.btnGhost} text-[#007AFF]`}
                     title="Edit"
                   >
                     <Pencil size={14} />

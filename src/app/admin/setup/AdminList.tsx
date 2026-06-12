@@ -81,7 +81,7 @@ export default function AdminList({ refreshKey }: { refreshKey: number }) {
       <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
         {loading ? (
           <div className="flex items-center justify-center h-full">
-            <div className="w-8 h-8 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-[#7B5EA7]/30 border-t-[#7B5EA7] rounded-full animate-spin" />
           </div>
         ) : admins.length > 0 ? (
           admins.map((admin) => (
@@ -90,7 +90,7 @@ export default function AdminList({ refreshKey }: { refreshKey: number }) {
               className="admin-card flex justify-between items-center p-4 bg-slate-50"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 shrink-0 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black">
+                <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-[#7B5EA7] to-[#9B7FBF] text-white flex items-center justify-center font-black">
                   {admin.username.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0">

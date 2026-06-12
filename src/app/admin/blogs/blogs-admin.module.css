@@ -1,13 +1,15 @@
 .root {
   font-size: 14px;
   line-height: 1.5;
-  color: #334155;
+  color: #374151;
 }
 
 .root h1 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0;
   margin-bottom: 0.25rem;
+  color: #111827;
 }
 
 .root h2 {
@@ -23,7 +25,19 @@
 .root input,
 .root textarea,
 .root select {
-  padding: 0.4rem 0.6rem;
+  padding: 0.55rem 0.75rem;
+  background: rgba(249, 250, 251, 0.8);
+  border-color: rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+  font-weight: 600;
+}
+
+.root input:focus,
+.root textarea:focus,
+.root select:focus {
+  border-color: rgba(123, 94, 167, 0.42);
+  box-shadow: 0 0 0 4px rgba(123, 94, 167, 0.16);
+  outline: none;
 }
 
 .root :global(.note-editor) {
@@ -40,9 +54,11 @@
 }
 
 .card {
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.04);
 }
 
 .btnPrimary {
@@ -52,9 +68,10 @@
   padding: 0.4rem 0.75rem;
   font-size: 11px;
   font-weight: 700;
-  border-radius: 0.5rem;
-  background: #007aff;
+  border-radius: 1rem;
+  background: #7b5ea7;
   color: white;
+  box-shadow: 0 8px 18px rgba(123, 94, 167, 0.18);
 }
 
 .btnGreen {
@@ -64,34 +81,35 @@
   padding: 0.4rem 0.75rem;
   font-size: 11px;
   font-weight: 700;
-  border-radius: 0.5rem;
-  background: #34c759;
+  border-radius: 1rem;
+  background: #7b5ea7;
   color: white;
+  box-shadow: 0 8px 18px rgba(123, 94, 167, 0.18);
 }
 
 .btnGhost {
   padding: 0.35rem 0.55rem;
   font-size: 10px;
   font-weight: 600;
-  border-radius: 0.5rem;
-  color: #64748b;
+  border-radius: 0.85rem;
+  color: #6b7280;
 }
 
 .btnGhost:hover {
-  background: #f1f5f9;
+  background: #f3f4f6;
 }
 
 .metaBox {
   padding: 0.75rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.65rem;
+  background: rgba(249, 250, 251, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 1rem;
 }
 
 .metaTitle {
   font-size: 10px;
   font-weight: 800;
-  color: #64748b;
+  color: #9ca3af;
   margin-bottom: 0.5rem;
 }
 
@@ -102,19 +120,24 @@
 }
 
 .listRow {
-  padding: 0.65rem 0.85rem;
+  padding: 0.85rem 1rem;
+  transition: background-color 160ms ease;
+}
+
+.listRow:hover {
+  background: rgba(249, 250, 251, 0.7);
 }
 
 .listTitle {
   font-size: 12px;
   font-weight: 700;
-  color: #0f172a;
+  color: #111827;
 }
 
 .listSlug {
   font-size: 10px;
   font-family: ui-monospace, monospace;
-  color: #94a3b8;
+  color: #9ca3af;
 }
 
 .badge {
@@ -138,6 +161,6 @@
   font-weight: 800;
   padding: 0.15rem 0.4rem;
   border-radius: 999px;
-  background: #f1f5f9;
-  color: #64748b;
+  background: #fff4e0;
+  color: #ff9f0a;
 }

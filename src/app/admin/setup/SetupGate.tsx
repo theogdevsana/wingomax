@@ -66,7 +66,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
   if (checking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--admin-bg)]">
-        <div className="w-8 h-8 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-[#7B5EA7]/30 border-t-[#7B5EA7] rounded-full animate-spin" />
       </div>
     );
   }
@@ -74,7 +74,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
   if (!unlocked) {
     return (
       <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[var(--admin-bg)] p-4">
-        <div className="absolute inset-x-0 top-0 h-2 bg-blue-600" />
+        <div className="absolute inset-x-0 top-0 h-2 bg-[#7B5EA7]" />
 
         <div className="admin-panel relative z-10 w-full max-w-md p-6 sm:p-8 shadow-2xl">
           <div className="flex justify-center mb-6">
@@ -108,7 +108,7 @@ export default function SetupGate({ children }: { children: ReactNode }) {
                   placeholder="Enter setup password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-medium text-slate-900"
+                  className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-[#7B5EA7] focus:bg-white transition-all font-medium text-slate-900"
                   required
                   autoFocus
                 />

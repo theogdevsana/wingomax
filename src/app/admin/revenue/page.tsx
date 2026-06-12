@@ -37,32 +37,32 @@ export default function RevenuePage() {
 
       {isFetching ? (
         <div className="flex justify-center p-12">
-          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[#7B5EA7]/20 border-t-[#7B5EA7] rounded-full animate-spin" />
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 md:gap-4">
           <RevenueCard 
             title="Total Revenue" 
             amount={stats?.total || 0} 
-            icon={<DollarSign className="text-emerald-600" size={28} />} 
+            icon={<DollarSign className="text-[#34C759]" size={26} />} 
             color="#34C759"
           />
           <RevenueCard 
             title="Monthly Sales (Last 30 Days)" 
             amount={stats?.monthly || 0} 
-            icon={<Calendar className="text-blue-600" size={28} />} 
+            icon={<Calendar className="text-[#007AFF]" size={26} />} 
             color="#007AFF"
           />
           <RevenueCard 
             title="Weekly Sales (Last 7 Days)" 
             amount={stats?.weekly || 0} 
-            icon={<TrendingUp className="text-purple-600" size={28} />} 
-            color="#AF52DE"
+            icon={<TrendingUp className="text-[#7B5EA7]" size={26} />} 
+            color="#7B5EA7"
           />
           <RevenueCard 
             title="Previous Month Sales" 
             amount={stats?.lastMonth || 0} 
-            icon={<CalendarDays className="text-orange-600" size={28} />} 
+            icon={<CalendarDays className="text-[#FF9F0A]" size={26} />} 
             color="#FF9500"
           />
         </div>

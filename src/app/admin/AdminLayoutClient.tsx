@@ -3,8 +3,7 @@
 import { ReactNode, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Home, Users, Gamepad2, Settings, LogOut, Key, Menu, X, DollarSign, Power, Sparkles } from "lucide-react";
-import Image from "next/image";
+import { LayoutDashboard, Users, Gamepad2, Settings, LogOut, Key, Menu, X, DollarSign, Zap, ChevronRight, ArrowLeft } from "lucide-react";
 import { Nunito } from 'next/font/google';
 import AdminBlogNav from "./AdminBlogNav";
 import { getApiUrl } from "@/lib/api-utils";
@@ -42,99 +41,70 @@ export default function AdminLayoutClient({ children }: { children: ReactNode })
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
-          className="fixed inset-0 h-[100dvh] bg-slate-950/45 backdrop-blur-sm z-40 md:hidden transition-opacity" 
+          className="fixed inset-0 h-[100dvh] bg-black/20 backdrop-blur-sm z-40 lg:hidden transition-opacity" 
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside className={`admin-sidebar fixed inset-y-0 left-0 z-50 h-[100dvh] max-h-[100dvh] w-[280px] bg-white/95 border-r border-slate-200 flex flex-col overflow-hidden transition-transform duration-300 ease-out md:relative md:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="shrink-0 p-5 border-b border-slate-100 flex justify-start items-center relative">
-          <Link href="/admin" className="flex items-center pl-1">
-            <div className="relative w-36 h-12">
-              <Image 
-                src="/duner/main_logo.png" 
-                alt="Main Logo" 
-                fill 
-                className="object-contain object-left"
-                priority
-                sizes="(max-width: 768px) 144px, 144px"
-              />
+      <aside className={`admin-sidebar fixed inset-y-0 left-0 z-50 h-[100dvh] max-h-[100dvh] w-[280px] bg-white/80 backdrop-blur-xl border-r border-black/5 flex flex-col overflow-hidden transition-transform duration-300 ease-out lg:relative lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="shrink-0 px-6 h-16 border-b border-black/5 flex items-center gap-3 relative">
+          <Link href="/admin" className="flex min-w-0 flex-1 items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#7B5EA7] to-[#9B7FBF] flex items-center justify-center shadow-sm">
+              <Zap className="w-4 h-4 text-white" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-sm font-bold text-gray-900 tracking-tight truncate">Wingo Admin</div>
+              <div className="text-[10px] text-gray-400 font-medium -mt-0.5 truncate">Management Panel</div>
             </div>
           </Link>
-          <button className="md:hidden text-slate-500 absolute right-4" onClick={() => setSidebarOpen(false)}>
-            <X size={24} />
+          <button className="lg:hidden p-2 rounded-xl text-gray-400 hover:bg-gray-100" onClick={() => setSidebarOpen(false)}>
+            <X className="w-5 h-5" />
           </button>
         </div>
-        <div className="shrink-0 px-5 pt-4">
-          <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-3">
-            <div className="flex items-center gap-2 text-blue-700">
-              <Sparkles size={16} />
-              <span className="text-xs font-black uppercase tracking-wide">Admin Control</span>
-            </div>
-            <p className="mt-1 text-xs font-semibold leading-5 text-slate-600">Manage keys, users, revenue, and site settings.</p>
-          </div>
-        </div>
-        <nav className="min-h-0 flex-1 overscroll-contain p-4 space-y-1.5 overflow-y-auto hide-scrollbar">
-          <NavItem href="/admin" icon={<Home size={19} />} label="Dashboard" onClick={() => setSidebarOpen(false)} />
-          <NavItem href="/admin/licenses" icon={<Key size={19} />} label="License Keys" onClick={() => setSidebarOpen(false)} />
-          <NavItem href="/admin/users" icon={<Users size={19} />} label="Users" onClick={() => setSidebarOpen(false)} />
-          <NavItem href="/admin/revenue" icon={<DollarSign size={19} />} label="Revenue" onClick={() => setSidebarOpen(false)} />
+        <nav className="min-h-0 flex-1 overscroll-contain px-3 py-4 space-y-1 overflow-y-auto hide-scrollbar">
+          <NavItem href="/admin" icon={<LayoutDashboard className="w-5 h-5" />} label="Dashboard" onClick={() => setSidebarOpen(false)} />
+          <NavItem href="/admin/licenses" icon={<Key className="w-5 h-5" />} label="License Keys" onClick={() => setSidebarOpen(false)} />
+          <NavItem href="/admin/users" icon={<Users className="w-5 h-5" />} label="Users" onClick={() => setSidebarOpen(false)} />
+          <NavItem href="/admin/revenue" icon={<DollarSign className="w-5 h-5" />} label="Revenue" onClick={() => setSidebarOpen(false)} />
           <AdminBlogNav onNavigate={() => setSidebarOpen(false)} />
-          <NavItem href="#" icon={<Gamepad2 size={19} />} label="Games" />
-          <NavItem href="/admin/settings" icon={<Settings size={19} />} label="Settings" onClick={() => setSidebarOpen(false)} />
+          <NavItem href="#" icon={<Gamepad2 className="w-5 h-5" />} label="Games" />
+          <NavItem href="/admin/settings" icon={<Settings className="w-5 h-5" />} label="Settings" onClick={() => setSidebarOpen(false)} />
         </nav>
-        <div className="shrink-0 p-4 border-t border-slate-100 bg-slate-50/70">
+        <div className="shrink-0 px-4 py-4 border-t border-black/5 space-y-1">
           <button 
             onClick={handleLogout}
-            className="admin-action flex items-center gap-3 w-full p-3 rounded-xl text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors font-bold"
+            className="admin-action flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-red-400 hover:bg-red-50 hover:text-red-600 transition-all w-full"
           >
-            <LogOut size={20} />
-            <span>Logout</span>
+            <LogOut className="w-4 h-4" />
+            <span>Sign Out</span>
           </button>
+          <Link href="/" className="admin-action flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-all">
+            <ArrowLeft className="w-4 h-4" />
+            Back to Site
+          </Link>
         </div>
       </aside>
 
       {/* Main Content */}
       <main className="admin-main flex-1 flex flex-col h-[100dvh] min-w-0 overflow-hidden">
         {/* Top Header */}
-        <header className="admin-header h-16 bg-white/88 border-b border-slate-200 flex items-center px-4 md:px-6 shrink-0">
+        <header className="admin-header h-14 bg-[#f2f2f7]/80 border-b border-black/5 flex items-center px-4 lg:hidden shrink-0">
           <div className="flex-1 flex items-center gap-3 min-w-0">
-            <button className="md:hidden p-2 text-slate-600 rounded-xl hover:bg-slate-100" onClick={() => setSidebarOpen(true)}>
-              <Menu size={24} />
+            <button className="p-2 -ml-2 text-gray-600 rounded-xl hover:bg-gray-200/50" onClick={() => setSidebarOpen(true)}>
+              <Menu className="w-5 h-5" />
             </button>
-            <div className="hidden sm:block min-w-0">
-              <p className="text-[11px] font-black uppercase tracking-wide text-slate-400">Wingo Signal</p>
-              <h2 className="truncate text-sm font-black text-slate-900 md:text-base">{pageTitle}</h2>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#7B5EA7] to-[#9B7FBF] flex items-center justify-center">
+                <Zap className="w-3 h-3 text-white" />
+              </div>
+              <span className="truncate text-sm font-bold text-gray-900">{pageTitle}</span>
             </div>
-          </div>
-          
-          <div className="flex items-center justify-center md:hidden">
-            <div className="relative w-36 h-10">
-              <Image 
-                src="/duner/main_logo.png" 
-                alt="Main Logo" 
-                fill 
-                className="object-contain"
-                priority
-                sizes="(max-width: 768px) 144px, 144px"
-              />
-            </div>
-          </div>
-
-          <div className="flex-1 flex items-center justify-end gap-4">
-            <button 
-              onClick={handleLogout}
-              className="admin-action w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500 hover:bg-red-100 hover:text-red-600 transition-colors border border-red-100 shadow-sm"
-              title="Logout"
-            >
-              <Power size={20} strokeWidth={2.5} />
-            </button>
           </div>
         </header>
         
         {/* Page Content */}
-        <div className="admin-content flex-1 overflow-y-auto p-4 sm:p-5 md:p-8">
+        <div className="admin-content flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           {children}
         </div>
       </main>
@@ -157,11 +127,12 @@ function NavItem({ href, icon, label, active = false, onClick }: { href: string;
   return (
     <Link href={href} onClick={onClick} data-active={isActive} className={`admin-nav-link no-underline flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold transition-all ${
       isActive
-        ? "bg-blue-50 text-blue-700 shadow-sm" 
-        : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+        ? "bg-[#7B5EA7]/10 text-[#7B5EA7]" 
+        : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
     }`} style={{ textDecoration: "none" }}>
-      <span className={`${isActive ? "text-blue-600" : "text-slate-400"} transition-colors`}>{icon}</span>
+      <span className={`${isActive ? "text-[#7B5EA7]" : "text-gray-400"} transition-colors`}>{icon}</span>
       <span>{label}</span>
+      {isActive && <ChevronRight className="w-4 h-4 ml-auto text-[#7B5EA7]/50" />}
     </Link>
   );
 }

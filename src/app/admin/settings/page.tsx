@@ -67,7 +67,7 @@ export default function SettingsPage() {
       <div className="admin-panel">
         <div className="p-6 border-b border-slate-100 bg-slate-50/50">
           <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
-            <LinkIcon size={20} className="text-blue-500" />
+            <LinkIcon size={20} className="text-[#7B5EA7]" />
             External Links
           </h2>
         </div>
@@ -75,7 +75,7 @@ export default function SettingsPage() {
         <div className="p-6">
           {isLoading ? (
             <div className="flex justify-center items-center py-12">
-              <Loader2 className="animate-spin text-blue-500" size={32} />
+              <Loader2 className="animate-spin text-[#7B5EA7]" size={32} />
             </div>
           ) : (
             <form onSubmit={handleSave} className="space-y-6">
@@ -102,7 +102,7 @@ export default function SettingsPage() {
                     value={telegramLink}
                     onChange={(e) => setTelegramLink(e.target.value)}
                     required
-                  className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all"
+                  className="block w-full pl-10 pr-3 py-3 border border-black/[0.06] bg-gray-50/80 rounded-2xl focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 sm:text-sm font-medium transition-all"
                     placeholder="https://t.me/yourtelegram"
                   />
                 </div>
@@ -115,7 +115,7 @@ export default function SettingsPage() {
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="admin-action bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="admin-action bg-[#7B5EA7] hover:brightness-110 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-colors disabled:opacity-70 disabled:cursor-not-allowed shadow-sm"
                 >
                   {isSaving ? (
                     <>

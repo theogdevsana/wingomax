@@ -36,18 +36,18 @@ export default function AdminBlogNav({ onNavigate }: { onNavigate?: () => void }
       <Link
         href="/admin/blogs"
         onClick={onNavigate}
-        className="flex items-center gap-3 p-3 rounded-xl font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all no-underline"
+        className="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-all no-underline"
       >
-        <FileText size={20} color="#5856D6" />
-        <span className="text-sm">Blogs</span>
+        <FileText className="w-5 h-5 text-gray-400" />
+        <span>Blogs</span>
       </Link>
     );
   }
 
   return (
     <div className="space-y-1">
-      <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-violet-50 text-violet-700">
-        <FileText size={18} color="#5856D6" />
+      <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#7B5EA7]/10 text-[#7B5EA7]">
+        <FileText className="w-5 h-5 text-[#7B5EA7]" />
         <span className="text-sm font-bold">Blogs</span>
       </div>
 
@@ -56,8 +56,8 @@ export default function AdminBlogNav({ onNavigate }: { onNavigate?: () => void }
         onClick={onNavigate}
         className={`blog-sub-link flex items-center gap-2 pl-9 pr-3 py-2 rounded-lg text-xs font-semibold transition-colors no-underline ${
           pathname === "/admin/blogs"
-            ? "bg-blue-50 text-blue-600"
-            : "text-slate-600 hover:bg-slate-50"
+            ? "bg-[#7B5EA7]/10 text-[#7B5EA7]"
+            : "text-gray-500 hover:bg-gray-100"
         }`}
       >
         <List size={14} /> All blogs
@@ -68,8 +68,8 @@ export default function AdminBlogNav({ onNavigate }: { onNavigate?: () => void }
         onClick={onNavigate}
         className={`blog-sub-link flex items-center gap-2 pl-9 pr-3 py-2 rounded-lg text-xs font-semibold transition-colors no-underline ${
           pathname === "/admin/blogs/new"
-            ? "bg-blue-50 text-blue-600"
-            : "text-slate-600 hover:bg-slate-50"
+            ? "bg-[#7B5EA7]/10 text-[#7B5EA7]"
+            : "text-gray-500 hover:bg-gray-100"
         }`}
       >
         <Plus size={14} /> New post
@@ -91,8 +91,8 @@ export default function AdminBlogNav({ onNavigate }: { onNavigate?: () => void }
                 title={post.title}
                 className={`blog-sub-link block px-2 py-1.5 rounded-md text-[11px] font-medium truncate no-underline ${
                   active
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-slate-500 hover:bg-slate-50 hover:text-slate-800"
+                    ? "bg-[#7B5EA7]/10 text-[#7B5EA7]"
+                    : "text-gray-400 hover:bg-gray-100 hover:text-gray-700"
                 }`}
               >
                 {post.title}
