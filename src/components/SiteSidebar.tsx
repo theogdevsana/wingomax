@@ -54,6 +54,8 @@ export default function SiteSidebar({ isOpen, onClose }: { isOpen: boolean; onCl
     <>
       <div onClick={onClose} style={{
         position: "fixed", inset: 0, zIndex: 200,
+        height: "100dvh",
+        minHeight: "100dvh",
         background: "rgba(0,0,0,0.7)",
         backdropFilter: "blur(6px)",
         WebkitBackdropFilter: "blur(6px)",
@@ -64,7 +66,10 @@ export default function SiteSidebar({ isOpen, onClose }: { isOpen: boolean; onCl
 
       <div role="dialog" aria-modal="true" aria-label="Navigation" style={{
         position: "fixed", top: 0, right: 0, zIndex: 300,
-        width: "min(300px, 82vw)", height: "100dvh",
+        width: "min(300px, 82vw)",
+        height: "100dvh",
+        minHeight: "100dvh",
+        maxHeight: "100dvh",
         background: "rgba(255,255,255,0.88)",
         backdropFilter: "blur(24px) saturate(1.2)",
         WebkitBackdropFilter: "blur(24px) saturate(1.2)",
@@ -72,8 +77,10 @@ export default function SiteSidebar({ isOpen, onClose }: { isOpen: boolean; onCl
         transform: isOpen ? "translateX(0)" : "translateX(100%)",
         transition: "transform 0.35s cubic-bezier(0.32,0.72,0,1)",
         display: "flex", flexDirection: "column",
+        overflow: "hidden",
+        overscrollBehavior: "contain",
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "22px 20px 14px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "calc(22px + env(safe-area-inset-top, 0px)) 20px 14px", flexShrink: 0 }}>
           <Link href="/" onClick={onClose} style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
             <Image src="/logo/main_logo.png" alt="Wingo Signal" width={120} height={24} style={{ objectFit: "contain" }} priority />
           </Link>
@@ -83,7 +90,7 @@ export default function SiteSidebar({ isOpen, onClose }: { isOpen: boolean; onCl
           </button>
         </div>
 
-        <nav style={{ padding: "6px 14px", flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "2px" }}>
+        <nav style={{ padding: "6px 14px", flex: 1, minHeight: 0, overflowY: "auto", overscrollBehavior: "contain", WebkitOverflowScrolling: "touch", display: "flex", flexDirection: "column", gap: "2px" }}>
           {navItems.map(({ label, href, icon }) => {
             const iconColor =
               href === "/" ? "#007AFF" :
@@ -135,7 +142,7 @@ export default function SiteSidebar({ isOpen, onClose }: { isOpen: boolean; onCl
           ))}
         </nav>
 
-        <div style={{ padding: "6px 16px 28px", borderTop: "1px solid rgba(60,60,67,0.08)" }}>
+        <div style={{ padding: "6px 16px calc(28px + env(safe-area-inset-bottom, 0px))", borderTop: "1px solid rgba(60,60,67,0.08)", flexShrink: 0 }}>
           <Link href="/login" onClick={onClose} style={{
             width: "100%", padding: "13px 20px", fontSize: "14px",
             background: "#007AFF", color: "#fff", textDecoration: "none",

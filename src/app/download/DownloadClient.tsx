@@ -337,6 +337,8 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
         {/* Overlay */}
         <div onClick={() => setMenuOpen(false)} style={{
           position: "fixed", inset: 0, zIndex: 200,
+          height: "100dvh",
+          minHeight: "100dvh",
           background: "rgba(0,0,0,0.7)",
           backdropFilter: "blur(6px)",
           opacity: menuOpen ? 1 : 0,
@@ -347,7 +349,10 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
         {/* Drawer */}
         <div ref={menuRef} role="dialog" aria-modal="true" aria-label="Navigation" style={{
           position: "fixed", top: 0, right: 0, zIndex: 300,
-          width: "min(300px, 82vw)", height: "100dvh",
+          width: "min(300px, 82vw)",
+          height: "100dvh",
+          minHeight: "100dvh",
+          maxHeight: "100dvh",
           background: "rgba(255,255,255,0.88)",
           backdropFilter: "blur(24px) saturate(1.2)",
           WebkitBackdropFilter: "blur(24px) saturate(1.2)",
@@ -355,9 +360,11 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
           transform: menuOpen ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.35s cubic-bezier(0.32,0.72,0,1)",
           display: "flex", flexDirection: "column",
+          overflow: "hidden",
+          overscrollBehavior: "contain",
         }}>
           {/* Drawer header */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "22px 20px 14px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "calc(22px + env(safe-area-inset-top, 0px)) 20px 14px", flexShrink: 0 }}>
             <Link href="/" onClick={() => setMenuOpen(false)} style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
               <Image src="/logo/main_logo.png" alt="Wingo Signal" width={120} height={24} style={{ objectFit: "contain" }} priority />
             </Link>
@@ -368,7 +375,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
           </div>
 
           {/* Drawer nav */}
-          <nav style={{ padding: "6px 14px", flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "2px" }}>
+          <nav style={{ padding: "6px 14px", flex: 1, minHeight: 0, overflowY: "auto", overscrollBehavior: "contain", WebkitOverflowScrolling: "touch", display: "flex", flexDirection: "column", gap: "2px" }}>
               {[
                   { label: "Home", href: "/", Icon: Icons.Home, iconColor: "#007AFF" },
                   { label: "About", href: "/about", Icon: Icons.Home, iconColor: "#007AFF" },
@@ -424,7 +431,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
           </nav>
 
           {/* Drawer footer */}
-          <div style={{ padding: "6px 16px 28px", borderTop: "1px solid rgba(60,60,67,0.08)" }}>
+          <div style={{ padding: "6px 16px calc(28px + env(safe-area-inset-bottom, 0px))", borderTop: "1px solid rgba(60,60,67,0.08)", flexShrink: 0 }}>
             <Link href="/login" onClick={() => setMenuOpen(false)} className="relative flex items-center overflow-hidden font-medium transition-all rounded-xl group" style={{ width: "100%", padding: "13px 20px", fontSize: "14px", background: "#007AFF", color: "#fff", textDecoration: "none", fontWeight: 700, justifyContent: "center", letterSpacing: "0.3px", boxShadow: "0 4px 12px rgba(0,122,255,0.3)" }}>
               <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out rounded" style={{ background: "#0066d9" }}>
                 <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#fff" }}></span>
