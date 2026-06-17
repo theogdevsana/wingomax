@@ -35,11 +35,11 @@ export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { 
 
   return (
     <>
-      <script
+      <script key="org-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
       />
-      <script
+      <script key="website-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
       />
@@ -81,13 +81,13 @@ export default function JsonLd({
   return (
     <>
       {breadcrumbData && (
-        <script
+        <script key="breadcrumb-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
         />
       )}
       {faqData && (
-        <script
+        <script key="faq-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
         />
