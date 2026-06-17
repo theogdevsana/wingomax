@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { generateAdminToken } from '@/lib/jwt';
 import { query } from '@/lib/db';
-import crypto from 'crypto';
 import { validateLoginCredentials, sanitizeInput } from '@/lib/security';
 import { adminLoginLimiter } from '@/lib/rate-limiter';
 
@@ -44,15 +43,12 @@ export async function POST(req: Request) {
     }
 
     const sanitizedUsername = sanitizeInput(username);
-    const sanitizedPassword = password;
 
     const result = await query('SELECT * FROM admins WHERE username = $1', [sanitizedUsername]);
     const admin = result.rows[0];
 
     if (admin) {
-      const hash = crypto.createHash('sha256').update(sanitizedPassword).digest('hex');
-
-      if (admin.password_hash === hash) {
+      if (admin.password_hash === password) {
         const token = generateAdminToken({ username: admin.username, role: 'admin' });
         adminLoginLimiter.reset(ip);
         return setTokenAndRespond(token);

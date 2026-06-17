@@ -6,6 +6,13 @@ import { User, KeyRound, AlertCircle, Eye, EyeOff, Zap } from "lucide-react";
 import { getApiUrl } from "@/lib/api-utils";
 import { validateLoginCredentials } from "@/lib/security";
 
+async function sha256(message: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 export default function AdminLogin() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,11 +38,12 @@ export default function AdminLogin() {
     }
     setIsLoading(true);
     try {
+      const passwordHash = await sha256(password);
       const res = await fetch(getApiUrl("/v1/admin/login"), { 
         credentials: 'include', 
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password: passwordHash }),
       });
       const data = await res.json();
       if (res.ok && data.status === "success") {
@@ -53,7 +61,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-purple-50 p-4">
+    <div className="relative w-full min-h-[100dvh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-purple-50 p-4">
 
       <div className="relative z-10 w-full" style={{ maxWidth: "min(100%, 28rem)" }}>
         <div className="text-center mb-8">
