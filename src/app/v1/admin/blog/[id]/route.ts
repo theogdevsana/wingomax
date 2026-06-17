@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import connectToDatabase from '@/lib/mongodb';
-import BlogPostModel from '@/lib/models/BlogPost';
+import { query } from '@/lib/db';
 import { verifyAdminToken } from '@/lib/jwt';
 import { getBlogPostById, slugifyTitle } from '@/lib/blog-data';
 import { normalizeContentHtml, resolveBlogImage } from '@/lib/cdn';
@@ -12,10 +11,7 @@ async function getAuthToken() {
   return token ? verifyAdminToken(token) : null;
 }
 
-export async function GET(
-  _req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const admin = await getAuthToken();
   if (!admin) {
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
@@ -30,10 +26,7 @@ export async function GET(
   return NextResponse.json({ status: 'success', data: post });
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const admin = await getAuthToken();
   if (!admin) {
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
@@ -43,52 +36,54 @@ export async function PUT(
 
   try {
     const body = await req.json();
-    await connectToDatabase();
 
-    const post = await BlogPostModel.findById(id);
-    if (!post) {
+    const postResult = await query('SELECT * FROM blog_posts WHERE id = $1', [id]);
+    if (postResult.rows.length === 0) {
       return NextResponse.json({ status: 'error', msg: 'Blog not found' }, { status: 404 });
     }
 
-    if (body.title !== undefined) post.title = body.title.trim();
-    if (body.description !== undefined) post.description = body.description.trim();
-    if (body.content !== undefined) post.content = normalizeContentHtml(body.content);
-    if (body.date !== undefined) post.date = body.date.trim();
-    if (body.author !== undefined) post.author = body.author.trim();
-    if (body.image !== undefined) post.image = resolveBlogImage(body.image.trim());
-    if (body.imageAlt !== undefined) post.imageAlt = body.imageAlt.trim();
-    if (body.faqs !== undefined) post.faqs = Array.isArray(body.faqs) ? body.faqs : [];
-    if (body.published !== undefined) post.published = Boolean(body.published);
-    if (body.metaTitle !== undefined) post.metaTitle = body.metaTitle.trim();
-    if (body.metaDescription !== undefined) post.metaDescription = body.metaDescription.trim();
-    if (body.metaKeywords !== undefined) post.metaKeywords = body.metaKeywords.trim();
-    if (body.articleSection !== undefined) post.articleSection = body.articleSection.trim();
-    if (body.tags !== undefined) post.tags = Array.isArray(body.tags) ? body.tags.filter((t: any) => t && typeof t === 'string') : [];
+    const post = postResult.rows[0];
+    const updates: string[] = [];
+    const values: any[] = [];
+    let idx = 1;
+
+    if (body.title !== undefined) { updates.push(`title = $${idx++}`); values.push(body.title.trim()); }
+    if (body.description !== undefined) { updates.push(`description = $${idx++}`); values.push(body.description.trim()); }
+    if (body.content !== undefined) { updates.push(`content = $${idx++}`); values.push(normalizeContentHtml(body.content)); }
+    if (body.date !== undefined) { updates.push(`date = $${idx++}`); values.push(body.date.trim()); }
+    if (body.author !== undefined) { updates.push(`author = $${idx++}`); values.push(body.author.trim()); }
+    if (body.image !== undefined) { updates.push(`image = $${idx++}`); values.push(resolveBlogImage(body.image.trim())); }
+    if (body.imageAlt !== undefined) { updates.push(`image_alt = $${idx++}`); values.push(body.imageAlt.trim()); }
+    if (body.faqs !== undefined) { updates.push(`faqs = $${idx++}`); values.push(JSON.stringify(Array.isArray(body.faqs) ? body.faqs : [])); }
+    if (body.published !== undefined) { updates.push(`published = $${idx++}`); values.push(Boolean(body.published)); }
+    if (body.metaTitle !== undefined) { updates.push(`meta_title = $${idx++}`); values.push(body.metaTitle.trim()); }
+    if (body.metaDescription !== undefined) { updates.push(`meta_description = $${idx++}`); values.push(body.metaDescription.trim()); }
+    if (body.metaKeywords !== undefined) { updates.push(`meta_keywords = $${idx++}`); values.push(body.metaKeywords.trim()); }
+    if (body.articleSection !== undefined) { updates.push(`article_section = $${idx++}`); values.push(body.articleSection.trim()); }
+    if (body.tags !== undefined) { updates.push(`tags = $${idx++}`); values.push(`{${Array.isArray(body.tags) ? body.tags.filter((t: any) => t && typeof t === 'string').join(',') : ''}}`); }
 
     if (body.slug !== undefined) {
-      const newSlug = (body.slug.trim() || slugifyTitle(post.title)).toLowerCase();
-      const clash = await BlogPostModel.findOne({ slug: newSlug, _id: { $ne: id } });
-      if (clash) {
-        return NextResponse.json(
-          { status: 'error', msg: 'Slug already in use' },
-          { status: 400 }
-        );
+      const newSlug = (body.slug.trim() || slugifyTitle(body.title || post.title)).toLowerCase();
+      const clash = await query('SELECT id FROM blog_posts WHERE slug = $1 AND id != $2', [newSlug, id]);
+      if (clash.rows.length > 0) {
+        return NextResponse.json({ status: 'error', msg: 'Slug already in use' }, { status: 400 });
       }
-      post.slug = newSlug;
+      updates.push(`slug = $${idx++}`);
+      values.push(newSlug);
     }
 
-    await post.save();
+    if (updates.length > 0) {
+      updates.push(`updated_at = CURRENT_TIMESTAMP`);
+      await query(`UPDATE blog_posts SET ${updates.join(', ')} WHERE id = $${idx}`, [...values, id]);
+    }
 
-    return NextResponse.json({ status: 'success', data: { id: String(post._id), slug: post.slug } });
+    return NextResponse.json({ status: 'success', data: { id, slug: body.slug || post.slug } });
   } catch {
     return NextResponse.json({ status: 'error', msg: 'Failed to update blog' }, { status: 500 });
   }
 }
 
-export async function DELETE(
-  _req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const admin = await getAuthToken();
   if (!admin) {
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
@@ -97,9 +92,8 @@ export async function DELETE(
   const { id } = await params;
 
   try {
-    await connectToDatabase();
-    const deleted = await BlogPostModel.findByIdAndDelete(id);
-    if (!deleted) {
+    const deleted = await query('DELETE FROM blog_posts WHERE id = $1 RETURNING id', [id]);
+    if (deleted.rows.length === 0) {
       return NextResponse.json({ status: 'error', msg: 'Blog not found' }, { status: 404 });
     }
     return NextResponse.json({ status: 'success' });

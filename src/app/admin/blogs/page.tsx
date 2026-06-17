@@ -50,11 +50,12 @@ export default function AdminBlogsListPage() {
   };
 
   return (
-    <div className={styles.root}>
-      <div className="flex items-center justify-between mb-4">
+    <div className={`${styles.root} admin-page`}>
+      <div className="admin-page-header">
         <div>
+          <p className="admin-eyebrow">Content</p>
           <h1>All Blogs</h1>
-          <p className="text-slate-500">Manage every blog post</p>
+          <p className="admin-subtitle">Manage every blog post</p>
         </div>
         <Link href="/admin/blogs/new" className={styles.btnPrimary}>
           <Plus size={14} /> New Post
@@ -64,12 +65,12 @@ export default function AdminBlogsListPage() {
       <div className={styles.card}>
         {loading ? (
           <div className="p-8 flex justify-center">
-            <Loader2 className="animate-spin text-[#7B5EA7]" size={22} />
+            <Loader2 className="animate-spin" size={22} style={{ color: 'var(--admin-primary)' }} />
           </div>
         ) : posts.length === 0 ? (
-          <p className="p-8 text-center text-slate-500">No posts yet.</p>
+          <p className="p-8 text-center" style={{ color: 'var(--admin-muted)' }}>No posts yet.</p>
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y" style={{ borderColor: 'var(--admin-border)' }}>
             {posts.map((post) => (
               <div
                 key={post.id}
@@ -106,7 +107,8 @@ export default function AdminBlogsListPage() {
                   </Link>
                   <Link
                     href={`/admin/blogs/edit/${post.id}`}
-                    className={`${styles.btnGhost} text-[#007AFF]`}
+                    className={`${styles.btnGhost}`}
+                    style={{ color: 'var(--admin-blue)' }}
                     title="Edit"
                   >
                     <Pencil size={14} />
@@ -114,7 +116,8 @@ export default function AdminBlogsListPage() {
                   <button
                     type="button"
                     onClick={() => handleDelete(post.id, post.title)}
-                    className={`${styles.btnGhost} text-red-500`}
+                    className={styles.btnGhost}
+                    style={{ color: 'var(--admin-red)' }}
                     title="Delete"
                   >
                     <Trash2 size={14} />

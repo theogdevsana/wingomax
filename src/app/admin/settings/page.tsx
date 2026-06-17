@@ -55,7 +55,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="admin-page max-w-3xl">
+    <div className="admin-page" style={{ maxWidth: "min(100%, 48rem)" }}>
       <div className="admin-page-header">
         <div>
           <p className="admin-eyebrow">Configuration</p>
@@ -65,9 +65,9 @@ export default function SettingsPage() {
       </div>
 
       <div className="admin-panel">
-        <div className="p-6 border-b border-slate-100 bg-slate-50/50">
+        <div className="p-6 border-b border-[var(--admin-border)] bg-[var(--admin-surface-soft)]">
           <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
-            <LinkIcon size={20} className="text-[#7B5EA7]" />
+            <LinkIcon size={20} className="text-[var(--admin-primary)]" />
             External Links
           </h2>
         </div>
@@ -75,7 +75,7 @@ export default function SettingsPage() {
         <div className="p-6">
           {isLoading ? (
             <div className="flex justify-center items-center py-12">
-              <Loader2 className="animate-spin text-[#7B5EA7]" size={32} />
+              <Loader2 className="animate-spin" size={32} style={{ color: 'var(--admin-primary)' }} />
             </div>
           ) : (
             <form onSubmit={handleSave} className="space-y-6">
@@ -89,9 +89,7 @@ export default function SettingsPage() {
               )}
 
               <div className="space-y-2">
-                <label htmlFor="telegramLink" className="block text-sm font-bold text-slate-700">
-                  Telegram Channel / Support Link
-                </label>
+                <label htmlFor="telegramLink" className="admin-label">Telegram Channel / Support Link</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <LinkIcon size={16} className="text-slate-400" />
@@ -102,11 +100,11 @@ export default function SettingsPage() {
                     value={telegramLink}
                     onChange={(e) => setTelegramLink(e.target.value)}
                     required
-                  className="block w-full pl-10 pr-3 py-3 border border-black/[0.06] bg-gray-50/80 rounded-2xl focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 sm:text-sm font-medium transition-all"
+                    className="admin-input pl-10 pr-3"
                     placeholder="https://t.me/yourtelegram"
                   />
                 </div>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs" style={{ color: 'var(--admin-muted)' }}>
                   This link will be updated everywhere on the platform (except blog posts).
                 </p>
               </div>
@@ -115,7 +113,7 @@ export default function SettingsPage() {
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="admin-action bg-[#7B5EA7] hover:brightness-110 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-colors disabled:opacity-70 disabled:cursor-not-allowed shadow-sm"
+                  className="admin-btn admin-btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSaving ? (
                     <>

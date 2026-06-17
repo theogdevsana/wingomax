@@ -26,7 +26,7 @@ export default function RevenuePage() {
   }, []);
 
   return (
-    <div className="admin-page space-y-8">
+    <div className="admin-page space-y-6 md:space-y-8">
       <div className="admin-page-header">
         <div>
           <p className="admin-eyebrow">Financials</p>
@@ -37,33 +37,33 @@ export default function RevenuePage() {
 
       {isFetching ? (
         <div className="flex justify-center p-12">
-          <div className="w-8 h-8 border-4 border-[#7B5EA7]/20 border-t-[#7B5EA7] rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[var(--admin-primary)]/20 border-t-[var(--admin-primary)] rounded-full animate-spin" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 md:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
           <RevenueCard 
             title="Total Revenue" 
             amount={stats?.total || 0} 
-            icon={<DollarSign className="text-[#34C759]" size={26} />} 
-            color="#34C759"
+            icon={<DollarSign className="text-[var(--admin-green)]" size={26} />} 
+            color="var(--admin-green)"
           />
           <RevenueCard 
             title="Monthly Sales (Last 30 Days)" 
             amount={stats?.monthly || 0} 
-            icon={<Calendar className="text-[#007AFF]" size={26} />} 
-            color="#007AFF"
+            icon={<Calendar className="text-[var(--admin-blue)]" size={26} />} 
+            color="var(--admin-blue)"
           />
           <RevenueCard 
             title="Weekly Sales (Last 7 Days)" 
             amount={stats?.weekly || 0} 
-            icon={<TrendingUp className="text-[#7B5EA7]" size={26} />} 
-            color="#7B5EA7"
+            icon={<TrendingUp className="text-[var(--admin-primary)]" size={26} />} 
+            color="var(--admin-primary)"
           />
           <RevenueCard 
             title="Previous Month Sales" 
             amount={stats?.lastMonth || 0} 
-            icon={<CalendarDays className="text-[#FF9F0A]" size={26} />} 
-            color="#FF9500"
+            icon={<CalendarDays className="text-[var(--admin-orange)]" size={26} />} 
+            color="var(--admin-orange)"
           />
         </div>
       )}
@@ -71,22 +71,16 @@ export default function RevenuePage() {
   );
 }
 
-function RevenueCard({ title, amount, icon, color = "#007AFF" }: { title: string, amount: number, icon: React.ReactNode, color?: string }) {
-  const shadowColor = `${color}25`;
-
+function RevenueCard({ title, amount, icon, color = "var(--admin-blue)" }: { title: string, amount: number, icon: React.ReactNode, color?: string }) {
   return (
-    <div 
-      className="admin-card bg-white p-5 relative overflow-hidden group min-h-[130px] flex flex-col justify-center cursor-default"
-      style={{ boxShadow: `0 8px 24px -8px ${shadowColor}` }}
-    >
-      <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: color }} />
-
-      <div className="relative z-10 flex items-center justify-between">
-        <div>
-          <h4 className="text-slate-500 font-black text-[11px] mb-1 uppercase tracking-wide">{title}</h4>
-          <p className="text-2xl md:text-3xl font-black tracking-tight text-slate-900">₹{amount.toLocaleString()}</p>
+    <div className="admin-stat" style={{ '--stat-color': color } as React.CSSProperties}>
+      <div className="admin-stat-accent" style={{ background: color }} />
+      <div className="relative z-10 flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="admin-stat-label">{title}</p>
+          <p className="admin-stat-value text-[var(--admin-text)]">₹{amount.toLocaleString()}</p>
         </div>
-        <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 group-hover:shadow-md transition-all">
+        <div className="admin-stat-icon">
           {icon}
         </div>
       </div>

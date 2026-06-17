@@ -1,7 +1,6 @@
 import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/blog-data";
 import Link from "next/link";
-import connectMongo from '@/lib/mongodb';
-import Settings from '@/lib/models/Settings';
+import { query } from '@/lib/db';
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
@@ -72,9 +71,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     notFound();
   }
 
-  await connectMongo();
-  const settings = await Settings.findOne({});
-  const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
+  const result = await query('SELECT telegram_link FROM settings LIMIT 1');
+  const telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : "https://t.me/enzosrs";
 
   const contentWithDynamicLinks = post.content.replace(/https:\/\/t\.me\/enzosrs/g, telegramLink);
 

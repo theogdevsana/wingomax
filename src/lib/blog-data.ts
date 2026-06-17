@@ -1,136 +1,68 @@
-import connectToDatabase from '@/lib/mongodb';
-import BlogPostModel from '@/lib/models/BlogPost';
-import { BLOG_POSTS, type BlogPost, type FAQ } from '@/lib/blogs';
+import { BLOG_POSTS, type BlogPost } from '@/lib/blogs';
 import { normalizeContentHtml, resolveBlogImage } from '@/lib/cdn';
 
-function mapDoc(doc: {
-  title: string;
-  slug: string;
-  description: string;
-  date: string;
-  author: string;
-  content: string;
-  image: string;
-  imageAlt: string;
-  faqs?: FAQ[];
-  published?: boolean;
-  metaTitle?: string;
-  metaDescription?: string;
-  metaKeywords?: string;
-  articleSection?: string;
-  tags?: string[];
-}): BlogPost {
-  return {
-    title: doc.title,
-    slug: doc.slug,
-    description: doc.description,
-    date: doc.date,
-    author: doc.author,
-    content: normalizeContentHtml(doc.content),
-    image: resolveBlogImage(doc.image),
-    imageAlt: doc.imageAlt || doc.title,
-    faqs: doc.faqs?.length ? doc.faqs : undefined,
-    metaTitle: doc.metaTitle || undefined,
-    metaDescription: doc.metaDescription || undefined,
-    metaKeywords: doc.metaKeywords || undefined,
-    articleSection: doc.articleSection || undefined,
-    tags: doc.tags?.length ? doc.tags : undefined,
-  };
-}
-
-async function seedFromStaticIfEmpty() {
-  const count = await BlogPostModel.countDocuments();
-  if (count > 0) return;
-
-  await BlogPostModel.insertMany(
-    BLOG_POSTS.map((post) => ({
-      title: post.title,
-      slug: post.slug,
-      description: post.description,
-      date: post.date,
-      author: post.author,
-      content: post.content,
-      image: resolveBlogImage(post.image),
-      imageAlt: post.imageAlt,
-      faqs: post.faqs ?? [],
-      published: true,
-      metaTitle: post.title,
-      metaDescription: post.description,
-      metaKeywords: '',
-      articleSection: post.articleSection ?? '',
-      tags: post.tags ?? [],
-    }))
-  );
-}
-
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
-  await connectToDatabase();
-  await seedFromStaticIfEmpty();
-
-  const docs = await BlogPostModel.find({ published: true })
-    .sort({ createdAt: -1 })
-    .lean();
-
-  return docs.map((doc) => mapDoc(doc as Parameters<typeof mapDoc>[0]));
+  return BLOG_POSTS.map(post => ({
+    ...post,
+    content: normalizeContentHtml(post.content),
+    image: resolveBlogImage(post.image),
+  }));
 }
 
 export async function getAllBlogPostsAdmin() {
-  await connectToDatabase();
-  await seedFromStaticIfEmpty();
-
-  const docs = await BlogPostModel.find().sort({ createdAt: -1 }).lean();
-  return docs.map((doc) => ({
-    id: String(doc._id),
-    title: doc.title,
-    slug: doc.slug,
-    description: doc.description,
-    date: doc.date,
-    author: doc.author,
-    content: doc.content,
-    image: resolveBlogImage(doc.image),
-    imageAlt: doc.imageAlt,
-    faqs: doc.faqs ?? [],
-    published: doc.published ?? true,
-    metaTitle: doc.metaTitle ?? '',
-    metaDescription: doc.metaDescription ?? '',
-    metaKeywords: doc.metaKeywords ?? '',
-    articleSection: doc.articleSection ?? '',
-    tags: doc.tags ?? [],
-    createdAt: doc.createdAt,
-    updatedAt: doc.updatedAt,
+  return BLOG_POSTS.map((post, idx) => ({
+    id: String(idx + 1),
+    title: post.title,
+    slug: post.slug,
+    description: post.description,
+    date: post.date,
+    author: post.author,
+    content: normalizeContentHtml(post.content),
+    image: resolveBlogImage(post.image),
+    imageAlt: post.imageAlt,
+    faqs: post.faqs ?? [],
+    published: true,
+    metaTitle: post.metaTitle ?? '',
+    metaDescription: post.metaDescription ?? '',
+    metaKeywords: post.metaKeywords ?? '',
+    articleSection: post.articleSection ?? '',
+    tags: post.tags ?? [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   }));
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  await connectToDatabase();
-  await seedFromStaticIfEmpty();
-
-  const doc = await BlogPostModel.findOne({ slug, published: true }).lean();
-  if (!doc) return null;
-  return mapDoc(doc as Parameters<typeof mapDoc>[0]);
+  const post = BLOG_POSTS.find(p => p.slug === slug);
+  if (!post) return null;
+  return {
+    ...post,
+    content: normalizeContentHtml(post.content),
+    image: resolveBlogImage(post.image),
+  };
 }
 
 export async function getBlogPostById(id: string) {
-  await connectToDatabase();
-  const doc = await BlogPostModel.findById(id).lean();
-  if (!doc) return null;
+  const idx = parseInt(id) - 1;
+  const post = BLOG_POSTS[idx];
+  if (!post) return null;
   return {
-    id: String(doc._id),
-    title: doc.title,
-    slug: doc.slug,
-    description: doc.description,
-    date: doc.date,
-    author: doc.author,
-    content: doc.content,
-    image: resolveBlogImage(doc.image),
-    imageAlt: doc.imageAlt,
-    faqs: doc.faqs ?? [],
-    published: doc.published ?? true,
-    metaTitle: doc.metaTitle ?? '',
-    metaDescription: doc.metaDescription ?? '',
-    metaKeywords: doc.metaKeywords ?? '',
-    articleSection: doc.articleSection ?? '',
-    tags: doc.tags ?? [],
+    id,
+    title: post.title,
+    slug: post.slug,
+    description: post.description,
+    date: post.date,
+    author: post.author,
+    content: normalizeContentHtml(post.content),
+    image: resolveBlogImage(post.image),
+    imageAlt: post.imageAlt,
+    faqs: post.faqs ?? [],
+    published: true,
+    metaTitle: post.metaTitle ?? '',
+    metaDescription: post.metaDescription ?? '',
+    metaKeywords: post.metaKeywords ?? '',
+    articleSection: post.articleSection ?? '',
+    tags: post.tags ?? [],
   };
 }
 

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import styles from './page.module.css';
-import connectMongo from '@/lib/mongodb';
-import Settings from '@/lib/models/Settings';
+import { query } from '@/lib/db';
 
 export const metadata: Metadata = {
   title: "Pricing & Subscription | Wingo Signal Premium",
@@ -124,9 +123,8 @@ const PLANS = [
 ];
 
 export default async function SubscribePage() {
-  await connectMongo();
-  const settings = await Settings.findOne({});
-  const telegramLink = settings?.telegramLink ?? null;
+  const result = await query('SELECT telegram_link FROM settings LIMIT 1');
+  const telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : null;
 
   const standardPlans = PLANS.slice(0, 3);
   const advancedPlans = PLANS.slice(3, 6);

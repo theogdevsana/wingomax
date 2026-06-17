@@ -1,8 +1,7 @@
 import { Metadata } from "next";
 import DownloadClient from "./download/DownloadClient";
 import JsonLd from "@/components/JsonLd";
-import connectMongo from '@/lib/mongodb';
-import Settings from '@/lib/models/Settings';
+import { query } from '@/lib/db';
 
 export const metadata: Metadata = {
   title: "Wingo Signal - Free AI Color Prediction Tool for 91Club & Tiranga 2026",
@@ -140,9 +139,8 @@ const faqData = [
 ];
 
 export default async function HomePage() {
-  await connectMongo();
-  const settings = await Settings.findOne({});
-  const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
+  const result = await query('SELECT telegram_link FROM settings LIMIT 1');
+  const telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : "https://t.me/enzosrs";
 
   return (
     <>

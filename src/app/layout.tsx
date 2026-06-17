@@ -83,17 +83,15 @@ export const metadata: Metadata = {
 import { OrganizationSchema } from "@/components/JsonLd";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
-import connectMongo from '@/lib/mongodb';
-import Settings from '@/lib/models/Settings';
+import { query } from '@/lib/db';
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await connectMongo();
-  const settings = await Settings.findOne({});
-  const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
+  const result = await query('SELECT telegram_link FROM settings LIMIT 1');
+  const telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : "https://t.me/enzosrs";
 
   return (
     <html

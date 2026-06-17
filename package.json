@@ -18,14 +18,15 @@
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/pg": "^8.20.0",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.38.0",
     "jose": "^6.2.3",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.14.0",
-    "mongoose": "^9.6.2",
     "next": "16.2.4",
     "node-fetch": "^3.3.2",
+    "pg": "^8.21.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

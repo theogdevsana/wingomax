@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import connectToDatabase from '@/lib/mongodb';
-import License from '@/lib/models/License';
+import { query } from '@/lib/db';
 import { verifyAdminToken } from '@/lib/jwt';
 import crypto from 'crypto';
 
@@ -18,36 +17,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
     }
     const createdBy = adminData.username || 'unknown';
-    await connectToDatabase();
-    
+
     const { durationDays } = await req.json();
-    
+
     if (!durationDays || typeof durationDays !== 'number') {
       return NextResponse.json({ error: 'Invalid duration' }, { status: 400 });
     }
 
-    // Generate a secure random key
     const key = 'WG-' + crypto.randomBytes(4).toString('hex').toUpperCase() + '-' + crypto.randomBytes(4).toString('hex').toUpperCase();
-    
-    // Calculate expiration date
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + durationDays);
 
-    const license = await License.create({
-      key,
-      expiresAt,
-      createdBy,
-    });
+    const result = await query(
+      'INSERT INTO licenses (key, expires_at, created_by) VALUES ($1, $2, $3) RETURNING id, key, expires_at',
+      [key, expiresAt, createdBy]
+    );
 
-    return NextResponse.json({ 
-      status: 'success', 
-      data: {
-        key: license.key,
-        expiresAt: license.expiresAt,
-        durationDays
-      } 
-    });
-
+    return NextResponse.json({ status: 'success', data: { key: result.rows[0].key, expiresAt: result.rows[0].expires_at, durationDays } });
   } catch (error) {
     console.error('License creation error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
@@ -59,9 +45,8 @@ export async function GET() {
     if (!(await getAuthToken())) {
       return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
     }
-    await connectToDatabase();
-    const licenses = await License.find().sort({ createdAt: -1 }).limit(50);
-    return NextResponse.json({ status: 'success', data: licenses });
+    const result = await query('SELECT * FROM licenses ORDER BY created_at DESC LIMIT 50');
+    return NextResponse.json({ status: 'success', data: result.rows });
   } catch (error) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
@@ -72,33 +57,28 @@ export async function PUT(req: Request) {
     if (!(await getAuthToken())) {
       return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
     }
-    await connectToDatabase();
     const { id, action } = await req.json();
 
     if (!id || !action) {
       return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
     }
 
-    const license = await License.findById(id);
+    const licenseResult = await query('SELECT * FROM licenses WHERE id = $1', [id]);
+    const license = licenseResult.rows[0];
     if (!license) return NextResponse.json({ error: 'License not found' }, { status: 404 });
 
     if (action === 'ban') {
-      license.status = 'banned';
+      await query('UPDATE licenses SET status = $1 WHERE id = $2', ['banned', id]);
     } else if (action === 'unban') {
-      // Re-evaluate if it's expired
-      if (new Date() > new Date(license.expiresAt)) {
-        license.status = 'expired';
-      } else {
-        license.status = 'active';
-      }
+      const newStatus = new Date() > new Date(license.expires_at) ? 'expired' : 'active';
+      await query('UPDATE licenses SET status = $1 WHERE id = $2', [newStatus, id]);
     } else if (action === 'reset') {
-      license.deviceId = null;
+      await query('UPDATE licenses SET device_id = NULL WHERE id = $1', [id]);
     } else {
       return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
 
-    await license.save();
-    return NextResponse.json({ status: 'success', data: license });
+    return NextResponse.json({ status: 'success' });
   } catch (error) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
@@ -109,13 +89,12 @@ export async function DELETE(req: Request) {
     if (!(await getAuthToken())) {
       return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 });
     }
-    await connectToDatabase();
     const url = new URL(req.url);
     const id = url.searchParams.get('id');
 
     if (!id) return NextResponse.json({ error: 'Missing id parameter' }, { status: 400 });
 
-    await License.findByIdAndDelete(id);
+    await query('DELETE FROM licenses WHERE id = $1', [id]);
     return NextResponse.json({ status: 'success' });
   } catch (error) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

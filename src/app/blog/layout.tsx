@@ -1,16 +1,14 @@
 import React from 'react';
 import BlogLayoutClient from './BlogLayoutClient';
-import connectMongo from '@/lib/mongodb';
-import Settings from '@/lib/models/Settings';
+import { query } from '@/lib/db';
 
 export default async function BlogLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  await connectMongo();
-  const settings = await Settings.findOne({});
-  const telegramLink = settings?.telegramLink || "https://t.me/enzosrs";
+  const result = await query('SELECT telegram_link FROM settings LIMIT 1');
+  const telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : "https://t.me/enzosrs";
 
   return (
     <>

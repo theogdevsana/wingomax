@@ -13,7 +13,7 @@ export default function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  
+
   useEffect(() => {
     const savedUser = localStorage.getItem("admin_user");
     const savedPass = localStorage.getItem("admin_pass");
@@ -24,16 +24,12 @@ export default function AdminLogin() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
-    // Client-side validation
     const validation = validateLoginCredentials(username, password);
     if (!validation.valid) {
       setError(validation.errors[0] || "Invalid input");
       return;
     }
-
     setIsLoading(true);
-
     try {
       const res = await fetch(getApiUrl("/v1/admin/login"), { 
         credentials: 'include', 
@@ -41,17 +37,12 @@ export default function AdminLogin() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-
       const data = await res.json();
-
       if (res.ok && data.status === "success") {
         localStorage.setItem("admin_user", username);
         localStorage.setItem("admin_pass", password);
-        // On admin.wingosignals.xyz, '/' rewrites to /admin via proxy
-        // Using '/admin' directly would result in /admin/admin (double prefix)
         router.push("/");
       } else {
-        // Don't reveal if username exists or not
         setError(data.msg || "Invalid credentials");
       }
     } catch (err) {
@@ -64,16 +55,16 @@ export default function AdminLogin() {
   return (
     <div className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-purple-50 p-4">
 
-      <div className="relative z-10 w-full max-w-md">
+      <div className="relative z-10 w-full" style={{ maxWidth: "min(100%, 28rem)" }}>
         <div className="text-center mb-8">
-          <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-[#7B5EA7] to-[#9B7FBF] flex items-center justify-center shadow-lg shadow-[#7B5EA7]/20 mb-4">
+          <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-[var(--admin-primary)] to-[var(--admin-primary-2)] flex items-center justify-center shadow-lg mb-4" style={{ boxShadow: '0 8px 24px rgba(123, 94, 167, 0.2)' }}>
             <Zap className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-2xl font-black text-gray-900 tracking-tight">Wingo Admin</h1>
           <p className="text-sm text-gray-400 font-medium mt-1">Sign in to management panel</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-xl rounded-3xl border border-black/[0.04] shadow-xl shadow-black/[0.03] p-6 sm:p-8 space-y-5">
+        <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-xl rounded-3xl border border-[var(--admin-border)] shadow-xl p-6 sm:p-8 space-y-5" style={{ boxShadow: 'var(--admin-shadow-lg)' }}>
         {error && (
           <div className="px-4 py-3 bg-red-50 text-red-600 rounded-xl flex items-center gap-3 font-semibold text-sm">
             <AlertCircle size={18} /> {error}
@@ -81,7 +72,7 @@ export default function AdminLogin() {
         )}
 
           <div className="space-y-2">
-            <label className="block text-xs font-bold text-gray-500 tracking-wider mb-2">Admin ID</label>
+            <label className="admin-label mb-2">Admin ID</label>
             <div className="relative flex items-center">
               <User className="absolute left-4 text-slate-400" size={20} />
               <input
@@ -89,14 +80,14 @@ export default function AdminLogin() {
                 placeholder="Enter admin ID"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-[#7B5EA7] focus:bg-white transition-all font-semibold text-sm text-gray-900"
+                className="admin-input pl-12 pr-4"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="block text-xs font-bold text-gray-500 tracking-wider mb-2">Password</label>
+            <label className="admin-label mb-2">Password</label>
             <div className="relative flex items-center">
               <KeyRound className="absolute left-4 text-slate-400" size={20} />
               <input
@@ -104,7 +95,7 @@ export default function AdminLogin() {
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-12 pr-12 py-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-[#7B5EA7] focus:bg-white transition-all font-semibold text-sm text-gray-900"
+                className="admin-input pl-12 pr-12"
                 required
               />
               <button
@@ -120,7 +111,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={isLoading}
-            className="admin-action w-full mt-2 py-3.5 bg-gradient-to-r from-[#7B5EA7] to-[#9B7FBF] text-white rounded-xl font-extrabold text-sm shadow-lg shadow-[#7B5EA7]/20 hover:shadow-xl hover:shadow-[#7B5EA7]/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="admin-btn admin-btn-primary w-full mt-2 py-3.5 text-sm flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />

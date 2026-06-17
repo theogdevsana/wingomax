@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import connectToDatabase from '@/lib/mongodb';
-import Admin from '@/lib/models/Admin';
+import { query } from '@/lib/db';
 import { isSetupAccessCookie } from '@/lib/setup-access';
 import crypto from 'crypto';
 
@@ -19,22 +18,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ status: 'error', msg: 'Username and password are required' }, { status: 400 });
     }
 
-    await connectToDatabase();
-
-    const existingAdmin = await Admin.findOne({ username });
-    if (existingAdmin) {
+    const existing = await query('SELECT id FROM admins WHERE username = $1', [username]);
+    if (existing.rows.length > 0) {
       return NextResponse.json({ status: 'error', msg: 'Username already exists' }, { status: 400 });
     }
 
     const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
-
-    const newAdmin = await Admin.create({
-      username,
-      passwordHash,
-    });
+    await query('INSERT INTO admins (username, password_hash) VALUES ($1, $2)', [username, passwordHash]);
 
     return NextResponse.json({ status: 'success', msg: 'Admin registered successfully' });
-
   } catch (error) {
     console.error('Registration error:', error);
     return NextResponse.json({ status: 'error', msg: 'Internal Server Error' }, { status: 500 });

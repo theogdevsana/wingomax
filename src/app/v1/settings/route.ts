@@ -1,23 +1,12 @@
 import { NextResponse } from 'next/server';
-import connectMongo from '@/lib/mongodb';
-import Settings from '@/lib/models/Settings';
+import { query } from '@/lib/db';
 
 export async function GET() {
   try {
-    await connectMongo();
-    let settings = await Settings.findOne({});
-    
-    // If no settings exist, create default
-    if (!settings) {
-      settings = await Settings.create({ telegramLink: "https://t.me/enzosrs" });
-    }
+    const result = await query('SELECT telegram_link FROM settings LIMIT 1');
+    const telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : "https://t.me/enzosrs";
 
-    return NextResponse.json({
-      status: "success",
-      data: {
-        subscription_link: settings.telegramLink,
-      }
-    });
+    return NextResponse.json({ status: "success", data: { subscription_link: telegramLink } });
   } catch (error) {
     return NextResponse.json({ status: "error", msg: "Failed to fetch settings" }, { status: 500 });
   }
