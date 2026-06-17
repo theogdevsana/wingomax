@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Get the most accurate Wingo 30 seconds prediction signals. Our AI tool provides real-time WinGo 30s color and number patterns for Tiranga and 91Club.",
   keywords: ["wingo 30s prediction", "wingo prediction telegram link", "wingo mod apk", "wingo 30s signal app"],
   alternates: {
-    canonical: "https://wingosignals.xyz/wingo-30-seconds-prediction",
+    canonical: "https://wingosignals.com/wingo-30-seconds-prediction",
   }
 };
 

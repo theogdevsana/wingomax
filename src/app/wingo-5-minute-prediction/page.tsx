@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Official Wingo 5 minute prediction signals. Master the 5 min WinGo game with our AI predictor app and real-time big small patterns.",
   keywords: ["wingo 5 minute prediction", "wingo predictor app download", "wingo 5 min pattern", "wingo signal telegram"],
   alternates: {
-    canonical: "https://wingosignals.xyz/wingo-5-minute-prediction",
+    canonical: "https://wingosignals.com/wingo-5-minute-prediction",
   }
 };
 

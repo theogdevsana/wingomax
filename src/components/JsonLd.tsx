@@ -15,8 +15,8 @@ export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { 
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Wingo Signal",
-    "url": "https://wingosignals.xyz",
-    "logo": "https://wingosignals.xyz/logo/official-logo.png",
+    "url": "https://wingosignals.com",
+    "logo": "https://wingosignals.com/logo/official-logo.png",
     "sameAs": [telegramLink],
     "description": "Professional Wingo prediction tools and AI-driven signals for gaming platforms."
   };
@@ -25,10 +25,10 @@ export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { 
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Wingo Signal",
-    "url": "https://wingosignals.xyz",
+    "url": "https://wingosignals.com",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://wingosignals.xyz/blog?q={search_term_string}",
+      "target": "https://wingosignals.com/blog?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -61,7 +61,7 @@ export default function JsonLd({
       "@type": "ListItem",
       "position": index + 1,
       "name": crumb.name,
-      "item": crumb.item.startsWith('http') ? crumb.item : `https://wingosignals.xyz${crumb.item}`
+      "item": crumb.item.startsWith('http') ? crumb.item : `https://wingosignals.com${crumb.item}`
     }))
   } : null;
 

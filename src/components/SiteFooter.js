@@ -124,7 +124,7 @@ export default function SiteFooter({ className = "" }) {
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#9ca3af", fontWeight: 500 }}>
               <GlobeIcon />
-              wingosignals.xyz
+              wingosignals.com
             </div>
           </div>
         </div>

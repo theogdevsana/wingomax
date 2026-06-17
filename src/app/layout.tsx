@@ -6,7 +6,7 @@ import { nunito } from "@/lib/fonts";
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://wingosignals.xyz'),
+  metadataBase: new URL('https://wingosignals.com'),
   title: {
     default: "Wingo Signal - #1 AI Color Prediction Tool for 91Club & Tiranga 2026",
     template: "%s | Wingo Signal"
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://wingosignals.xyz',
+    url: 'https://wingosignals.com',
     siteName: 'Wingo Signal',
     title: 'Wingo Signal - Professional Game Predictor',
     description: 'Advanced Wingo Signal platform providing premium prediction tools and real-time signals.',
@@ -70,9 +70,9 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://wingosignals.xyz',
+    canonical: 'https://wingosignals.com',
     types: {
-      'application/rss+xml': 'https://wingosignals.xyz/rss.xml',
+      'application/rss+xml': 'https://wingosignals.com/rss.xml',
     },
   },
   other: {

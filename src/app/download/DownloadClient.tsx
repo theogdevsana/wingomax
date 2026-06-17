@@ -311,7 +311,7 @@ const FAQS = [
   { q: "Which platforms does Wingo Signal support?", a: "We support 91Club, Tiranga Games, BDG Win, 82 Lottery, Jai Club, Yarr Win, Raja Game, Jalwa Game, GOA Game, Sikkim Games, and Tashan Win, with more platforms added regularly." },
   { q: "What prediction intervals are available?", a: "Wingo Signal covers 30 second, 1 minute, 3 minute, and 5 minute Wingo rounds. Each interval runs on a dedicated model fine tuned for that round duration." },
   { q: "How accurate are the predictions?", a: "Our verified accuracy across all platforms and intervals is 91 to 96%. Individual sessions will vary, but the engine is built to surface the highest probability outcome for each round." },
-  { q: "Do I need to download an app?", a: "No download is needed. Wingo Signal runs entirely in your browser. Open wingosignals.xyz on any device, Android, iPhone, tablet, or desktop, and start immediately." },
+  { q: "Do I need to download an app?", a: "No download is needed. Wingo Signal runs entirely in your browser. Open wingosignals.com on any device, Android, iPhone, tablet, or desktop, and start immediately." },
   { q: "Can I use it on multiple devices at the same time?", a: "Yes. Your subscription works across all your devices simultaneously. Log in on your phone during your commute and continue on a tablet at home with no interruption." },
 ];
 
@@ -367,7 +367,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
             "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "50000" },
             "description": "Wingo Signal is the #1 AI color prediction tool for 91Club, Tiranga, BDG Win and 10+ platforms with 95%+ accuracy.",
-            "url": "https://wingosignals.xyz",
+            "url": "https://wingosignals.com",
           })
         }} />
 

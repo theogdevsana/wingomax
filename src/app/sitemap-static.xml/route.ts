@@ -1,5 +1,5 @@
 export async function GET() {
-  const baseUrl = 'https://wingosignals.xyz';
+  const baseUrl = 'https://wingosignals.com';
   
   const pages = [
     '',

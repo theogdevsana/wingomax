@@ -4,7 +4,7 @@ import type { BlogPost } from '@/lib/blogs';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const baseUrl = 'https://wingosignals.xyz';
+  const baseUrl = 'https://wingosignals.com';
   let BLOG_POSTS: BlogPost[];
   try {
     BLOG_POSTS = await getAllBlogPosts();

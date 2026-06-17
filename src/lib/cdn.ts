@@ -1,6 +1,6 @@
 export const BLOG_CDN_BASE = 'https://cdn.nexapk.in';
 export const DEFAULT_BLOG_IMAGE = '/svg/png/wingo-signals-banner.png';
-export const SITE_ORIGIN = 'https://wingosignals.xyz';
+export const SITE_ORIGIN = 'https://wingosignals.com';
 
 /** Featured image: local path by default; admin can set any full https URL. */
 export function resolveBlogImage(path: string): string {
@@ -20,7 +20,7 @@ export function resolveBlogImage(path: string): string {
     try {
       const url = new URL(p);
       if (url.hostname === 'cdn.nexapk.in') return url.pathname;
-      if (url.hostname === 'wingosignals.xyz' || url.hostname === 'www.wingosignals.xyz') {
+      if (url.hostname === 'wingosignals.com' || url.hostname === 'www.wingosignals.com') {
         return url.pathname;
       }
       return p;

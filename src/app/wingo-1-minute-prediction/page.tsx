@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Get the latest Wingo 1 min prediction signals and color prediction formula. Accurate WinGo 1 minute patterns for big small games and number predictions.",
   keywords: ["wingo 1 min prediction", "wingo color prediction formula", "wingo 1 min prediction app", "wingo signal software", "91club wingo prediction", "wingo mod apk"],
   alternates: {
-    canonical: "https://wingosignals.xyz/wingo-1-minute-prediction",
+    canonical: "https://wingosignals.com/wingo-1-minute-prediction",
   }
 };
 

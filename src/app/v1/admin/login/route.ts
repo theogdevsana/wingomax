@@ -17,7 +17,7 @@ async function setTokenAndRespond(token: string) {
   };
 
   if (process.env.NODE_ENV === 'production') {
-    cookieOptions.domain = '.wingosignals.xyz';
+    cookieOptions.domain = '.wingosignals.com';
   }
 
   cookieStore.set('admin_token', token, cookieOptions);

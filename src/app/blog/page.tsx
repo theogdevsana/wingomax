@@ -26,15 +26,15 @@ export default async function BlogListing() {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "@id": "https://wingosignals.xyz/blog",
+    "@id": "https://wingosignals.com/blog",
     "name": "Wingo Signal Blog",
     "description": "Expert insights, strategies, and tutorials about Wingo Signal prediction tools.",
-    "url": "https://wingosignals.xyz/blog",
+    "url": "https://wingosignals.com/blog",
     "blogPost": BLOG_POSTS.map((post, i) => ({
       "@type": "BlogPosting",
       "position": i + 1,
       "headline": post.title,
-      "url": `https://wingosignals.xyz/blog/${post.slug}`,
+      "url": `https://wingosignals.com/blog/${post.slug}`,
       "datePublished": new Date(post.date).toISOString(),
     }))
   };
@@ -43,8 +43,8 @@ export default async function BlogListing() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Wingo Signal",
-    "url": "https://wingosignals.xyz",
-    "logo": "https://wingosignals.xyz/logo/official-logo.png",
+    "url": "https://wingosignals.com",
+    "logo": "https://wingosignals.com/logo/official-logo.png",
     "description": "Professional Wingo prediction tools and AI-driven signals for gaming platforms."
   };
 
@@ -52,10 +52,10 @@ export default async function BlogListing() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Wingo Signal",
-    "url": "https://wingosignals.xyz",
+    "url": "https://wingosignals.com",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://wingosignals.xyz/blog?q={search_term_string}",
+      "target": "https://wingosignals.com/blog?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };

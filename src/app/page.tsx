@@ -56,19 +56,19 @@ export const metadata: Metadata = {
     "wingo ai prediction bot",
   ],
   alternates: {
-    canonical: "https://wingosignals.xyz",
+    canonical: "https://wingosignals.com",
   },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://wingosignals.xyz",
+    url: "https://wingosignals.com",
     siteName: "Wingo Signal",
     title: "Wingo Signal - Free AI Color Prediction Tool | 95%+ Accuracy for 91Club & Tiranga",
     description:
       "Wingo Signal - the #1 AI color prediction tool for 91Club, Tiranga & BDG Win. Get 95%+ accurate Wingo signals instantly in your browser. No APK required. 50,000+ users.",
     images: [
       {
-        url: "https://wingosignals.xyz/logo/hero_main.png",
+        url: "https://wingosignals.com/logo/hero_main.png",
         width: 1200,
         height: 630,
         alt: "Wingo Signal AI Color Prediction Tool Dashboard Preview",
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     title: "Wingo Signal - Free AI Color Prediction Tool | 95%+ Accuracy",
     description:
       "Wingo Signal — AI-powered color predictions for 91Club, Tiranga & BDG Win. 95%+ accuracy. No download needed. Trusted by 50,000+ users daily.",
-    images: ["https://wingosignals.xyz/logo/hero_main.png"],
+    images: ["https://wingosignals.com/logo/hero_main.png"],
     creator: "@enzosrs",
   },
   robots: {
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  authors: [{ name: "Wingo Signal Team", url: "https://wingosignals.xyz" }],
+  authors: [{ name: "Wingo Signal Team", url: "https://wingosignals.com" }],
   creator: "Wingo Signal",
   publisher: "Wingo Signal",
   category: "Technology",
@@ -126,7 +126,7 @@ const faqData = [
   },
   {
     question: "Do I need to download an app?",
-    answer: "No download is needed. Wingo Signal runs entirely in your browser. Open wingosignals.xyz on any device, Android, iPhone, tablet, or desktop, and start immediately."
+    answer: "No download is needed. Wingo Signal runs entirely in your browser. Open wingosignals.com on any device, Android, iPhone, tablet, or desktop, and start immediately."
   },
   {
     question: "How do I get a license key for Wingo Signal?",
@@ -155,7 +155,7 @@ export default async function HomePage() {
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
           "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "50000" },
           "description": "Wingo Signal is the #1 AI color prediction tool for 91Club, Tiranga, BDG Win and 10+ platforms with 95%+ accuracy.",
-          "url": "https://wingosignals.xyz",
+          "url": "https://wingosignals.com",
         })
       }} />
       <DownloadClient telegramLink={telegramLink} />

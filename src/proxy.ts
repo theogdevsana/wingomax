@@ -14,9 +14,9 @@ export async function proxy(request: NextRequest) {
     hostname.includes('gitpod') ||
     hostname.includes('github.dev');
 
-  const mainDomain = 'wingosignals.xyz';
-  const adminDomain = 'admin.wingosignals.xyz';
-  const apiDomain = 'api.wingosignals.xyz';
+  const mainDomain = 'wingosignals.com';
+  const adminDomain = 'admin.wingosignals.com';
+  const apiDomain = 'api.wingosignals.com';
 
   // Determine current domain context based on hostname
   const isMainDomain = isDev ? (!hostname.startsWith('admin.') && !hostname.startsWith('api.')) : (hostname === mainDomain || hostname === `www.${mainDomain}`);
@@ -50,7 +50,7 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // 2. Admin Domain Subrouting: admin.wingosignals.xyz/* -> rewrites to /admin/*
+  // 2. Admin Domain Subrouting: admin.wingosignals.com/* -> rewrites to /admin/*
   if (isAdminDomain) {
     const adminToken = request.cookies.get('admin_token')?.value;
     const isAdminValid = adminToken ? !!(await edgeVerifyToken(adminToken)) : false;
@@ -86,8 +86,8 @@ export async function proxy(request: NextRequest) {
     // /v1/* on admin subdomain: pass through (admin API calls work normally)
   }
 
-  // 3. API Domain Subrouting: api.wingosignals.xyz/* -> rewrites to /v1/*
-  // Clients call api.wingosignals.xyz/login (NOT /v1/login)
+  // 3. API Domain Subrouting: api.wingosignals.com/* -> rewrites to /v1/*
+  // Clients call api.wingosignals.com/login (NOT /v1/login)
   if (isApiDomain) {
     if (!pathname.startsWith('/v1/')) {
       const url = request.nextUrl.clone();

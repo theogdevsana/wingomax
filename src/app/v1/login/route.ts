@@ -76,7 +76,7 @@ export async function POST(req: Request) {
     };
 
     if (process.env.NODE_ENV === 'production') {
-      cookieOptions.domain = '.wingosignals.xyz';
+      cookieOptions.domain = '.wingosignals.com';
     }
 
     cookieStore.set('auth_token', token, cookieOptions);

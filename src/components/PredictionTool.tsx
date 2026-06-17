@@ -362,13 +362,13 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://wingosignals.xyz"
+                    "item": "https://wingosignals.com"
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": `Wingo ${gameLabel} Prediction`,
-                    "item": `https://wingosignals.xyz/${MODE_TO_SLUG[mode]}`
+                    "item": `https://wingosignals.com/${MODE_TO_SLUG[mode]}`
                   }
                 ]
               }

@@ -21,7 +21,7 @@ self.addEventListener("fetch", function (event) {
   if (
     event.request.method !== "GET" ||
     event.request.url.includes("/v1/") ||
-    event.request.url.includes("api.wingosignals.xyz")
+    event.request.url.includes("api.wingosignals.com")
   ) {
     return;
   }

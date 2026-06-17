@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Accurate Wingo 3 minute prediction tool. Use our AI signals and Wingo big small pattern strategy to improve your win rate in WinGo 3 min rounds.",
   keywords: ["wingo 3 minute prediction", "wingo big small pattern", "wingo prediction online", "wingo free signal", "tiranga wingo prediction"],
   alternates: {
-    canonical: "https://wingosignals.xyz/wingo-3-minute-prediction",
+    canonical: "https://wingosignals.com/wingo-3-minute-prediction",
   }
 };
 

@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: metaTitle,
       description: metaDescription,
       type: "article",
-      url: `https://wingosignals.xyz/blog/${slug}`,
+      url: `https://wingosignals.com/blog/${slug}`,
       images: [
         {
           url: toAbsoluteBlogImage(post.image),
@@ -77,7 +77,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const contentWithDynamicLinks = post.content.replace(/https:\/\/t\.me\/enzosrs/g, telegramLink);
 
   const readingTime = calculateReadingTime(post.content);
-  const fullUrl = `https://wingosignals.xyz/blog/${slug}`;
+  const fullUrl = `https://wingosignals.com/blog/${slug}`;
   const allPosts = await getAllBlogPosts();
   const otherPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
@@ -97,7 +97,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       "name": "Wingo Signal",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://wingosignals.xyz/logo/official-logo.png"
+        "url": "https://wingosignals.com/logo/official-logo.png"
       }
     },
     "mainEntityOfPage": {
