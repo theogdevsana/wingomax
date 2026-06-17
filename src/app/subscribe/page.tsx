@@ -123,8 +123,11 @@ const PLANS = [
 ];
 
 export default async function SubscribePage() {
-  const result = await query('SELECT telegram_link FROM settings LIMIT 1');
-  const telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : null;
+  let telegramLink = null;
+  try {
+    const result = await query('SELECT telegram_link FROM settings LIMIT 1');
+    telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : null;
+  } catch {}
 
   const standardPlans = PLANS.slice(0, 3);
   const advancedPlans = PLANS.slice(3, 6);

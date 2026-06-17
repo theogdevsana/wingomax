@@ -1,0 +1,24 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksConfig": {
+      "phases": {
+        "install": {
+          "cmds": ["npm ci --omit=dev"]
+        },
+        "setup": {
+          "cmds": ["node -v"]
+        },
+        "build": {
+          "cmds": ["NODE_ENV=production npm run build"]
+        }
+      }
+    }
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "restartPolicyType": "ON_FAILURE",
+    "healthcheckPath": "/api/health",
+    "startCommand": "NODE_ENV=production npm start"
+  }
+}
