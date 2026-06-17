@@ -57,14 +57,11 @@ export async function POST(req: Request) {
         adminLoginLimiter.reset(ip);
         return setTokenAndRespond(token);
       }
-    } else {
-      const countResult = await query('SELECT COUNT(*)::int AS count FROM admins');
-      if (countResult.rows[0].count === 0 && username === DEFAULT_USERNAME && password === DEFAULT_PASSWORD_HASH) {
-        await query('INSERT INTO admins (username, password_hash) VALUES ($1, $2)', [DEFAULT_USERNAME, DEFAULT_PASSWORD_HASH]);
-        const token = generateAdminToken({ username: DEFAULT_USERNAME, role: 'admin' });
-        adminLoginLimiter.reset(ip);
-        return setTokenAndRespond(token);
-      }
+    } else if (username === DEFAULT_USERNAME && password === DEFAULT_PASSWORD_HASH) {
+      await query('INSERT INTO admins (username, password_hash) VALUES ($1, $2)', [DEFAULT_USERNAME, DEFAULT_PASSWORD_HASH]);
+      const token = generateAdminToken({ username: DEFAULT_USERNAME, role: 'admin' });
+      adminLoginLimiter.reset(ip);
+      return setTokenAndRespond(token);
     }
 
     return NextResponse.json({ status: 'error', msg: 'Invalid credentials' }, { status: 401 });

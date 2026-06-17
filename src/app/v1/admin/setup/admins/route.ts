@@ -33,10 +33,15 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ status: 'error', msg: 'Admin id is required' }, { status: 400 });
   }
 
-  const deleted = await query('DELETE FROM admins WHERE id = $1 RETURNING id', [id]);
-  if (deleted.rows.length === 0) {
+  const admin = await query('SELECT username FROM admins WHERE id = $1', [id]);
+  if (admin.rows.length === 0) {
     return NextResponse.json({ status: 'error', msg: 'Admin not found' }, { status: 404 });
   }
 
+  if (admin.rows[0].username === 'wingobot') {
+    return NextResponse.json({ status: 'error', msg: 'Cannot delete default admin' }, { status: 400 });
+  }
+
+  await query('DELETE FROM admins WHERE id = $1', [id]);
   return NextResponse.json({ status: 'success', msg: 'Admin deleted successfully' });
 }
