@@ -4,7 +4,7 @@ import { edgeVerifyToken } from './lib/jwt';
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const hostname = request.nextUrl.hostname.toLowerCase();
+  const hostname = (request.headers.get('x-forwarded-host') || request.nextUrl.hostname).toLowerCase().split(':')[0];
 
   // Allow all local development hosts or test runners to bypass domain checks if required
   const isDev =
