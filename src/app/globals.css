@@ -34,7 +34,7 @@ body {
   background: transparent;
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
-  min-height: 100vh;
+  min-height: 100dvh;
   /* Content Protection */
   -webkit-user-select: none;
   -moz-user-select: none;

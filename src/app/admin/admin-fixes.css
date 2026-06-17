@@ -54,7 +54,6 @@
 .admin-shell {
   display: flex;
   height: 100dvh;
-  min-height: 100dvh;
   overflow: hidden;
   background: var(--admin-bg);
 }
@@ -570,14 +569,6 @@
   .admin-header {
     padding-top: env(safe-area-inset-top);
     height: calc(clamp(3rem, 5vh, 3.5rem) + env(safe-area-inset-top));
-  }
-}
-
-@supports (height: 100dvh) {
-  .admin-shell,
-  .admin-sidebar,
-  .admin-main {
-    height: 100dvh;
   }
 }
 
