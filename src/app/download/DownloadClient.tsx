@@ -145,89 +145,6 @@ const Icons = {
   ),
 };
 
-// ─── Animated Counter ──────────────────────────────────────────────────────────
-
-function AnimatedCounter() {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          const target = 1444;
-          const duration = 2000;
-          const start = performance.now();
-          const animate = (now: number) => {
-            const elapsed = now - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.floor(eased * target));
-            if (progress < 1) requestAnimationFrame(animate);
-          };
-          requestAnimationFrame(animate);
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <section
-      ref={ref}
-      style={{
-        padding: "32px 24px",
-        background: "linear-gradient(135deg, #0A1628 0%, #1A1B4B 50%, #0A1628 100%)",
-        overflow: "hidden",
-      }}
-    >
-      <div style={{ maxWidth: "1160px", margin: "0 auto", textAlign: "center" }}>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "12px",
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "16px",
-            padding: "24px 40px",
-            backdropFilter: "blur(12px)",
-          }}
-        >
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#34C759" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-          </svg>
-          <div style={{ textAlign: "left" }}>
-            <div style={{ fontSize: "11px", fontWeight: 700, color: "rgba(255,255,255,0.5)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "2px" }}>
-              Signals Generated Today
-            </div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-              <span
-                style={{
-                  fontSize: "clamp(28px, 4vw, 42px)",
-                  fontWeight: 900,
-                  color: "#fff",
-                  letterSpacing: "-0.02em",
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
-                {count.toLocaleString()}
-              </span>
-              <span style={{ fontSize: "clamp(18px, 2.5vw, 28px)", fontWeight: 700, color: "#34C759" }}>+</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
 const NAV_ITEMS = [
@@ -599,8 +516,6 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
         </section>
 
         {/* ── SIGNALS COUNTER ────────────────────────────────────────────── */}
-        <AnimatedCounter />
-
         {/* ── GAME MODES ──────────────────────────────────────────────────── */}
         <section style={{ padding: "48px 24px", background: "var(--bg)" }}>
           <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
