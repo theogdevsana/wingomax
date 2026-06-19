@@ -82,7 +82,7 @@ export default function AdminLogin() {
           <div className="space-y-2">
             <label className="admin-label mb-2">Admin ID</label>
             <div className="relative flex items-center">
-              <User className="absolute left-4 text-slate-400" size={20} />
+              <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
               <input
                 type="text"
                 placeholder="Enter admin ID"
@@ -97,7 +97,7 @@ export default function AdminLogin() {
           <div className="space-y-2">
             <label className="admin-label mb-2">Password</label>
             <div className="relative flex items-center">
-              <KeyRound className="absolute left-4 text-slate-400" size={20} />
+              <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
