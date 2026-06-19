@@ -2,44 +2,10 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 
-function generateHistory(period: string, count = 15) {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-
-  const secondsPerPeriod = period === "30" ? 30 : 60;
-  const startTime = new Date();
-  startTime.setHours(5, 30, 0, 0);
-
-  const elapsedSeconds = Math.floor((now.getTime() - startTime.getTime()) / 1000);
-  const totalPeriods = Math.floor(elapsedSeconds / secondsPerPeriod);
-
-  const history = [];
-  for (let i = 0; i < count; i++) {
-    const periodNum = totalPeriods - i;
-    if (periodNum <= 0) break;
-
-    const number = Math.floor(Math.random() * 10);
-    let color: string;
-    if (number === 0) color = "red";
-    else if (number === 5) color = "green";
-    else if ([1, 3, 7, 9].includes(number)) color = "green";
-    else if ([2, 4, 6, 8].includes(number)) color = "red";
-    else color = "violet";
-
-    const periodStr = `${year}${month}${day}1000020${String(periodNum).padStart(3, '0')}`;
-
-    history.push({
-      period: periodStr,
-      number,
-      colour: color,
-      size: number >= 5 ? "Big" : "Small",
-    });
-  }
-
-  return history;
-}
+const HISTORY_ENDPOINTS: Record<string, string> = {
+  "1m": "https://cloud-apis.com/v2/history/1m",
+  "30s": "https://cloud-apis.com/v2/history/30s",
+};
 
 export async function GET(
   request: Request,
@@ -54,9 +20,24 @@ export async function GET(
 
   const { period: rawPeriod } = await params;
   const normalized = (rawPeriod || "1m").toLowerCase();
-  const period = ["30", "30s", "30sec", "30secs"].includes(normalized) ? "30" : "1m";
+  const period = ["30", "30s", "30sec", "30secs"].includes(normalized) ? "30s" : "1m";
 
-  const history = generateHistory(period);
+  const endpoint = HISTORY_ENDPOINTS[period];
+  if (!endpoint) {
+    return NextResponse.json({ status: "error", message: "Invalid period" }, { status: 400 });
+  }
 
-  return NextResponse.json({ history });
+  try {
+    const resp = await fetch(endpoint, { cache: "no-store" });
+    if (!resp.ok) throw new Error("External API error");
+    const data = await resp.json();
+    const history = (data || []).slice(0, 10).map((h: any) => ({
+      period: h.period || h.issueNumber,
+      number: h.number,
+      size: h.size,
+    }));
+    return NextResponse.json({ history });
+  } catch {
+    return NextResponse.json({ history: [] });
+  }
 }
