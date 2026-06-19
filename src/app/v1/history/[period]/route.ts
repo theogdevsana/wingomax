@@ -31,10 +31,11 @@ export async function GET(
     const resp = await fetch(endpoint, { cache: "no-store" });
     if (!resp.ok) throw new Error("External API error");
     const data = await resp.json();
-    const history = (data || []).slice(0, 10).map((h: any) => ({
-      period: h.period || h.issueNumber,
+    const history = (data?.history || []).slice(0, 10).map((h: any) => ({
+      period: h.period,
       number: h.number,
       size: h.size,
+      color: h.color || "",
     }));
     return NextResponse.json({ history });
   } catch {

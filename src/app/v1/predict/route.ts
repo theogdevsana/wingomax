@@ -40,11 +40,14 @@ export async function GET() {
 
     // 3. Extract and Clean the Response
     if (data && data.predictionResult) {
-      const { predictionResult } = data;
+      const { predictionResult, predictionDetails } = data;
 
       const cleanResult = {
         period: predictionResult.period,
         prediction: predictionResult.prediction,
+        gameType: predictionDetails?.gameType || "",
+        skipped: Boolean(predictionResult.skipped),
+        skipReason: predictionResult.skipReason || "",
       };
 
       return NextResponse.json({ predictionResult: cleanResult });
