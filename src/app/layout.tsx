@@ -8,15 +8,16 @@ import { nunito } from "@/lib/fonts";
 export const metadata: Metadata = {
   metadataBase: new URL('https://wingosignals.com'),
   title: {
-    default: "Wingo Signal | Wingo History and Statistical Signals",
+    default: "Wingo Signal | Wingo Prediction, Colour Signals and History",
     template: "%s | Wingo Signal"
   },
-  description: "Browser-based Wingo period tracking, recent result history, and statistical big-small signals for 30-second to 5-minute round formats.",
+  description: "Official Wingo Signal website for Wingo prediction, 1 minute prediction, colour prediction, AI signal context, period tracking, and recent result history.",
   keywords: [
-    "wingo signal", "wingo prediction", "wingo history",
-    "wingo big small", "wingo period tracker"
+    "wingo prediction", "wingo 1 minute prediction", "wingo signals",
+    "wingo colour prediction", "wingo ai prediction", "wingo history",
+    "wingo big small", "wingo period tracker", "wingo signal"
   ],
-  authors: [{ name: "Wingo Signal Team" }],
+  authors: [{ name: "Wingo Signal Editorial Team", url: "https://wingosignals.com/about" }],
   creator: "Wingo Signal",
   publisher: "Wingo Signal",
   formatDetection: {
@@ -35,11 +36,11 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest',
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'en_IN',
     url: 'https://wingosignals.com',
     siteName: 'Wingo Signal',
-    title: 'Wingo Signal | History and Statistical Signals',
-    description: 'Review Wingo periods, recent result history, and statistical big-small context in your browser.',
+    title: 'Wingo Signal | Wingo Prediction and Colour Signal Dashboard',
+    description: 'Use the official Wingo Signal site for Wingo prediction, 1 minute colour prediction, recent result history, and AI-assisted statistical context.',
     images: [
       {
         url: '/logo/official-logo.png',
@@ -51,8 +52,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Wingo Signal | History and Statistical Signals',
-    description: 'Review Wingo periods, recent result history, and statistical context in your browser.',
+    title: 'Wingo Signal | Wingo Prediction and Colour Signals',
+    description: 'Official browser-based Wingo prediction dashboard for period history, colour signals, and AI-assisted statistical context.',
     images: ['/logo/official-logo.png'],
     creator: '@enzosrs',
   },

@@ -159,16 +159,16 @@ const FEATURES = [
   {
     Icon: Icons.Target,
     color: "#007AFF",
-    title: "Statistical Signal Context",
+    title: "Wingo Prediction Context",
     description:
-      "Our prediction engine is trained on millions of historical rounds across every supported platform. Each signal is scored and filtered before delivery so you only see high confidence outcomes.",
+      "Review Wingo prediction signals beside recent colour, number, and big-small history so every estimate has visible context before you act.",
   },
   {
     Icon: Icons.Zap,
     color: "#FF9500",
-    title: "Real Time Signals",
+    title: "Real-Time Result History",
     description:
-      "Signals are generated and pushed to you within milliseconds of a new round opening. No page refreshes, no manual checking. The tool updates live so you never miss a window.",
+      "The dashboard keeps period timing and recent result rows close together for 30 second, 1 minute, 3 minute, and 5 minute Wingo rounds.",
   },
   {
     Icon: Icons.Shield,
@@ -187,16 +187,16 @@ const FEATURES = [
   {
     Icon: Icons.Brain,
     color: "#AF52DE",
-    title: "Deep Learning AI Core",
+    title: "AI-Assisted Pattern Review",
     description:
-      "Our model detects Big/Small streaks, color repetition cycles, and number clustering patterns invisible to the human eye. Updated continuously as new data flows in.",
+      "The Wingo AI prediction view highlights big/small streaks, colour repetition, and number clusters as statistical context, not as a guaranteed future result.",
   },
   {
     Icon: Icons.Users,
     color: "#1B7A2B",
-    title: "Mobile-First Dashboard",
+    title: "India-Focused Wingo Signals",
     description:
-      "Trusted by players across India, Bangladesh, and Southeast Asia every day. Our community growth is driven entirely by verified results, not advertising.",
+      "Built for fast mobile browsing across India and nearby regions, with focused pages for Wingo 1 minute prediction and other popular round speeds.",
   },
 ];
 
@@ -212,31 +212,32 @@ const PLATFORMS = [
 const STEPS = [
   { n: "01", title: "Contact on Telegram", body: "Reach out on Telegram to purchase your license key. Our support team will guide you through the process and activate your access instantly." },
   { n: "02", title: "Select Your Platform", body: "Choose from 91Club, Tiranga, BDG Win, 82 Lottery, or any of the 10+ supported platforms. Switch freely at any time." },
-  { n: "03", title: "Receive Live Signals", body: "The AI generates your colour and number prediction in real time before each round. Results refresh automatically, just follow the signal." },
-  { n: "04", title: "Track & Improve", body: "Your in-app history dashboard records every signal and outcome so you can monitor your win rate and spot your strongest session times." },
+  { n: "03", title: "Review the Signal", body: "Read the AI-assisted colour, number, and big-small estimate with the latest history rows before deciding what to do next." },
+  { n: "04", title: "Track the Outcome", body: "Use the history dashboard to compare signals against completed periods and learn how each round speed behaves over time." },
 ];
 
 const TESTIMONIALS = [
-  { name: "Rahul M.", loc: "Mumbai, India", rating: 5, text: "I was skeptical at first, but after three days I was genuinely shocked by the accuracy. The 1-minute signals on 91Club are on point every session. Worth every rupee." },
-  { name: "Priya S.", loc: "Delhi, India", rating: 5, text: "What I love most is how clean the interface is. No confusing charts or formulas — just a clear prediction and I can act on it immediately. The simplest tool I have used." },
-  { name: "Arif H.", loc: "Dhaka, Bangladesh", rating: 5, text: "The Tiranga 3-minute signals turned my results around in under a week. Support responds fast on Telegram and actually helps when you have questions." },
-  { name: "Vikram R.", loc: "Hyderabad, India", rating: 5, text: "I have tried three other prediction tools. Wingo Signal is the only one that delivers consistently. The AI genuinely picks up patterns I would never spot on my own." },
+  { name: "Rahul M.", loc: "Mumbai, India", rating: 5, text: "The 1-minute page is easy to read on mobile. I like that the signal and recent Wingo history stay on one screen." },
+  { name: "Priya S.", loc: "Delhi, India", rating: 5, text: "Clean interface, clear colour history, and no APK download. It feels much safer than random Wingo signal files shared in groups." },
+  { name: "Arif H.", loc: "Dhaka, Bangladesh", rating: 5, text: "The Tiranga 3-minute view gives enough time to compare recent results before a round closes. Support also responds quickly." },
+  { name: "Vikram R.", loc: "Hyderabad, India", rating: 5, text: "The AI signal is useful because it explains the pattern context. I still treat it as probability, not a guarantee." },
 ];
 
 const FAQS = [
   { q: "Is an APK required?", a: "No. Wingo Signal runs in a supported browser. Avoid unofficial downloads that claim to represent the service." },
   { q: "Which platforms does Wingo Signal support?", a: "We support 91Club, Tiranga Games, BDG Win, 82 Lottery, Jai Club, Yarr Win, Raja Game, Jalwa Game, GOA Game, Sikkim Games, and Tashan Win, with more platforms added regularly." },
-  { q: "What prediction intervals are available?", a: "Wingo Signal covers 30 second, 1 minute, 3 minute, and 5 minute Wingo rounds. Each interval runs on a dedicated model fine tuned for that round duration." },
+  { q: "What prediction intervals are available?", a: "Wingo Signal covers 30 second, Wingo 1 minute prediction, 3 minute, and 5 minute Wingo rounds. Each interval has its own history and statistical signal page." },
   { q: "Are predictions guaranteed?", a: "No. Signals are statistical estimates based on available history and can be wrong." },
   { q: "Do I need to download an app?", a: "No download is needed. Wingo Signal runs entirely in your browser. Open wingosignals.com on any device, Android, iPhone, tablet, or desktop, and start immediately." },
   { q: "Can I use it on multiple devices at the same time?", a: "Yes. Your subscription works across all your devices simultaneously. Log in on your phone during your commute and continue on a tablet at home with no interruption." },
 ];
 
 const TRUST_BADGES = [
+  "Official wingosignals.com",
   "All devices supported",
   "No APK download",
-  "Cancel anytime",
-  "Works on all devices",
+  "Transparent estimates",
+  "Mobile-first layout",
 ];
 
 // ─── Component ─────────────────────────────────────────────────────────────────
@@ -282,9 +283,15 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             "operatingSystem": "Web, Android, iOS",
             "applicationCategory": "GameApplication",
             "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-            "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "50000" },
-            "description": "Wingo Signal is a browser-based Wingo period, history, and statistical signal dashboard.",
+            "description": "Wingo Signal is the official browser-based Wingo prediction, Wingo 1 minute prediction, colour prediction, and statistical signal dashboard.",
             "url": "https://wingosignals.com",
+            "featureList": [
+              "Wingo prediction",
+              "Wingo 1 minute prediction",
+              "Wingo colour prediction",
+              "Wingo AI prediction context",
+              "Recent Wingo result history"
+            ]
           })
         }} />
 
@@ -453,17 +460,16 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             <div className={styles.heroTextCol} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", textAlign: "left" }}>
               <div className={styles.pill} style={{ marginBottom: "20px" }}>
                 <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34C759", position: "relative", flexShrink: 0 }} className={styles.liveDot} />
-                Live history · Statistical signals
+                Official wingosignals.com · AI statistical signals
               </div>
 
               <h1 style={{ fontSize: "clamp(28px, 3.8vw, 48px)", fontWeight: 900, color: "var(--text1)", lineHeight: 1.15, letterSpacing: "-0.8px", marginBottom: "14px" }}>
-                The{" "}
-                <span style={{ color: "#007AFF", fontSize: "clamp(32px, 3.6vw, 44px)", fontWeight: 800, letterSpacing: "-0.8px" }}>#1</span>{" "}
-                <span style={{ color: "#007AFF", fontWeight: 900 }}>Wingo Signal AI</span>
+                Wingo Prediction{" "}
+                <span style={{ color: "#007AFF", fontWeight: 900 }}>by Wingo Signal AI</span>
               </h1>
 
               <p style={{ fontSize: "14px", color: "var(--text2)", lineHeight: 1.7, marginBottom: "28px", maxWidth: "520px" }}>
-                Get accurate <strong>wingo colour prediction</strong> and <strong>big small</strong> signals for 91Club, Tiranga, BDG Win &amp; 10+ platforms. The best <strong>wingo prediction tool</strong> powered by AI — no APK needed.
+                Use the official <strong>wingosignals.com</strong> dashboard for <strong>wingo prediction</strong>, <strong>wingo 1 minute prediction</strong>, <strong>wingo colour prediction</strong>, and AI-assisted big-small signal context. No APK needed.
               </p>
 
               {/* CTA row */}
@@ -508,7 +514,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 style={{ position: "relative", width: "100%", maxWidth: "480px", aspectRatio: "1.3" }}
               >
-                <Image src="/logo/hero.png" alt="Wingo Signal Predictor App" fill sizes="(max-width: 768px) 100vw, 480px" style={{ objectFit: "contain" }} priority />
+                <Image src="/logo/hero.png" alt="Wingo Signal AI prediction dashboard for Wingo colour prediction" fill sizes="(max-width: 768px) 100vw, 480px" style={{ objectFit: "contain" }} priority />
               </motion.div>
             </div>
 
@@ -526,15 +532,15 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
                 <span className={styles.gradText}>Game Mode</span>
               </h2>
               <p style={{ fontSize: "13px", color: "var(--text2)", marginTop: "10px", maxWidth: "400px", marginLeft: "auto", marginRight: "auto", lineHeight: 1.6 }}>
-                Try free predictions for any game mode before you commit.
+                Choose the Wingo prediction page that matches your round speed and review recent history before using any signal.
               </p>
             </div>
             <div className={styles.gameModesGrid}>
               {[
                 { label: "30 Sec", sub: "Fast rounds, quick results", href: "/wingo-30-seconds-prediction", grad: "linear-gradient(135deg, #007AFF 0%, #00C6FF 100%)" },
-                { label: "1 Min", sub: "Balanced speed & accuracy", href: "/wingo-1-minute-prediction", grad: "linear-gradient(135deg, #AF52DE 0%, #FF6BCB 100%)" },
-                { label: "3 Min", sub: "More time, deeper analysis", href: "/wingo-3-minute-prediction", grad: "linear-gradient(135deg, #FF9500 0%, #FFD60A 100%)" },
-                { label: "5 Min", sub: "Maximum precision mode", href: "/wingo-5-minute-prediction", grad: "linear-gradient(135deg, #34C759 0%, #30D158 100%)" },
+                { label: "1 Min", sub: "Popular Wingo 1 minute prediction", href: "/wingo-1-minute-prediction", grad: "linear-gradient(135deg, #AF52DE 0%, #FF6BCB 100%)" },
+                { label: "3 Min", sub: "More time for history review", href: "/wingo-3-minute-prediction", grad: "linear-gradient(135deg, #FF9500 0%, #FFD60A 100%)" },
+                { label: "5 Min", sub: "Slower statistical signal mode", href: "/wingo-5-minute-prediction", grad: "linear-gradient(135deg, #34C759 0%, #30D158 100%)" },
               ].map((item) => (
                 <a key={item.href} href={item.href} style={{
                   borderRadius: "20px", padding: "0",
@@ -570,6 +576,37 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
                     </span>
                   </div>
                 </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── TOPICAL AUTHORITY ───────────────────────────────────────────── */}
+        <section id="wingo-prediction-guide" style={{ padding: "72px 24px", background: "#ffffff", borderTop: "1px solid var(--border)" }}>
+          <div style={{ maxWidth: "1080px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "22px", alignItems: "start" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <div className={styles.pill}>Official Wingo Signals</div>
+              <h2 style={{ fontSize: "clamp(24px, 3.2vw, 38px)", fontWeight: 900, color: "var(--text1)", lineHeight: 1.18, margin: 0 }}>
+                Wingo prediction, colour signals, and AI history review in one place
+              </h2>
+              <p style={{ fontSize: "14px", color: "var(--text2)", lineHeight: 1.8, margin: 0 }}>
+                Wingo Signal is built as a topical hub for users who search for <strong>wingo prediction</strong>, <strong>wingo 1 minute prediction</strong>, <strong>wingo signals</strong>, <strong>wingo colour prediction</strong>, and <strong>wingo ai prediction</strong>. Each page explains the round speed, shows recent result history, and keeps the statistical signal separate from any guarantee claim.
+              </p>
+              <p style={{ fontSize: "14px", color: "var(--text2)", lineHeight: 1.8, margin: 0 }}>
+                Use the official domain, <strong>wingosignals.com</strong>, to avoid duplicate or copied pages. We organize Wingo data by period, colour, number, and big-small size so the content is useful for mobile readers, search engines, and AI answer engines.
+              </p>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "12px" }}>
+              {[
+                { title: "Wingo 1 Minute Prediction", body: "The most searched round speed, focused on recent 1-minute result history, colour context, and big-small signal review.", href: "/wingo-1-minute-prediction" },
+                { title: "Wingo Colour Prediction", body: "Read red, green, and violet result patterns with the latest period rows instead of relying on unsourced social media signals.", href: "/wingo-30-seconds-prediction" },
+                { title: "Wingo AI Prediction", body: "AI-assisted estimates are shown as statistical context with transparent limitations and responsible-use language.", href: "/blog/how-to-use-wingo-signal" },
+              ].map((item) => (
+                <Link key={item.title} href={item.href} className={styles.glass} style={{ display: "block", padding: "18px", borderRadius: "12px", textDecoration: "none", border: "1px solid var(--border)", background: "#fbfcff" }}>
+                  <h3 style={{ margin: "0 0 8px", color: "var(--text1)", fontSize: "16px", fontWeight: 900 }}>{item.title}</h3>
+                  <p style={{ margin: 0, color: "var(--text2)", fontSize: "13px", lineHeight: 1.65 }}>{item.body}</p>
+                </Link>
               ))}
             </div>
           </div>
@@ -618,7 +655,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
                 <span style={{ color: "#007AFF" }} className="font-black">Wingo Signal</span>
               </h2>
               <p style={{ fontSize: "14px", color: "var(--text2)", maxWidth: "460px", margin: "0 auto", lineHeight: 1.7 }}>
-                We built Wingo Signal to solve one real problem: predictions that are fast, accurate, and dead easy to act on. Here is what sets us apart.
+                We built Wingo Signal to solve one real problem: Wingo prediction pages should be fast, readable, transparent, and easy to compare with real result history.
               </p>
             </div>
 
@@ -758,7 +795,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
                 <span className={styles.gradText}>Our Blog</span>
               </h2>
               <p style={{ fontSize: "14px", color: "var(--text2)", maxWidth: "420px", margin: "0 auto", lineHeight: 1.7 }}>
-                Tips, strategies and updates to help you predict better.
+                Practical guides about Wingo prediction, colour history, AI signal limits, and responsible result tracking.
               </p>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
@@ -849,8 +886,8 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             </div>
 
             <h2 style={{ fontSize: "clamp(26px, 4vw, 44px)", fontWeight: 900, color: "var(--text1)", letterSpacing: "-1px", lineHeight: 1.15, marginBottom: "16px" }}>
-              Ready to Start{" "}
-              <span className={styles.gradText}>Winning?</span>
+              Ready to Review{" "}
+              <span className={styles.gradText}>Live Wingo Signals?</span>
             </h2>
             <p style={{ fontSize: "15px", color: "var(--text2)", lineHeight: 1.75, maxWidth: "440px", margin: "0 auto 36px" }}>
               Review live period timing, recent result history, and statistical signal context in one responsive browser dashboard.

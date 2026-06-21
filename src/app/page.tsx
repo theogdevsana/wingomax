@@ -4,54 +4,25 @@ import JsonLd from "@/components/JsonLd";
 import { query } from '@/lib/db';
 
 export const metadata: Metadata = {
-  title: "Wingo Signal | Live Wingo History and Statistical Signals",
+  title: "Wingo Prediction | Wingo Signal AI Colour Prediction Dashboard",
   description:
-    "Track Wingo periods, inspect recent colour and big-small history, and view statistical signals for 30-second, 1-minute, 3-minute, and 5-minute rounds.",
+    "Use Wingo Signal for Wingo prediction, Wingo 1 minute prediction, colour prediction, AI signal context, period tracking, and recent result history on the official website.",
   keywords: [
-    "wingo signal",
-    "wingo signals",
-    "wingo signal prediction",
-    "wingo colour prediction",
     "wingo prediction",
-    "wingo signal download",
-    "wingo prediction tool download",
-    "wingo predictor app",
-    "91club prediction tool download",
-    "tiranga prediction tool download",
-    "bdg win prediction",
-    "color prediction tool 2026",
-    "wingo signal apk",
-    "wingo color prediction formula",
-    "wingo big small prediction",
-    "wingo signal free",
-    "wingo predictor online",
-    "wingo signal app download",
-    "wingo signal login",
-    "wingo signal telegram",
-    "ai color prediction tool india",
-    "82 lottery prediction signal",
-    "jai club prediction tool",
     "wingo 1 minute prediction",
+    "wingo signals",
+    "wingo colour prediction",
+    "wingo ai prediction",
+    "wingo signal",
+    "wingo big small prediction",
+    "wingo 30 seconds prediction",
     "wingo 3 minute prediction",
     "wingo 5 minute prediction",
-    "wingo 30 seconds prediction",
-    "wingo signal 91club",
-    "wingo prediction website",
-    "best color prediction tool",
-    "wingo signal online free",
-    "prediction tool for tiranga",
-    "wingo colour prediction",
-    "wingo big small prediction tool",
-    "wingo predictor online free",
-    "wingo winning tricks",
-    "wingo signal 1 minute",
     "91club wingo prediction",
-    "tiranga colour prediction",
-    "wingo telegram signal",
-    "wingo panel",
-    "best wingo prediction site",
-    "wingo mod apk",
-    "wingo ai prediction bot",
+    "tiranga wingo prediction",
+    "bdg win wingo prediction",
+    "wingo prediction website",
+    "wingo history",
   ],
   alternates: {
     canonical: "https://wingosignals.com",
@@ -61,9 +32,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://wingosignals.com",
     siteName: "Wingo Signal",
-    title: "Wingo Signal | Wingo Period, History and Signal Dashboard",
+    title: "Wingo Prediction | Official Wingo Signal AI Dashboard",
     description:
-      "A responsive Wingo dashboard for period timing, recent result history, and uncertain statistical big-small signals. No APK required.",
+      "Official Wingo Signal dashboard for Wingo prediction, 1 minute colour prediction, recent result history, and AI-assisted statistical signals.",
     images: [
       {
         url: "https://wingosignals.com/logo/hero_main.png",
@@ -77,9 +48,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wingo Signal | Period and Result History Dashboard",
+    title: "Wingo Prediction | Wingo Signal AI Dashboard",
     description:
-      "Review Wingo period timing, recent results, and statistical signal context from a mobile-friendly browser dashboard.",
+      "Track Wingo prediction, colour signals, 1 minute history, and AI-assisted statistical context from the official mobile-friendly website.",
     images: ["https://wingosignals.com/logo/hero_main.png"],
     creator: "@enzosrs",
   },
@@ -94,11 +65,11 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  authors: [{ name: "Wingo Signal Team", url: "https://wingosignals.com" }],
+  authors: [{ name: "Wingo Signal Editorial Team", url: "https://wingosignals.com/about" }],
   creator: "Wingo Signal",
   publisher: "Wingo Signal",
   category: "Technology",
-  classification: "AI Prediction Tool",
+  classification: "Statistical Wingo Prediction Dashboard",
   other: {
     "application-name": "Wingo Signal",
     "apple-mobile-web-app-title": "Wingo Signal",
@@ -116,7 +87,7 @@ const faqData = [
   },
   {
     question: "What prediction intervals are available?",
-    answer: "Wingo Signal covers 30 second, 1 minute, 3 minute, and 5 minute Wingo rounds. Each interval runs on a dedicated model fine tuned for that round duration."
+    answer: "Wingo Signal covers 30 second, Wingo 1 minute prediction, 3 minute, and 5 minute Wingo rounds. Each interval has its own result-history and statistical signal view."
   },
   {
     question: "How accurate are the predictions?",
@@ -154,8 +125,16 @@ export default async function HomePage() {
           "operatingSystem": "Web, Android, iOS",
           "applicationCategory": "GameApplication",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-          "description": "Wingo Signal provides browser-based period tracking, recent result history, and statistical signal context.",
+          "description": "Wingo Signal provides browser-based Wingo prediction, Wingo 1 minute prediction, colour prediction, recent result history, and statistical signal context.",
           "url": "https://wingosignals.com",
+          "sameAs": ["https://wingosignals.com"],
+          "featureList": [
+            "Wingo prediction dashboard",
+            "Wingo 1 minute prediction history",
+            "Wingo colour prediction context",
+            "AI-assisted big small signal view",
+            "30 second, 1 minute, 3 minute, and 5 minute round pages"
+          ]
         })
       }} />
       <DownloadClient telegramLink={telegramLink} />

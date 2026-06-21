@@ -1,18 +1,18 @@
 export async function GET() {
   const baseUrl = 'https://wingosignals.com';
   const pages = [
-    'wingo-1-minute-prediction',
-    'wingo-3-minute-prediction',
-    'wingo-5-minute-prediction',
-    'wingo-30-seconds-prediction'
+    { path: 'wingo-1-minute-prediction', priority: '0.98' },
+    { path: 'wingo-30-seconds-prediction', priority: '0.94' },
+    { path: 'wingo-3-minute-prediction', priority: '0.92' },
+    { path: 'wingo-5-minute-prediction', priority: '0.90' }
   ];
 
-  const urls = pages.map(p => `
+  const urls = pages.map((page) => `
   <url>
-    <loc>${baseUrl}/${p}</loc>
+    <loc>${baseUrl}/${page.path}</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>${page.priority}</priority>
   </url>`).join('');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

@@ -15,17 +15,36 @@ export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { 
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Wingo Signal",
+    "alternateName": ["Wingo Signals", "Wingo AI Prediction"],
     "url": "https://wingosignals.com",
     "logo": "https://wingosignals.com/logo/official-logo.png",
     "sameAs": [telegramLink],
-    "description": "Browser-based Wingo period tracking, recent result history, and statistical signal context."
+    "description": "Official browser-based Wingo prediction website for period tracking, result history, colour prediction context, and AI-assisted statistical signals.",
+    "knowsAbout": [
+      "wingo prediction",
+      "wingo 1 minute prediction",
+      "wingo signals",
+      "wingo colour prediction",
+      "wingo ai prediction",
+      "wingo big small history"
+    ],
+    "areaServed": ["IN", "BD"],
+    "foundingDate": "2026"
   };
 
   const websiteData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Wingo Signal",
+    "alternateName": "Wingo Signals",
     "url": "https://wingosignals.com",
+    "inLanguage": "en-IN",
+    "description": "Official Wingo Signal website covering Wingo prediction, Wingo 1 minute prediction, colour prediction, AI signal context, and result history.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Wingo Signal",
+      "url": "https://wingosignals.com"
+    },
     "potentialAction": {
       "@type": "SearchAction",
       "target": "https://wingosignals.com/blog?q={search_term_string}",
