@@ -35,11 +35,10 @@ export default async function SitemapPage() {
       title: "Main Pages",
       links: [
         { name: "Home", href: "/" },
-        { name: "Login", href: "/login" },
         { name: "Wingo Blog", href: "/blog" },
+        { name: "About", href: "/about" },
         { name: "FAQ", href: "/faq" },
         { name: "Subscribe", href: "/subscribe" },
-        { name: "Free Fire Rewards", href: "/free-fire-rewards" },
       ],
     },
     {

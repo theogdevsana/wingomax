@@ -1,35 +1,12 @@
-import { Metadata } from "next";
-import PrivacyPage from "./PrivacyClient";
+import type { Metadata } from "next";
+import PublicInfoPage from "@/components/PublicInfoPage";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | Wingo Signal - Your Data Security",
-  description: "Learn how Wingo Signal protects your privacy and manages your data. Our commitment to securing your personal information and prediction history.",
-  keywords: ["wingo privacy", "data protection", "wingo signal terms", "privacy policy"],
-  alternates: {
-    canonical: '/privacy',
-  },
-};
-
-import { query } from '@/lib/db';
-
-import JsonLd from "@/components/JsonLd";
-
-export default async function Page() {
-  let telegramLink = "https://t.me/enzosrs";
-  try {
-    const result = await query('SELECT telegram_link FROM settings LIMIT 1');
-    telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : "https://t.me/enzosrs";
-  } catch {}
-
-  const breadcrumbs = [
-    { name: "Home", item: "/" },
-    { name: "Privacy Policy", item: "/privacy" }
-  ];
-
-  return (
-    <>
-      <JsonLd breadcrumbs={breadcrumbs} />
-      <PrivacyPage telegramLink={telegramLink} />
-    </>
-  );
-}
+export const metadata: Metadata={title:"Privacy Policy | Wingo Signal",description:"Read how Wingo Signal handles account, license, device, analytics, support, and service-security data.",alternates:{canonical:"/privacy"}};
+const sections=[
+  {id:"information",title:"Information we process",paragraphs:["We process information needed to operate the service, such as an account identifier, license status, device association, support messages, and basic request logs. We may also process aggregated usage events to understand reliability and feature performance."],bullets:["Account or license identifiers","Device association used to enforce access rules","Technical logs such as time, route, and error status","Messages voluntarily sent to support"]},
+  {id:"purpose",title:"Why we use it",paragraphs:["Data is used to authenticate access, prevent abuse, troubleshoot failed requests, maintain service security, and answer support questions. Aggregated measurements may be used to improve product reliability and page performance."]},
+  {id:"sharing",title:"Service providers and sharing",paragraphs:["Hosting, database, analytics, and communication providers may process limited information on our behalf. We do not describe personal information as a product for sale. Information may be disclosed when required by law or needed to protect the service and its users."]},
+  {id:"retention",title:"Retention and your choices",paragraphs:["Records are retained only as long as reasonably needed for the purpose described, dispute handling, security, or legal obligations. You can ask support about access, correction, or deletion of information connected to your account, subject to verification and applicable requirements."]},
+  {id:"security",title:"Security and policy changes",paragraphs:["We use standard transport security and access controls, but no online service can promise absolute security. Material policy changes will be reflected on this page with a revised update date."],note:"Do not send card details, passwords, or one-time codes through support chat."},
+];
+export default function PrivacyPage(){return <PublicInfoPage eyebrow="Legal" title="Privacy policy" intro="A plain-language explanation of the information used to provide and protect Wingo Signal." updated="21 June 2026" sections={sections}/>}

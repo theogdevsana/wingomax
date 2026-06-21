@@ -10,7 +10,7 @@ export async function GET() {
   const urls = pages.map(p => `
   <url>
     <loc>${baseUrl}/${p}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    <lastmod>2026-06-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>`).join('');

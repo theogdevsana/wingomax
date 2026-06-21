@@ -5,9 +5,9 @@ import { getAllBlogPosts } from "@/lib/blog-data";
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: "Wingo Signal Blog - Prediction Tips, Guides & More",
-  description: "Explore the latest guides, strategies, and updates about Wingo Signal. Learn how to use and purchase our premium prediction tools.",
-  keywords: "Wingo Signal, Wingo Prediction, Game Strategy, Purchase License, AI Prediction Tool",
+  title: "Wingo Signal Guides | History, Patterns and Responsible Use",
+  description: "Read practical guides about Wingo result history, pattern interpretation, account access, product updates, and responsible use of statistical signals.",
+  keywords: ["wingo guides", "wingo history", "big small patterns", "statistical signals"],
   alternates: {
     canonical: '/blog',
   },
@@ -28,7 +28,7 @@ export default async function BlogListing() {
     "@type": "Blog",
     "@id": "https://wingosignals.com/blog",
     "name": "Wingo Signal Blog",
-    "description": "Expert insights, strategies, and tutorials about Wingo Signal prediction tools.",
+    "description": "Guides about Wingo history, pattern interpretation, product use, and statistical-signal limitations.",
     "url": "https://wingosignals.com/blog",
     "blogPost": BLOG_POSTS.map((post, i) => ({
       "@type": "BlogPosting",
@@ -45,7 +45,7 @@ export default async function BlogListing() {
     "name": "Wingo Signal",
     "url": "https://wingosignals.com",
     "logo": "https://wingosignals.com/logo/official-logo.png",
-    "description": "Professional Wingo prediction tools and AI-driven signals for gaming platforms."
+    "description": "Browser-based Wingo period tracking, result history, and statistical signal context."
   };
 
   const websiteSchema = {
@@ -93,7 +93,7 @@ export default async function BlogListing() {
         <div className="blog-listing-container">
           <div className="blog-listing-header">
             <h1 className="blog-listing-title">Wingo Signal Blog</h1>
-            <p className="blog-listing-subtitle">Expert insights, strategies, and tutorials</p>
+            <p className="blog-listing-subtitle">History interpretation, product help, and responsible-use guides</p>
           </div>
 
           <div className="blog-listing-grid">

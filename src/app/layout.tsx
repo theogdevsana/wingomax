@@ -8,15 +8,13 @@ import { nunito } from "@/lib/fonts";
 export const metadata: Metadata = {
   metadataBase: new URL('https://wingosignals.com'),
   title: {
-    default: "Wingo Signal - #1 AI Color Prediction Tool for 91Club & Tiranga 2026",
+    default: "Wingo Signal | Wingo History and Statistical Signals",
     template: "%s | Wingo Signal"
   },
-  description: "Official Wingo Signal AI color prediction tool for 91Club, Tiranga, BDG Win & 10+ platforms. Get 95%+ accurate 1-min, 3-min & 5-min signals — no download needed. Trusted by 50,000+ users.",
+  description: "Browser-based Wingo period tracking, recent result history, and statistical big-small signals for 30-second to 5-minute round formats.",
   keywords: [
-    "wingo signal", "wingo prediction", "color prediction tool",
-    "91club prediction", "tiranga prediction tool", "wingo signals telegram",
-    "wingo mod apk", "wingo color prediction formula", "wingo big small pattern",
-    "wingo predictor app download"
+    "wingo signal", "wingo prediction", "wingo history",
+    "wingo big small", "wingo period tracker"
   ],
   authors: [{ name: "Wingo Signal Team" }],
   creator: "Wingo Signal",
@@ -40,8 +38,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://wingosignals.com',
     siteName: 'Wingo Signal',
-    title: 'Wingo Signal - Professional Game Predictor',
-    description: 'Advanced Wingo Signal platform providing premium prediction tools and real-time signals.',
+    title: 'Wingo Signal | History and Statistical Signals',
+    description: 'Review Wingo periods, recent result history, and statistical big-small context in your browser.',
     images: [
       {
         url: '/logo/official-logo.png',
@@ -53,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Wingo Signal - Professional Game Predictor',
-    description: 'Advanced Wingo Signal platform providing premium prediction tools and real-time signals.',
+    title: 'Wingo Signal | History and Statistical Signals',
+    description: 'Review Wingo periods, recent result history, and statistical context in your browser.',
     images: ['/logo/official-logo.png'],
     creator: '@enzosrs',
   },

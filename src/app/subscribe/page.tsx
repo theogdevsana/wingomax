@@ -4,7 +4,7 @@ import { query } from '@/lib/db';
 
 export const metadata: Metadata = {
   title: "Pricing & Subscription | Wingo Signal Premium",
-  description: "Get premium access to Wingo Signal AI tools. Choose from Starter, Elite, and Max Pro plans for maximum accuracy in game predictions.",
+  description: "Compare Wingo Signal access plans by duration, dashboard features, and support level. Statistical signals never guarantee a result.",
   keywords: ["wingo subscription", "wingo premium access", "wingo vip signals", "wingo tool pricing"],
   alternates: {
     canonical: '/subscribe',
@@ -18,7 +18,7 @@ const PLANS = [
     price: "₹499",
     period: "7 Days Access",
     features: [
-      "55%+ Accuracy Basic Signals",
+      "Basic statistical signals",
       "Live Profitable Trend Scan",
       "Double-Chance Safe Signals",
       "Dedicated Telegram Support",
@@ -36,7 +36,7 @@ const PLANS = [
     price: "₹999",
     period: "10 Days Access",
     features: [
-      "70%+ High Win-Rate Signals",
+      "Expanded signal access",
       "Advanced Fast Pattern Tracker",
       "Direct VIP Channel Access",
       "24/7 Priority Support Desk",
@@ -54,11 +54,11 @@ const PLANS = [
     price: "₹1599", 
     period: "30 Days Access",
     features: [
-      "83%+ Neural Model Accuracy",
+      "Full live signal dashboard",
       "Full Live AI Signal Dashboard",
       "Multi-Game Prediction Unlocked",
       "1-on-1 Risk Minimizer Guide",
-      "Guaranteed Safe Win Signals",
+      "Account and setup guidance",
     ],
     gradient: ["#34C759", "#2EBD59"],
     blob1: "rgba(52,199,89,0.12)",
@@ -72,11 +72,11 @@ const PLANS = [
     price: "₹2499",
     period: "45 Days Access",
     features: [
-      "95%+ Fully Automated Accuracy",
-      "Developed by Official Wingo Devs",
+      "Automated signal refresh",
+      "Extended dashboard access",
       "Self-Learning Auto-Correct AI",
       "Premium Telegram Bot Hookup",
-      "100% Refund Covered Guarantee",
+      "Refund review under published policy",
     ],
     gradient: ["#FF9500", "#FFCC00"],
     blob1: "rgba(255,149,0,0.12)",
@@ -90,11 +90,11 @@ const PLANS = [
     price: "₹3999",
     period: "90 Days Access",
     features: [
-      "98%+ Deep Neural Precision",
-      "Official Wingo Dev Algorithm",
+      "Additional trend views",
+      "Long-duration access",
       "Highly Tuned Low-Risk Signals",
       "Direct Priority Dev Support Line",
-      "Covered by 100% Refund Policy",
+      "Refund review under published policy",
     ],
     gradient: ["#FF2D55", "#FF3B30"],
     blob1: "rgba(255,45,85,0.12)",
@@ -108,11 +108,11 @@ const PLANS = [
     price: "₹4999",
     period: "Lifetime VIP Access",
     features: [
-      "Uncapped 99% Max Accuracy",
-      "Created by Lead Wingo Dev Team",
-      "Quantum Sequence Hacker Access",
-      "Private VIP Undetected Channels",
-      "Safe Win Guarantee or Easy Refund",
+      "Lifetime dashboard access",
+      "All available interval views",
+      "Statistical sequence summaries",
+      "Priority support channel",
+      "Refund review under published policy",
     ],
     gradient: ["#7F00FF", "#00F2FE"],
     blob1: "rgba(127,0,255,0.12)",
@@ -147,7 +147,7 @@ export default async function SubscribePage() {
         <div className={styles.sectionHeader}>
           <div>
             <h2 className={styles.sectionTitle}>Standard Prediction Plans</h2>
-            <p className={styles.sectionDesc}>High-accuracy models for daily tracking</p>
+            <p className={styles.sectionDesc}>History and signal tools for daily review</p>
           </div>
           <span className={styles.sectionTag} style={{ backgroundColor: "rgba(0,122,255,0.1)", color: "#007AFF" }}>
             Popular

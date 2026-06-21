@@ -159,7 +159,7 @@ const FEATURES = [
   {
     Icon: Icons.Target,
     color: "#007AFF",
-    title: "95%+ Verified Accuracy",
+    title: "Statistical Signal Context",
     description:
       "Our prediction engine is trained on millions of historical rounds across every supported platform. Each signal is scored and filtered before delivery so you only see high confidence outcomes.",
   },
@@ -175,7 +175,7 @@ const FEATURES = [
     color: "#34C759",
     title: "Secure & Private",
     description:
-      "AES-256 encryption in transit and at rest, zero personal data logs, and no APK installs. Everything runs in your browser on our hardened infrastructure.",
+      "No APK installation is required. The dashboard runs in your browser and uses standard secure web transport for account requests.",
   },
   {
     Icon: Icons.Mobile,
@@ -194,7 +194,7 @@ const FEATURES = [
   {
     Icon: Icons.Users,
     color: "#1B7A2B",
-    title: "50,000+ Active Users",
+    title: "Mobile-First Dashboard",
     description:
       "Trusted by players across India, Bangladesh, and Southeast Asia every day. Our community growth is driven entirely by verified results, not advertising.",
   },
@@ -224,10 +224,10 @@ const TESTIMONIALS = [
 ];
 
 const FAQS = [
-  { q: "Is Wingo Signal safe to use?", a: "Yes. Wingo Signal is a browser based tool. No APK or third party software required. Your account uses AES-256 encryption and we maintain a strict no log policy on user activity." },
+  { q: "Is an APK required?", a: "No. Wingo Signal runs in a supported browser. Avoid unofficial downloads that claim to represent the service." },
   { q: "Which platforms does Wingo Signal support?", a: "We support 91Club, Tiranga Games, BDG Win, 82 Lottery, Jai Club, Yarr Win, Raja Game, Jalwa Game, GOA Game, Sikkim Games, and Tashan Win, with more platforms added regularly." },
   { q: "What prediction intervals are available?", a: "Wingo Signal covers 30 second, 1 minute, 3 minute, and 5 minute Wingo rounds. Each interval runs on a dedicated model fine tuned for that round duration." },
-  { q: "How accurate are the predictions?", a: "Our verified accuracy across all platforms and intervals is 91 to 96%. Individual sessions will vary, but the engine is built to surface the highest probability outcome for each round." },
+  { q: "Are predictions guaranteed?", a: "No. Signals are statistical estimates based on available history and can be wrong." },
   { q: "Do I need to download an app?", a: "No download is needed. Wingo Signal runs entirely in your browser. Open wingosignals.com on any device, Android, iPhone, tablet, or desktop, and start immediately." },
   { q: "Can I use it on multiple devices at the same time?", a: "Yes. Your subscription works across all your devices simultaneously. Log in on your phone during your commute and continue on a tablet at home with no interruption." },
 ];
@@ -283,7 +283,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             "applicationCategory": "GameApplication",
             "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
             "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "50000" },
-            "description": "Wingo Signal is the #1 AI color prediction tool for 91Club, Tiranga, BDG Win and 10+ platforms with 95%+ accuracy.",
+            "description": "Wingo Signal is a browser-based Wingo period, history, and statistical signal dashboard.",
             "url": "https://wingosignals.com",
           })
         }} />
@@ -453,7 +453,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             <div className={styles.heroTextCol} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", textAlign: "left" }}>
               <div className={styles.pill} style={{ marginBottom: "20px" }}>
                 <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34C759", position: "relative", flexShrink: 0 }} className={styles.liveDot} />
-                AI Powered · 95%+ Accuracy
+                Live history · Statistical signals
               </div>
 
               <h1 style={{ fontSize: "clamp(28px, 3.8vw, 48px)", fontWeight: 900, color: "var(--text1)", lineHeight: 1.15, letterSpacing: "-0.8px", marginBottom: "14px" }}>
@@ -686,8 +686,8 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
           <div style={{ maxWidth: "900px", margin: "0 auto" }}>
             <div className={styles.statsGrid} style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "40px", textAlign: "center" }}>
               {[
-                { val: "50,000+", label: "Active Users", sub: "across 8 countries" },
-                { val: "95%", label: "Prediction Accuracy", sub: "verified 90-day avg" },
+                { val: "4", label: "Round Formats", sub: "30s to 5 minutes" },
+                { val: "10", label: "Recent Results", sub: "visible history context" },
                 { val: "11+", label: "Platforms", sub: "91Club, Tiranga & more" },
                 { val: "24/7", label: "Live Signals", sub: "never miss a round" },
               ].map((s, idx) => (
@@ -853,7 +853,7 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
               <span className={styles.gradText}>Winning?</span>
             </h2>
             <p style={{ fontSize: "15px", color: "var(--text2)", lineHeight: 1.75, maxWidth: "440px", margin: "0 auto 36px" }}>
-              Join over 50,000 users who trust Wingo Signal every day for faster, smarter, and more consistent Wingo predictions. Your first session is completely free.
+              Review live period timing, recent result history, and statistical signal context in one responsive browser dashboard.
             </p>
 
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>

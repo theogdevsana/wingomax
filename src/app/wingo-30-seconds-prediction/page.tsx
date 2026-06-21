@@ -5,9 +5,9 @@ import { Metadata } from "next";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Wingo 30 Seconds Prediction - Official AI Pattern Analyst",
-  description: "Get the most accurate Wingo 30 seconds prediction signals. Our AI tool provides real-time WinGo 30s color and number patterns for Tiranga and 91Club.",
-  keywords: ["wingo 30s prediction", "wingo prediction telegram link", "wingo mod apk", "wingo 30s signal app"],
+  title: "Wingo 30 Second Prediction | Live Period and History",
+  description: "Review Wingo 30-second period timing, recent big-small history, colour context, and statistical signals in a responsive browser interface.",
+  keywords: ["wingo 30 second prediction", "wingo 30s history", "wingo 30 second period", "wingo big small"],
   alternates: {
     canonical: "https://wingosignals.com/wingo-30-seconds-prediction",
   }

@@ -4,9 +4,9 @@ import JsonLd from "@/components/JsonLd";
 import { query } from '@/lib/db';
 
 export const metadata: Metadata = {
-  title: "Wingo Signal - Free AI Color Prediction Tool for 91Club & Tiranga 2026",
+  title: "Wingo Signal | Live Wingo History and Statistical Signals",
   description:
-    "Wingo Signal is the #1 AI color prediction tool for 91Club, Tiranga & BDG Win. Get 95%+ accurate Wingo signals (30s-5min) instantly in your browser. No download needed. Trusted by 50,000+ users.",
+    "Track Wingo periods, inspect recent colour and big-small history, and view statistical signals for 30-second, 1-minute, 3-minute, and 5-minute rounds.",
   keywords: [
     "wingo signal",
     "wingo signals",
@@ -23,7 +23,6 @@ export const metadata: Metadata = {
     "wingo signal apk",
     "wingo color prediction formula",
     "wingo big small prediction",
-    "wingo signal 95 accuracy",
     "wingo signal free",
     "wingo predictor online",
     "wingo signal app download",
@@ -45,7 +44,6 @@ export const metadata: Metadata = {
     "wingo big small prediction tool",
     "wingo predictor online free",
     "wingo winning tricks",
-    "wingo hack tool",
     "wingo signal 1 minute",
     "91club wingo prediction",
     "tiranga colour prediction",
@@ -63,9 +61,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://wingosignals.com",
     siteName: "Wingo Signal",
-    title: "Wingo Signal - Free AI Color Prediction Tool | 95%+ Accuracy for 91Club & Tiranga",
+    title: "Wingo Signal | Wingo Period, History and Signal Dashboard",
     description:
-      "Wingo Signal - the #1 AI color prediction tool for 91Club, Tiranga & BDG Win. Get 95%+ accurate Wingo signals instantly in your browser. No APK required. 50,000+ users.",
+      "A responsive Wingo dashboard for period timing, recent result history, and uncertain statistical big-small signals. No APK required.",
     images: [
       {
         url: "https://wingosignals.com/logo/hero_main.png",
@@ -79,9 +77,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wingo Signal - Free AI Color Prediction Tool | 95%+ Accuracy",
+    title: "Wingo Signal | Period and Result History Dashboard",
     description:
-      "Wingo Signal — AI-powered color predictions for 91Club, Tiranga & BDG Win. 95%+ accuracy. No download needed. Trusted by 50,000+ users daily.",
+      "Review Wingo period timing, recent results, and statistical signal context from a mobile-friendly browser dashboard.",
     images: ["https://wingosignals.com/logo/hero_main.png"],
     creator: "@enzosrs",
   },
@@ -110,7 +108,7 @@ export const metadata: Metadata = {
 const faqData = [
   {
     question: "Is Wingo Signal safe to use?",
-    answer: "Yes. Wingo Signal is a browser based tool. No APK or third party software required. Your account uses AES-256 encryption and we maintain a strict no log policy on user activity."
+    answer: "Wingo Signal is browser based, so no APK is required. Use only the official site and keep your account credentials private."
   },
   {
     question: "Which platforms does Wingo Signal support?",
@@ -122,7 +120,7 @@ const faqData = [
   },
   {
     question: "How accurate are the predictions?",
-    answer: "Our verified accuracy across all platforms and intervals is 91 to 96%. Individual sessions will vary, but the engine is built to surface the highest probability outcome for each round."
+    answer: "Signals are statistical estimates based on available data and can be wrong. No accuracy percentage or future result is guaranteed."
   },
   {
     question: "Do I need to download an app?",
@@ -156,8 +154,7 @@ export default async function HomePage() {
           "operatingSystem": "Web, Android, iOS",
           "applicationCategory": "GameApplication",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "50000" },
-          "description": "Wingo Signal is the #1 AI color prediction tool for 91Club, Tiranga, BDG Win and 10+ platforms with 95%+ accuracy.",
+          "description": "Wingo Signal provides browser-based period tracking, recent result history, and statistical signal context.",
           "url": "https://wingosignals.com",
         })
       }} />

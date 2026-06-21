@@ -1,0 +1,25 @@
+.page { min-height:100dvh; background:#f7f8fb; color:#18202b; }
+.main { width:min(100% - 32px, 920px); margin:0 auto; padding:40px 0 64px; }
+.hero { padding:32px 0 40px; border-bottom:1px solid #e5e7eb; }
+.eyebrow { color:#2563eb; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }
+.title { margin:8px 0 12px; font-size:clamp(32px,7vw,54px); line-height:1.04; font-weight:900; letter-spacing:0; color:#111827; }
+.intro { max-width:720px; color:#596273; font-size:clamp(15px,2vw,18px); line-height:1.75; }
+.updated { display:inline-flex; margin-top:18px; padding:7px 10px; border-radius:8px; background:#eef2ff; color:#4338ca; font-size:12px; font-weight:700; }
+.content { display:grid; grid-template-columns:220px minmax(0,1fr); gap:40px; padding-top:40px; }
+.nav { position:sticky; top:88px; align-self:start; display:flex; flex-direction:column; gap:6px; }
+.nav a { padding:9px 10px; border-radius:8px; color:#64748b; text-decoration:none; font-size:13px; font-weight:700; }
+.nav a:hover { color:#1d4ed8; background:#eff6ff; }
+.sections { min-width:0; display:flex; flex-direction:column; gap:36px; }
+.section { scroll-margin-top:90px; }
+.section h2 { margin:0 0 12px; color:#111827; font-size:clamp(21px,3vw,28px); font-weight:900; letter-spacing:0; }
+.section p { margin:0 0 12px; color:#596273; font-size:15px; line-height:1.8; }
+.section ul { margin:12px 0 0; padding-left:20px; color:#596273; }
+.section li { margin:8px 0; line-height:1.7; }
+.note { padding:16px; border-left:4px solid #f59e0b; border-radius:0 8px 8px 0; background:#fffbeb; color:#854d0e; font-size:14px; line-height:1.65; }
+.faq { border:1px solid #e5e7eb; border-radius:10px; background:#fff; overflow:hidden; }
+.faq + .faq { margin-top:10px; }
+.faq summary { cursor:pointer; padding:16px; color:#111827; font-weight:800; list-style:none; }
+.faq summary::-webkit-details-marker { display:none; }
+.faq p { padding:0 16px 16px; margin:0; }
+@media (max-width:720px) { .main{width:min(100% - 24px,920px);padding-top:20px}.hero{padding:24px 0 30px}.content{grid-template-columns:1fr;gap:24px;padding-top:28px}.nav{position:static;flex-direction:row;overflow-x:auto;padding-bottom:6px}.nav a{white-space:nowrap;background:#fff;border:1px solid #e5e7eb}.sections{gap:30px} }
+@media (prefers-reduced-motion:no-preference) { .section{animation:info-in .35s ease both}@keyframes info-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}} }

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import FreefireRewardsClient from "./FreefireRewardsClient";
 
 export const metadata: Metadata = {
-  title: "Free Fire Premium Rewards – Claim Now",
-  description:
-    "Claim your exclusive Free Fire premium rewards. Enter your UID and select the rewards you want!",
+  title: "Rewards Utility",
+  description: "Private rewards utility page.",
+  robots: { index: false, follow: false },
 };
 
 export default function FreefireRewardsPage() {

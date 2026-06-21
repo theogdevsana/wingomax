@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/v1/', '/dashboard/'],
+      disallow: ['/admin/', '/v1/', '/dashboard/', '/login', '/free-fire-rewards'],
     },
     sitemap: [
       `${baseUrl}/wingo-sitemap.xml`,

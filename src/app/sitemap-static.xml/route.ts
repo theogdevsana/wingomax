@@ -3,21 +3,19 @@ export async function GET() {
   
   const pages = [
     '',
-    '/login',
     '/about',
     '/faq',
     '/privacy',
     '/refund',
     '/terms',
     '/subscribe',
-    '/free-fire-rewards',
   ];
 
   const urls = pages.map(p => `
   <url>
     <loc>${baseUrl}${p}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2026-06-21</lastmod>
+    <changefreq>${p === '' ? 'weekly' : 'monthly'}</changefreq>
     <priority>${p === '' ? '1.0' : '0.7'}</priority>
   </url>`).join('');
 

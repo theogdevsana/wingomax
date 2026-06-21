@@ -396,21 +396,21 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     </div>
 
                     <p className="blog-detail-premium-desc">
-                      Wingo Signal tracks live game patterns using advanced data analysis and years of historical results. Instead of random guesses, the system studies color and number trends in real time and sends fast Telegram alerts based on calculated probability and pattern behavior.
+                      Wingo Signal organizes recent result history into colour, number, and size views. Its signals are statistical estimates based on available data and do not guarantee a future outcome.
                     </p>
 
                     <div className="blog-detail-premium-stats">
                       <div className="blog-detail-premium-stat">
-                        <p className="blog-detail-premium-stat-value">95.4%</p>
-                        <p className="blog-detail-premium-stat-label">Accuracy</p>
+                        <p className="blog-detail-premium-stat-value">4</p>
+                        <p className="blog-detail-premium-stat-label">Intervals</p>
                       </div>
                       <div className="blog-detail-premium-stat">
-                        <p className="blog-detail-premium-stat-value" style={{ color: '#34d399' }}>50K+</p>
-                        <p className="blog-detail-premium-stat-label">Users</p>
+                        <p className="blog-detail-premium-stat-value" style={{ color: '#34d399' }}>10</p>
+                        <p className="blog-detail-premium-stat-label">History Rows</p>
                       </div>
                       <div className="blog-detail-premium-stat">
-                        <p className="blog-detail-premium-stat-value" style={{ color: '#22d3ee' }}>1.2s</p>
-                        <p className="blog-detail-premium-stat-label">Alert Speed</p>
+                        <p className="blog-detail-premium-stat-value" style={{ color: '#22d3ee' }}>Web</p>
+                        <p className="blog-detail-premium-stat-label">No APK</p>
                       </div>
                     </div>
 
@@ -450,7 +450,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         <span className="blog-detail-model-stream">Wingo 1-Min Stream</span>
                       </div>
                       <div className="blog-detail-model-accuracy">
-                        <span className="blog-detail-model-accuracy-value">96.1%</span>
+                        <span className="blog-detail-model-accuracy-value">History</span>
                         <span className="blog-detail-model-accuracy-dot" />
                       </div>
                     </div>
@@ -461,7 +461,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         <span className="blog-detail-model-stream">Wingo 3-Min Stream</span>
                       </div>
                       <div className="blog-detail-model-accuracy">
-                        <span className="blog-detail-model-accuracy-value">94.7%</span>
+                        <span className="blog-detail-model-accuracy-value">Sequence</span>
                         <span className="blog-detail-model-accuracy-dot" />
                       </div>
                     </div>
@@ -472,7 +472,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         <span className="blog-detail-model-stream">Wingo 5-Min Stream</span>
                       </div>
                       <div className="blog-detail-model-accuracy">
-                        <span className="blog-detail-model-accuracy-value">95.4%</span>
+                        <span className="blog-detail-model-accuracy-value">Trend</span>
                         <span className="blog-detail-model-accuracy-dot" />
                       </div>
                     </div>
@@ -483,7 +483,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         <span className="blog-detail-model-highlight-stream">All Timeframes</span>
                       </div>
                       <div className="blog-detail-model-accuracy">
-                        <span className="blog-detail-model-accuracy-value" style={{ color: '#4f46e5' }}>93.8%</span>
+                        <span className="blog-detail-model-accuracy-value" style={{ color: '#4f46e5' }}>Combined</span>
                         <span className="blog-detail-model-accuracy-dot-pulse" style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
                       </div>
                     </div>

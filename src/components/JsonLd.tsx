@@ -18,7 +18,7 @@ export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { 
     "url": "https://wingosignals.com",
     "logo": "https://wingosignals.com/logo/official-logo.png",
     "sameAs": [telegramLink],
-    "description": "Professional Wingo prediction tools and AI-driven signals for gaming platforms."
+    "description": "Browser-based Wingo period tracking, recent result history, and statistical signal context."
   };
 
   const websiteData = {

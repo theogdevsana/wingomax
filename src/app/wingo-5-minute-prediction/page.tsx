@@ -5,9 +5,9 @@ import { Metadata } from "next";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Wingo 5 Minute Prediction - WinGo 5 Min Predictor & Patterns",
-  description: "Official Wingo 5 minute prediction signals. Master the 5 min WinGo game with our AI predictor app and real-time big small patterns.",
-  keywords: ["wingo 5 minute prediction", "wingo predictor app download", "wingo 5 min pattern", "wingo signal telegram"],
+  title: "Wingo 5 Minute Prediction | Period and History Analysis",
+  description: "Review Wingo 5-minute period timing, recent result history, colour and size context, plus a browser-based statistical signal.",
+  keywords: ["wingo 5 minute prediction", "wingo 5 minute history", "wingo period analysis", "wingo size trend"],
   alternates: {
     canonical: "https://wingosignals.com/wingo-5-minute-prediction",
   }
