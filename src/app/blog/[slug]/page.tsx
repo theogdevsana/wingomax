@@ -535,7 +535,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     {otherPosts.map((trending, index) => {
                       let tag = "Guide";
                       if (trending.slug.includes("free-vs-paid")) tag = "Comparison";
-                      else if (trending.slug.includes("activation")) tag = "Setup";
+                      else if (trending.slug.includes("activation") || trending.slug.includes("license")) tag = "Setup";
                       else if (trending.slug.includes("strategy") || trending.slug.includes("tips")) tag = "Advanced";
                       else if (trending.slug.includes("how-to-use")) tag = "Tutorial";
 

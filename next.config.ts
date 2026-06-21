@@ -22,6 +22,30 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   compress: true,
+  async redirects() {
+    return [
+      {
+        source: '/blog/wingo-signal-free-vs-paid-comparison',
+        destination: '/blog/wingo-signal-free-vs-paid',
+        permanent: true,
+      },
+      {
+        source: '/blog/about-wingo-signal',
+        destination: '/blog/what-is-wingo-signal',
+        permanent: true,
+      },
+      {
+        source: '/blog/how-to-purchase-license',
+        destination: '/blog/buy-wingo-signal-license',
+        permanent: true,
+      },
+      {
+        source: '/blog/wingo-prediction-strategies',
+        destination: '/blog/wingo-prediction-tips-for-beginners',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 3600,
