@@ -2,6 +2,12 @@ import { getAllBlogPosts } from '@/lib/blog-data';
 
 export const dynamic = 'force-dynamic';
 
+function toDateStr(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return '2026-06-21';
+  return d.toISOString().slice(0, 10);
+}
+
 export async function GET() {
   const baseUrl = 'https://wingosignals.com';
 
@@ -27,7 +33,7 @@ export async function GET() {
   const blogUrls = blogPosts.map(p => `
     <url>
       <loc>${baseUrl}/blog/${p.slug}</loc>
-      <lastmod>${p.date || '2026-06-21'}</lastmod>
+      <lastmod>${toDateStr(p.date)}</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
     </url>`).join('');
