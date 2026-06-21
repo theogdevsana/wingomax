@@ -10,10 +10,11 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ['/admin/', '/v1/', '/dashboard/', '/login', '/free-fire-rewards'],
     },
     sitemap: [
-      `${baseUrl}/wingo-sitemap.xml`,
-      `${baseUrl}/blog-sitemap.xml`,
-      `${baseUrl}/img-sitemap.xml`,
+      `${baseUrl}/sitemap.xml`,
       `${baseUrl}/sitemap-static.xml`,
+      `${baseUrl}/blog-sitemap.xml`,
+      `${baseUrl}/wingo-sitemap.xml`,
+      `${baseUrl}/img-sitemap.xml`,
     ],
   };
 }
