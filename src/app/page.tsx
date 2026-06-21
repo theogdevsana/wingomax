@@ -6,7 +6,7 @@ import { query } from '@/lib/db';
 export const metadata: Metadata = {
   title: "Wingo Prediction | Wingo Signal AI Colour Prediction Dashboard",
   description:
-    "Use Wingo Signal for Wingo prediction, Wingo 1 minute prediction, colour prediction, AI signal context, period tracking, and recent result history on the official website.",
+    "Use Wingo Signal to check Wingo prediction, Wingo 1 minute prediction, colour prediction, AI signals, period timing, and recent result history.",
   keywords: [
     "wingo prediction",
     "wingo 1 minute prediction",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "Wingo Signal",
     title: "Wingo Prediction | Official Wingo Signal AI Dashboard",
     description:
-      "Official Wingo Signal dashboard for Wingo prediction, 1 minute colour prediction, recent result history, and AI-assisted statistical signals.",
+      "Official Wingo Signal website for Wingo prediction, 1 minute colour prediction, recent history, and AI signals.",
     images: [
       {
         url: "https://wingosignals.com/logo/hero_main.png",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Wingo Prediction | Wingo Signal AI Dashboard",
     description:
-      "Track Wingo prediction, colour signals, 1 minute history, and AI-assisted statistical context from the official mobile-friendly website.",
+      "Check Wingo prediction, colour signals, 1 minute history, and AI signals on the official mobile-friendly website.",
     images: ["https://wingosignals.com/logo/hero_main.png"],
     creator: "@enzosrs",
   },
@@ -87,11 +87,11 @@ const faqData = [
   },
   {
     question: "What prediction intervals are available?",
-    answer: "Wingo Signal covers 30 second, Wingo 1 minute prediction, 3 minute, and 5 minute Wingo rounds. Each interval has its own result-history and statistical signal view."
+    answer: "Wingo Signal has pages for 30 second, Wingo 1 minute prediction, 3 minute, and 5 minute rounds."
   },
   {
-    question: "How accurate are the predictions?",
-    answer: "Signals are statistical estimates based on available data and can be wrong. No accuracy percentage or future result is guaranteed."
+    question: "Can Wingo signals be wrong?",
+    answer: "Signals are estimates based on history and patterns. They can be wrong, so no result is guaranteed."
   },
   {
     question: "Do I need to download an app?",
@@ -125,14 +125,14 @@ export default async function HomePage() {
           "operatingSystem": "Web, Android, iOS",
           "applicationCategory": "GameApplication",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-          "description": "Wingo Signal provides browser-based Wingo prediction, Wingo 1 minute prediction, colour prediction, recent result history, and statistical signal context.",
+          "description": "Wingo Signal helps users check Wingo prediction, Wingo 1 minute prediction, colour prediction, recent history, and AI signals in a browser.",
           "url": "https://wingosignals.com",
           "sameAs": ["https://wingosignals.com"],
           "featureList": [
-            "Wingo prediction dashboard",
+            "Wingo prediction",
             "Wingo 1 minute prediction history",
-            "Wingo colour prediction context",
-            "AI-assisted big small signal view",
+            "Wingo colour prediction",
+            "AI big small signal view",
             "30 second, 1 minute, 3 minute, and 5 minute round pages"
           ]
         })
