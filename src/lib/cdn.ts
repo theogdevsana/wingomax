@@ -2,40 +2,23 @@ export const BLOG_CDN_BASE = 'https://cdn.nexapk.in';
 export const DEFAULT_BLOG_IMAGE = '/svg/png/wingo-signals-banner.png';
 export const SITE_ORIGIN = 'https://wingosignals.com';
 
-/** Featured image: local path by default; admin can set any full https URL. */
+/** Featured image: return as-is for full https URLs, resolve local to absolute path. */
 export function resolveBlogImage(path: string): string {
   if (!path?.trim()) return DEFAULT_BLOG_IMAGE;
 
   const p = path.trim();
 
-  if (p.startsWith(BLOG_CDN_BASE)) {
-    try {
-      return new URL(p).pathname;
-    } catch {
-      return DEFAULT_BLOG_IMAGE;
-    }
-  }
-
   if (p.startsWith('http://') || p.startsWith('https://')) {
-    try {
-      const url = new URL(p);
-      if (url.hostname === 'cdn.nexapk.in') return url.pathname;
-      if (url.hostname === 'wingosignals.com' || url.hostname === 'www.wingosignals.com') {
-        return url.pathname;
-      }
-      return p;
-    } catch {
-      return DEFAULT_BLOG_IMAGE;
-    }
+    return p;
   }
 
   return p.startsWith('/') ? p : `/${p}`;
 }
 
 export function toAbsoluteBlogImage(path: string): string {
-  const resolved = resolveBlogImage(path);
-  if (resolved.startsWith('http://') || resolved.startsWith('https://')) return resolved;
-  return `${SITE_ORIGIN}${resolved}`;
+  if (!path) return `${SITE_ORIGIN}${DEFAULT_BLOG_IMAGE}`;
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return `${SITE_ORIGIN}${path.startsWith('/') ? path : `/${path}`}`;
 }
 
 /** @deprecated Prefer resolveBlogImage for blog featured images. */
