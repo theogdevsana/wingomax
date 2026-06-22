@@ -2,8 +2,29 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { query } from '@/lib/db';
 import { verifyAdminToken } from '@/lib/jwt';
-import { getBlogPostById, slugifyTitle } from '@/lib/blog-data';
+import { slugifyTitle } from '@/lib/blog-data';
 import { normalizeContentHtml, resolveBlogImage } from '@/lib/cdn';
+
+function mapRow(row: any) {
+  return {
+    id: String(row.id),
+    title: row.title,
+    slug: row.slug,
+    description: row.description,
+    date: row.date,
+    author: row.author,
+    content: row.content,
+    image: row.image,
+    imageAlt: row.image_alt || '',
+    faqs: typeof row.faqs === 'string' ? JSON.parse(row.faqs) : (row.faqs || []),
+    published: row.published,
+    metaTitle: row.meta_title || '',
+    metaDescription: row.meta_description || '',
+    metaKeywords: row.meta_keywords || '',
+    articleSection: row.article_section || '',
+    tags: Array.isArray(row.tags) ? row.tags : [],
+  };
+}
 
 async function getAuthToken() {
   const cookieStore = await cookies();
@@ -18,12 +39,12 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   }
 
   const { id } = await params;
-  const post = await getBlogPostById(id);
-  if (!post) {
+  const result = await query('SELECT * FROM blog_posts WHERE id = $1', [id]);
+  if (result.rows.length === 0) {
     return NextResponse.json({ status: 'error', msg: 'Blog not found' }, { status: 404 });
   }
 
-  return NextResponse.json({ status: 'success', data: post });
+  return NextResponse.json({ status: 'success', data: mapRow(result.rows[0]) });
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {

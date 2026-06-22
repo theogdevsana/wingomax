@@ -2,13 +2,34 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { query } from '@/lib/db';
 import { verifyAdminToken } from '@/lib/jwt';
-import { getAllBlogPostsAdmin, slugifyTitle } from '@/lib/blog-data';
+import { slugifyTitle } from '@/lib/blog-data';
 import { normalizeContentHtml, resolveBlogImage } from '@/lib/cdn';
 
 async function getAuthToken() {
   const cookieStore = await cookies();
   const token = cookieStore.get('admin_token')?.value;
   return token ? verifyAdminToken(token) : null;
+}
+
+function mapRow(row: any) {
+  return {
+    id: String(row.id),
+    title: row.title,
+    slug: row.slug,
+    description: row.description,
+    date: row.date,
+    author: row.author,
+    content: row.content,
+    image: row.image,
+    imageAlt: row.image_alt || '',
+    faqs: typeof row.faqs === 'string' ? JSON.parse(row.faqs) : (row.faqs || []),
+    published: row.published,
+    metaTitle: row.meta_title || '',
+    metaDescription: row.meta_description || '',
+    metaKeywords: row.meta_keywords || '',
+    articleSection: row.article_section || '',
+    tags: Array.isArray(row.tags) ? row.tags : [],
+  };
 }
 
 export async function GET() {
@@ -18,7 +39,8 @@ export async function GET() {
   }
 
   try {
-    const posts = await getAllBlogPostsAdmin();
+    const result = await query('SELECT * FROM blog_posts ORDER BY created_at DESC', []);
+    const posts = result.rows.map(mapRow);
     return NextResponse.json({ status: 'success', data: posts });
   } catch {
     return NextResponse.json({ status: 'error', msg: 'Failed to fetch blogs' }, { status: 500 });
@@ -35,8 +57,8 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { title, slug, description, date, author, content, image, imageAlt, faqs, published, metaTitle, metaDescription, metaKeywords, articleSection, tags } = body;
 
-    if (!title?.trim() || !description?.trim() || !content?.trim() || !image?.trim()) {
-      return NextResponse.json({ status: 'error', msg: 'Title, description, content, and image are required' }, { status: 400 });
+    if (!title?.trim() || !content?.trim() || !image?.trim()) {
+      return NextResponse.json({ status: 'error', msg: 'Title, content, and image are required' }, { status: 400 });
     }
 
     const finalSlug = (slug?.trim() || slugifyTitle(title)).toLowerCase();

@@ -73,6 +73,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
   const [form, setForm] = useState(initial ?? emptyBlogForm());
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
+  const [faqJsonMode, setFaqJsonMode] = useState(false);
   const isEdit = Boolean(postId);
 
   const slugify2 = (text: string) => text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
@@ -84,13 +85,15 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
 
     const firstH2 = form.content.match(/<h2[^>]*>(.*?)<\/h2>/i);
     const articleSection = firstH2 ? firstH2[1].replace(/<[^>]*>/g, '').trim() : 'Guide';
+    const autoDescription = form.description.trim() || form.content.replace(/<[^>]*>/g, '').trim().slice(0, 160);
 
     const payload = {
       ...form,
+      description: autoDescription,
       slug: form.slug.trim() || slugify(form.title),
       image: resolveBlogImage(form.image),
       metaTitle: form.metaTitle.trim() || form.title.trim(),
-      metaDescription: form.metaDescription.trim() || form.description.trim(),
+      metaDescription: form.metaDescription.trim() || autoDescription,
       metaKeywords: form.metaKeywords.trim() || form.tags.filter(t => t.trim()).join(', '),
       articleSection,
       faqs: form.faqs.filter((f) => f.question.trim() && f.answer.trim()),
@@ -192,22 +195,7 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
               required
             />
           </div>
-          <div className="md:col-span-2">
-            <label className="font-bold text-slate-700 text-xs">Description *</label>
-            <textarea
-              value={form.description}
-              onChange={(e) =>
-                setForm((f) => ({
-                  ...f,
-                  description: e.target.value,
-                  metaDescription: f.metaDescription || e.target.value,
-                }))
-              }
-              rows={2}
-              className="w-full mt-0.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm resize-none"
-              required
-            />
-          </div>
+
           <div>
             <label className="font-bold text-slate-700 text-xs">Date</label>
             <input
@@ -323,12 +311,43 @@ export default function BlogForm({ initial, postId }: BlogFormProps) {
         <div className={`${styles.card} p-5 shadow-sm`}>
           <div className="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
             <h2 className="text-sm font-bold text-slate-800">Frequently Asked Questions</h2>
-            <button type="button" onClick={addFaq} className="text-xs font-bold text-[#7B5EA7] bg-[#7B5EA7]/10 hover:bg-[#7B5EA7]/15 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
-              <Plus size={14} /> Add FAQ
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setFaqJsonMode(!faqJsonMode)}
+                className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors ${
+                  faqJsonMode ? 'bg-[#7B5EA7]/20 text-[#7B5EA7]' : 'text-slate-500 bg-slate-100 hover:bg-slate-200'
+                }`}
+              >
+                {faqJsonMode ? 'Form' : 'JSON'}
+              </button>
+              {!faqJsonMode && (
+                <button type="button" onClick={addFaq} className="text-xs font-bold text-[#7B5EA7] bg-[#7B5EA7]/10 hover:bg-[#7B5EA7]/15 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                  <Plus size={14} /> Add FAQ
+                </button>
+              )}
+            </div>
           </div>
-          
-          {form.faqs.length === 0 ? (
+
+          {faqJsonMode ? (
+            <div>
+              <textarea
+                value={JSON.stringify(form.faqs, null, 2)}
+                onChange={(e) => {
+                  try {
+                    const parsed = JSON.parse(e.target.value);
+                    if (Array.isArray(parsed)) {
+                      setForm((f) => ({ ...f, faqs: parsed }));
+                    }
+                  } catch {}
+                }}
+                rows={10}
+                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs font-mono resize-y focus:ring-2 focus:ring-[#7B5EA7]/20 focus:border-[#7B5EA7]/40 transition-all"
+                placeholder='[{ "question": "...", "answer": "..." }]'
+              />
+              <p className="text-[10px] text-slate-400 mt-1">Edit FAQ array as raw JSON</p>
+            </div>
+          ) : form.faqs.length === 0 ? (
             <div className="text-center py-6 text-slate-400 text-xs border-2 border-dashed border-slate-100 rounded-xl">
               No FAQs added yet. Click &quot;Add FAQ&quot; to create one.
             </div>
