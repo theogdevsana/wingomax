@@ -105,6 +105,8 @@ export default async function RootLayout({
         <OrganizationSchema telegramLink={telegramLink} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.nexapk.in" />
+        <link rel="dns-prefetch" href="https://cdn.nexapk.in" />
         {/* PWA Manifest & Meta Tags */}
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="mobile-web-app-capable" content="yes" />

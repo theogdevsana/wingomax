@@ -15,6 +15,8 @@ export default async function BlogLayout({
 
   return (
     <>
+      <link rel="preconnect" href="https://cdn.nexapk.in" />
+      <link rel="dns-prefetch" href="https://cdn.nexapk.in" />
       <BlogLayoutClient telegramLink={telegramLink}>
         {children}
       </BlogLayoutClient>
