@@ -103,6 +103,8 @@ export default async function RootLayout({
     >
       <head>
         <OrganizationSchema telegramLink={telegramLink} />
+        <link rel="alternate" type="application/rss+xml" title="Wingo Signals RSS Feed" href="https://wingosignals.com/rss.xml" />
+        <link rel="sitemap" type="application/xml" title="Sitemap" href="https://wingosignals.com/sitemap.xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.nexapk.in" />

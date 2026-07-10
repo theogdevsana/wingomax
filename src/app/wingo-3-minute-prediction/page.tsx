@@ -29,7 +29,10 @@ export default async function Wingo3mPage() {
 
   return (
     <>
-      <JsonLd breadcrumbs={breadcrumbs} />
+      <JsonLd breadcrumbs={breadcrumbs} faq={[
+        { question: "What does the 3-minute page show?", answer: "It keeps the active period, remaining time and recent signal context together in one browser view." },
+        { question: "Does a longer timer guarantee a result?", answer: "No. More review time does not make an estimate certain." }
+      ]} page={{ name: "Wingo 3 Minute Signal Overview", description: "A browser-based view of the current Wingo three-minute period, countdown and recent signal context. Outputs are estimates, not guarantees.", url: "https://wingosignals.com/wingo-3-minute-prediction" }} />
       <PredictionTool mode="3m" telegramLink={telegramLink} />
     </>
   );

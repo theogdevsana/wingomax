@@ -60,19 +60,27 @@ export async function POST(req: Request) {
       return NextResponse.json({ status: 'error', msg: 'Key is already bound to another device' }, { status: 403 });
     }
 
+    const secondsUntilExpiry = Math.max(60, Math.floor((new Date(license.expires_at).getTime() - Date.now()) / 1000));
     const token = generateToken({
       licenseId: String(license.id),
       deviceId: sanitized.device_id,
       role: 'user'
-    });
+    }, secondsUntilExpiry);
 
     const cookieStore = await cookies();
-    const cookieOptions: any = {
+    const cookieOptions: {
+      httpOnly: boolean;
+      secure: boolean;
+      sameSite: 'lax';
+      path: string;
+      maxAge: number;
+      domain?: string;
+    } = {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 2 * 60 * 60
+      maxAge: secondsUntilExpiry
     };
 
     if (process.env.NODE_ENV === 'production') {
@@ -88,7 +96,7 @@ export async function POST(req: Request) {
       data: { is_demo: false, game_access: ['all'], expires_at: license.expires_at }
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json({ status: 'error', msg: 'Internal Server Error' }, { status: 500 });
   }

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import styles from './page.module.css';
-import { query } from '@/lib/db';
+import PlanPurchaseButton from './PlanPurchaseButton';
 
 export const metadata: Metadata = {
   title: "Pricing & Subscription | Wingo Signal Premium",
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 const PLANS = [
   {
+    id: 'starter',
     title: "Wingo Starter",
     subtitle: "Best for Beginners",
     price: "₹499",
@@ -31,6 +32,7 @@ const PLANS = [
     badge: "Basic",
   },
   {
+    id: 'elite',
     title: "Wingo Elite",
     subtitle: "Most Popular Choice",
     price: "₹999",
@@ -49,6 +51,7 @@ const PLANS = [
     badge: "Best Choice",
   },
   {
+    id: 'max',
     title: "Wingo Max Pro",
     subtitle: "Ultimate Lifetime Power",
     price: "₹1599", 
@@ -67,6 +70,7 @@ const PLANS = [
     badge: "VIP",
   },
   {
+    id: 'smart',
     title: "Wingo Smart AI",
     subtitle: "AI-Powered Predictions",
     price: "₹2499",
@@ -85,6 +89,7 @@ const PLANS = [
     badge: "AI Boosted",
   },
   {
+    id: 'neural',
     title: "Wingo Neural Pro",
     subtitle: "Ultra Advanced Algorithmic Edge",
     price: "₹3999",
@@ -103,6 +108,7 @@ const PLANS = [
     badge: "Advanced",
   },
   {
+    id: 'lifetime',
     title: "Wingo Lifetime Quantum",
     subtitle: "Ultimate Lifetime Power Plan",
     price: "₹4999",
@@ -123,12 +129,6 @@ const PLANS = [
 ];
 
 export default async function SubscribePage() {
-  let telegramLink = null;
-  try {
-    const result = await query('SELECT telegram_link FROM settings LIMIT 1');
-    telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : null;
-  } catch {}
-
   const standardPlans = PLANS.slice(0, 3);
   const advancedPlans = PLANS.slice(3, 6);
 
@@ -203,20 +203,7 @@ export default async function SubscribePage() {
                 ))}
 
                 {/* CTA Button */}
-                {telegramLink ? (
-                  <a
-                    href={telegramLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.planBtn}
-                  >
-                    Purchase Now
-                  </a>
-                ) : (
-                  <span className={styles.planBtn} style={{ opacity: 0.5, cursor: "not-allowed", pointerEvents: "none" }}>
-                    Contact Admin
-                  </span>
-                )}
+                <PlanPurchaseButton planId={plan.id} />
               </div>
             </div>
           ))}
@@ -282,20 +269,7 @@ export default async function SubscribePage() {
                 ))}
 
                 {/* CTA Button */}
-                {telegramLink ? (
-                  <a
-                    href={telegramLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.planBtn}
-                  >
-                    Purchase Now
-                  </a>
-                ) : (
-                  <span className={styles.planBtn} style={{ opacity: 0.5, cursor: "not-allowed", pointerEvents: "none" }}>
-                    Contact Admin
-                  </span>
-                )}
+                <PlanPurchaseButton planId={plan.id} />
               </div>
             </div>
           ))}

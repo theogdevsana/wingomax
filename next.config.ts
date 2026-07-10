@@ -67,6 +67,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'dl.dir.freefiremobile.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'kaelis.sh',
+      },
     ],
   },
 };

@@ -29,7 +29,10 @@ export default async function Wingo30SecondsPrediction() {
 
   return (
     <>
-      <JsonLd breadcrumbs={breadcrumbs} />
+      <JsonLd breadcrumbs={breadcrumbs} faq={[
+        { question: "What does the 30-second page show?", answer: "It shows the current period, countdown and a compact table of recent generated signal entries." },
+        { question: "Are 30-second signals guaranteed?", answer: "No. Signals are informational estimates and may differ from final results." }
+      ]} page={{ name: "Wingo 30 Second Signal Overview", description: "A browser-based view of the current Wingo 30-second period, countdown and recent signal context. Outputs are estimates, not guarantees.", url: "https://wingosignals.com/wingo-30-seconds-prediction" }} />
       <PredictionTool mode="30s" telegramLink={telegramLink} />
     </>
   );

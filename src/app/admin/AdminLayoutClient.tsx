@@ -3,7 +3,7 @@
 import { ReactNode, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Users, Gamepad2, Settings, LogOut, Key, Menu, X, DollarSign, Zap, ChevronRight, ArrowLeft } from "lucide-react";
+import { LayoutDashboard, Users, Gamepad2, Settings, LogOut, Key, Menu, X, DollarSign, Zap, ChevronRight, ArrowLeft, CreditCard } from "lucide-react";
 import AdminBlogNav from "./AdminBlogNav";
 import { getApiUrl } from "@/lib/api-utils";
 import "./admin-fixes.css";
@@ -59,6 +59,7 @@ export default function AdminLayoutClient({ children }: { children: ReactNode })
           <NavItem href="/admin/licenses" icon={<Key />} label="License Keys" onClick={() => setSidebarOpen(false)} />
           <NavItem href="/admin/users" icon={<Users />} label="Users" onClick={() => setSidebarOpen(false)} />
           <NavItem href="/admin/revenue" icon={<DollarSign />} label="Revenue" onClick={() => setSidebarOpen(false)} />
+          <NavItem href="/admin/payments" icon={<CreditCard />} label="Payment logs" onClick={() => setSidebarOpen(false)} />
           <AdminBlogNav onNavigate={() => setSidebarOpen(false)} />
           <NavItem href="#" icon={<Gamepad2 />} label="Games" />
           <NavItem href="/admin/settings" icon={<Settings />} label="Settings" onClick={() => setSidebarOpen(false)} />
@@ -104,6 +105,7 @@ function getPageTitle(pathname: string) {
   if (pathname.includes("/admin/licenses")) return "License Keys";
   if (pathname.includes("/admin/users")) return "Users";
   if (pathname.includes("/admin/revenue")) return "Revenue Analytics";
+  if (pathname.includes("/admin/payments")) return "Payment Logs";
   if (pathname.includes("/admin/blogs")) return "Blog Manager";
   if (pathname.includes("/admin/settings")) return "Platform Settings";
   return "Dashboard Overview";

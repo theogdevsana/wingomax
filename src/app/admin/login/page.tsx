@@ -23,10 +23,8 @@ export default function AdminLogin() {
 
   useEffect(() => {
     const savedUser = localStorage.getItem("admin_user");
-    const savedPass = localStorage.getItem("admin_pass");
-    if (savedUser) setUsername(savedUser);
-    if (savedPass) setPassword(savedPass);
-  }, []);
+if (savedUser) setUsername(savedUser);
+}, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,8 +46,7 @@ export default function AdminLogin() {
       const data = await res.json();
       if (res.ok && data.status === "success") {
         localStorage.setItem("admin_user", username);
-        localStorage.setItem("admin_pass", password);
-        router.push("/");
+router.push("/");
       } else {
         setError(data.msg || "Invalid credentials");
       }
@@ -82,13 +79,13 @@ export default function AdminLogin() {
           <div className="space-y-2">
             <label className="admin-label mb-2">Admin ID</label>
             <div className="relative flex items-center">
-              <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <User className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
               <input
                 type="text"
                 placeholder="Enter admin ID"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="admin-input pl-12 pr-4"
+                className="admin-input" style={{ paddingLeft: "3.25rem", paddingRight: "1rem" }}
                 required
               />
             </div>
@@ -97,13 +94,13 @@ export default function AdminLogin() {
           <div className="space-y-2">
             <label className="admin-label mb-2">Password</label>
             <div className="relative flex items-center">
-              <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <KeyRound className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="admin-input pl-12 pr-12"
+                className="admin-input" style={{ paddingLeft: "3.25rem", paddingRight: "3.25rem" }}
                 required
               />
               <button

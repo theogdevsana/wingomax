@@ -1,1278 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS | PRO</title>
-    <meta name="description"
-        content="NEXORA is a modern and powerful web platform built for speed, clean design, and advanced performance. Crafted for users who value style and innovation.">
-    <meta name="keywords"
-        content="NEXORA, modern web app, stylish UI, smooth animations, TailwindCSS design, Lottie integration, fast performance, next generation platform">
-    <meta name="author" content="NEXORA Team">
-    <meta name="theme-color" content="#a6c1ee">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-
-<style>
-    :root {
-        --grad-1: #BBD5FF;
-        --grad-2: #E0C3EF;
-        --accent-1: #6A40C9;
-        --accent-2-from: #8b5cf6;
-        --accent-2-to: #f472b6;
-        --footer-wave: #BBD5FF;
-        --glass-bg: rgba(255, 255, 255, 0.12);
-    }
-
-    body {
-        font-family: 'El Messiri', sans-serif;
-        background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23fbc2eb"/><stop offset="100%" stop-color="%23a6c1ee"/></linearGradient></defs><rect width="600" height="450" fill="url(%23g3)"/><circle cx="150" cy="120" r="90" fill="%23ffffff25"/><circle cx="450" cy="320" r="130" fill="%23ffffff30"/><path d="M0 300 Q150 250 300 310 T600 290 V450 H0 Z" fill="%23ffffff20"/></svg>') no-repeat center/cover;
-        border-radius: 20px;
-        scroll-behavior: smooth;
-        overflow-y: auto;
-        min-height: 100vh;
-        color: #000;
-    }
-
-    body::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    body::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-    }
-
-    body::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, var(--accent-2-from), var(--accent-2-to));
-        border-radius: 10px;
-    }
-
-    body::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(180deg, var(--accent-2-to), var(--accent-2-from));
-        cursor: pointer;
-    }
-
-    .hidden-section {
-        display: none;
-    }
-
-    @keyframes gradientShift {
-        0% {
-            background-position: 0% 50%;
+    <title>UPI Autopay Gateway Client</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0f19;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.2);
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.15);
+            --error: #ef4444;
         }
 
-        100% {
-            background-position: 200% 50%;
-        }
-    }
-
-    @keyframes float {
-        0% {
-            transform: translateY(0px);
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
         }
 
-        50% {
-            transform: translateY(-10px);
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
         }
 
-        100% {
-            transform: translateY(0px);
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: var(--primary);
+            filter: blur(180px);
+            opacity: 0.18;
+            z-index: 0;
         }
-    }
+        body::before { top: -100px; left: -100px; }
+        body::after { bottom: -100px; right: -100px; }
 
-    @keyframes pulse {
-        0% {
-            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+        .client-card {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 440px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 28px;
+            padding: 36px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        70% {
-            box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        100% {
-            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
         }
-    }
 
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
         }
 
-        to {
-            opacity: 1;
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 16px 16px 16px 40px;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.02);
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .amount-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .btn-action:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        .btn-action:active {
             transform: translateY(0);
         }
-    }
 
-    @keyframes typewriter {
-        from {
-            width: 0;
+        /* Payment display (hidden initially) */
+        .payment-display {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
         }
 
-        to {
-            width: 100%;
-        }
-    }
-
-    @keyframes blink {
-
-        0%,
-        50% {
-            opacity: 1;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        51%,
-        100% {
-            opacity: 0;
-        }
-    }
-
-    .frosted-bg {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
-        backdrop-filter: blur(8px) saturate(120%);
-        -webkit-backdrop-filter: blur(8px) saturate(120%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        box-shadow: 0 6px 18px rgba(10, 10, 20, 0.06);
-    }
-
-    .card-glass {
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-    }
-
-    footer {
-        position: relative;
-        overflow: hidden;
-    }
-
-    footer .footer-wave {
-        position: absolute;
-        top: -60px;
-        left: 0;
-        width: 100%;
-        line-height: 0;
-        z-index: 0;
-    }
-
-    footer .footer-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .feature-card {
-        transition: all 0.3s ease;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .pricing-card {
-        transition: all 0.3s ease;
-    }
-
-    .pricing-card:hover {
-        transform: scale(1.03);
-    }
-
-    .testimonial-card {
-        transition: all 0.3s ease;
-    }
-
-    .testimonial-card:hover {
-        transform: translateY(-3px);
-    }
-
-    .floating {
-        animation: float 5s ease-in-out infinite;
-    }
-
-    .pulse-animation {
-        animation: pulse 2s infinite;
-    }
-
-    .fade-in {
-        animation: fadeIn 0.8s ease-out forwards;
-    }
-
-    .typewriter {
-        overflow: hidden;
-        border-right: 2px solid;
-        white-space: nowrap;
-        animation: typewriter 3s steps(40, end), blink 0.8s step-end infinite;
-    }
-
-    .scroll-reveal {
-        opacity: 0;
-        transform: scale(0.9);
-        filter: blur(10px);
-        transition: all 0.6s ease-out;
-        will-change: opacity, transform, filter;
-    }
-
-    .scroll-reveal.visible {
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0);
-    }
-
-    .scroll-reveal:nth-child(1) {
-        transition-delay: 0.1s;
-    }
-
-    .scroll-reveal:nth-child(2) {
-        transition-delay: 0.2s;
-    }
-
-    .scroll-reveal:nth-child(3) {
-        transition-delay: 0.3s;
-    }
-
-    .scroll-reveal:nth-child(4) {
-        transition-delay: 0.4s;
-    }
-
-    .scroll-reveal:nth-child(5) {
-        transition-delay: 0.5s;
-    }
-
-    .scroll-reveal:nth-child(6) {
-        transition-delay: 0.6s;
-    }
-
-    .scroll-reveal:nth-child(7) {
-        transition-delay: 0.7s;
-    }
-
-    .scroll-reveal:nth-child(8) {
-        transition-delay: 0.8s;
-    }
-
-    .scroll-reveal:nth-child(9) {
-        transition-delay: 0.9s;
-    }
-
-    .scroll-reveal:nth-child(10) {
-        transition-delay: 1s;
-    }
-
-    .faq-item .answer {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-    }
-
-    .faq-item.active .answer {
-        max-height: 200px;
-    }
-
-    .faq-item .chevron {
-        transition: transform 0.3s ease;
-    }
-
-    .faq-item.active .chevron {
-        transform: rotate(180deg);
-    }
-
-    .indian-thousands::after {
-        content: ",000";
-        font-size: 0.8em;
-        color: inherit;
-    }
-
-    #particles-js {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-    }
-
-    .progress-bar {
-        height: 4px;
-        background: linear-gradient(to right, var(--accent-2-from), var(--accent-2-to));
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 100;
-        width: 0%;
-        transition: width 0.3s ease;
-    }
-
-    .mobile-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        height: 100vh;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        z-index: 1000;
-        transition: right 0.4s ease;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .mobile-menu.active {
-        right: 0;
-    }
-
-    .mobile-menu-close {
-        position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
-        font-size: 1.5rem;
-        color: var(--accent-1);
-    }
-
-    .mobile-menu a {
-        display: block;
-        margin: 1rem 0;
-        font-size: 1.2rem;
-        color: var(--accent-1);
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .mobile-menu-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        display: none;
-    }
-
-    .mobile-menu-overlay.active {
-        display: block;
-    }
-
-    .stats-counter {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: var(--accent-1);
-    }
-
-    .stats-label {
-        font-size: 1rem;
-        color: #666;
-    }
-
-    .stats-card {
-        text-align: center;
-        padding: 1.5rem;
-    }
-
-    .floating-shapes {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        overflow: hidden;
-    }
-
-    .floating-shape {
-        position: absolute;
-        border-radius: 50%;
-        opacity: 0.1;
-        animation: float 15s infinite ease-in-out;
-    }
-
-    .floating-shape:nth-child(1) {
-        width: 100px;
-        height: 100px;
-        background: var(--accent-1);
-        top: 10%;
-        left: 10%;
-        animation-delay: 0s;
-    }
-
-    .floating-shape:nth-child(2) {
-        width: 150px;
-        height: 150px;
-        background: var(--accent-2-from);
-        top: 60%;
-        left: 80%;
-        animation-delay: 2s;
-    }
-
-    .floating-shape:nth-child(3) {
-        width: 80px;
-        height: 80px;
-        background: var(--accent-2-to);
-        top: 30%;
-        left: 70%;
-        animation-delay: 4s;
-    }
-
-    .floating-shape:nth-child(4) {
-        width: 120px;
-        height: 120px;
-        background: var(--grad-1);
-        top: 70%;
-        left: 20%;
-        animation-delay: 6s;
-    }
-
-    .floating-shape:nth-child(5) {
-        width: 90px;
-        height: 90px;
-        background: var(--grad-2);
-        top: 20%;
-        left: 50%;
-        animation-delay: 8s;
-    }
-
-    .newsletter-form {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 16px;
-        padding: 2rem;
-        text-align: center;
-    }
-
-    .newsletter-input {
-        background: rgba(255, 255, 255, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50px;
-        padding: 0.75rem 1.5rem;
-        color: #000;
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    .newsletter-input::placeholder {
-        color: rgba(0, 0, 0, 0.6);
-    }
-
-    .newsletter-btn {
-        background: linear-gradient(to right, var(--accent-2-from), var(--accent-2-to));
-        color: white;
-        border: none;
-        border-radius: 50px;
-        padding: 0.75rem 2rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .newsletter-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .back-to-top {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(to right, var(--accent-2-from), var(--accent-2-to));
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 100;
-    }
-
-    .back-to-top.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .back-to-top:hover {
-        transform: translateY(-5px);
-    }
-
-    .stats-card {
-        transform: translateY(8px);
-        opacity: 0;
-        transition: transform .6s cubic-bezier(.2, .9, .3, 1), opacity .6s ease;
-    }
-
-    .stats-card.visible {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .stats-counter {
-        text-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
-    }
-
-    @media (max-width: 768px) {
-        header h1 {
-            font-size: 1.05rem;
+        .qr-frame {
+            background: #fff;
+            padding: 16px;
+            border-radius: 24px;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
         }
 
-        #landing h2 {
-            font-size: 2rem;
+        .qr-frame img {
+            display: block;
+            width: 220px;
+            height: 220px;
         }
 
-        #features h2,
-        #pricing h2,
-        #testimonials h2,
-        #faq h2 {
-            font-size: 1.8rem;
+        .status-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px 0;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
         }
 
-        footer {
-            padding: 1rem;
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border-left-color: var(--primary);
+            animation: spin 1s linear infinite;
+            margin-right: 12px;
         }
 
-        footer .flex {
-            gap: 0.5rem;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .to-grid {
-            gap: 1rem;
+        .status-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
         }
 
-        .mobile-stack {
+        /* Success screen */
+        .success-view {
+            display: none;
             flex-direction: column;
+            align-items: center;
+            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        .stats-counter {
-            font-size: 2rem;
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
-    }
-</style>
 
-<body class="min-h-screen text-black flex flex-col">
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--success-glow);
+            border: 2px solid var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--success);
+            font-size: 40px;
+            font-weight: bold;
+        }
 
+        .success-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--success);
+            margin-bottom: 8px;
+        }
 
-
-    <!-- Floating Shapes -->
-    <div class="floating-shapes">
-        <div class="floating-shape"></div>
-        <div class="floating-shape"></div>
-        <div class="floating-shape"></div>
-        <div class="floating-shape"></div>
-        <div class="floating-shape"></div>
-    </div>
-
-    <!-- Back to Top Button -->
-    <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-
-
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="mobile-menu-close" id="mobileMenuClose">
-            <i class="fas fa-times"></i>
-        </button>
-        <a href="#features" class="mobile-nav-link">Features</a>
-        <a href="#pricing" class="mobile-nav-link">Pricing</a>
-        <a href="#testimonials" class="mobile-nav-link">Testimonials</a>
-        <a href="#faq" class="mobile-nav-link">FAQ</a>
-        <a href="#stats" class="mobile-nav-link">Stats</a>
-        <a href="#newsletter" class="mobile-nav-link">Newsletter</a>
-    </div>
-
-    <header
-        class="frosted-bg h-16 flex items-center justify-between px-6 fixed top-0 w-full shadow-md rounded-b-3xl overflow-hidden relative z-50">
-        <div
-            class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full mix-blend-multiply opacity-60">
+        .btn-back {
+            margin-top: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            box-shadow: none;
+        }
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="client-card">
+        <!-- Input Form Screen -->
+        <div id="setupScreen">
+            <div class="logo">UPI AUTOPAY</div>
+            <div class="subtitle">Enter amount to generate a payment QR code</div>
+            
+            <div class="form-group">
+                <label class="form-label">Payment Amount</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">&#8377;</span>
+                    <input type="number" id="amountInput" class="amount-input" placeholder="0.00" min="1" step="any" required>
+                </div>
+            </div>
+            
+            <button class="btn-action" onclick="generateQR()">GENERATE QR CODE</button>
         </div>
-        <div
-            class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-r from-yellow-300 to-purple-500 rounded-full mix-blend-multiply opacity-60">
+
+        <!-- QR Display Screen -->
+        <div id="paymentScreen" class="payment-display">
+            <div class="logo">SCAN & PAY</div>
+            <p class="subtitle" id="paymentMeta"></p>
+
+            <div class="qr-frame">
+                <img id="qrImage" src="" alt="UPI QR Code">
+            </div>
+
+            <a id="upiPayLink" href="#" class="btn-action" style="display:block;text-decoration:none;margin-bottom:12px;" target="_blank">PAY NOW</a>
+
+            <div class="status-container">
+                <div class="spinner" id="statusSpinner"></div>
+                <span class="status-text" id="statusText">Waiting for payment...</span>
+            </div>
+            
+            <button class="btn-action btn-back" onclick="resetClient()">CANCEL</button>
         </div>
 
-        <h1
-            class="text-xl md:text-2xl font-bold uppercase flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-yellow-400 to-pink-500 [background-size:200%] animate-[gradientShift_3s_linear_infinite]">
-            <i class="fas fa-crown text-yellow-400 animate-bounce"></i>
-            NEXORA
-        </h1>
-
-        <nav class="hidden md:flex items-center gap-6">
-            <a href="#features" class="text-purple-600 hover:text-pink-500 transition font-semibold">Features</a>
-            <a href="#pricing" class="text-purple-600 hover:text-pink-500 transition font-semibold">Pricing</a>
-            <a href="#testimonials"
-                class="text-purple-600 hover:text-pink-500 transition font-semibold">Testimonials</a>
-            <a href="#faq" class="text-purple-600 hover:text-pink-500 transition font-semibold">FAQ</a>
-            <a href="#stats" class="text-purple-600 hover:text-pink-500 transition font-semibold">Stats</a>
-            <a href="#newsletter" class="text-purple-600 hover:text-pink-500 transition font-semibold">Newsletter</a>
-        </nav>
-
-        <button class="text-purple-600 text-3xl hover:text-pink-500 transition md:hidden" id="mobileMenuButton">
-            <i class="fas fa-bars"></i>
-        </button>
-    </header>
-
-    <main class="flex-1 w-full max-w-6xl mx-auto px-4 pt-28 pb-8">
-        <section id="landing" class="mx-auto max-w-6xl px-4 py-8 scroll-reveal">
-            <div class="grid md:grid-cols-2 gap-10 items-center">
-                <div>
-                    <h2
-                        class="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 [background-size:200%] animate-[gradientShift_4s_linear_infinite] drop-shadow-lg flex items-center gap-3">
-                        <span class="typewriter">Hey User</span>
-                    </h2>
-                    <p class="mt-4 text-black/80 text-lg fade-in">
-                        Welcome to the future of <span class="font-extrabold">AI Predictions</span>!
-                        Our powerful
-                        <span
-                            class="font-extrabold uppercase bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-yellow-400 to-pink-500 [background-size:200%] animate-[gradientShift_3s_linear_infinite]">
-                            NEXORA
-                        </span>
-                        delivers next-level accuracy with smart AI predictors. Unlock advanced insights and experience
-                        the premium
-                        side of predictions today...!!
-                    </p>
-
-                    <div class="mt-8 flex gap-4 flex-wrap">
-                        <a id="toPredict"
-                            class="cursor-pointer flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-500 hover:from-indigo-500 hover:to-purple-600 text-white font-bold px-6 py-3 rounded-2xl shadow-lg transition-transform transform hover:scale-105 pulse-animation">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white animate-pulse" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            Get Started
-                        </a>
-                        <a id="toPremium"
-                            class="cursor-pointer flex items-center gap-2 bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-500 hover:from-pink-500 hover:to-yellow-300 text-black font-bold px-6 py-3 rounded-2xl shadow-xl transition-transform transform hover:scale-105">
-                            <i class="fas fa-crown text-yellow-600 animate-bounce"></i>
-                            Premium
-                        </a>
-                    </div>
-                </div>
-                <div class="space-y-6">
-                    <lottie-player src="/json/App.json" background="transparent" speed="0.5" loop autoplay
-                        class="w-full h-60 floating">
-                    </lottie-player>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section id="stats" class="mx-auto max-w-6xl px-4 py-16 scroll-reveal">
-            <div class="text-center mb-16">
-                <h2
-                    class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-                    Our Impact in Numbers
-                </h2>
-                <p class="text-black/70 max-w-2xl mx-auto">See how NEXORA is transforming decision-making worldwide
-                </p>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="stats-card card-glass rounded-2xl p-6 text-center">
-                    <div class="stats-counter text-3xl md:text-4xl font-extrabold" data-count="15000" data-suffix="+">0
-                    </div>
-                    <div class="stats-label mt-2 text-sm">Active Users</div>
-                </div>
-
-                <div class="stats-card card-glass rounded-2xl p-6 text-center">
-                    <div class="stats-counter text-3xl md:text-4xl font-extrabold" data-count="92" data-suffix="%">0
-                    </div>
-                    <div class="stats-label mt-2 text-sm">Accuracy Rate</div>
-                </div>
-
-                <div class="stats-card card-glass rounded-2xl p-6 text-center">
-                    <div class="stats-counter text-3xl md:text-4xl font-extrabold" data-count="500" data-suffix="+">0
-                    </div>
-                    <div class="stats-label mt-2 text-sm">Predictions/Day</div>
-                </div>
-
-                <div class="stats-card card-glass rounded-2xl p-6 text-center">
-                    <div class="stats-counter text-3xl md:text-4xl font-extrabold" data-count="98" data-suffix="%">0
-                    </div>
-                    <div class="stats-label mt-2 text-sm">Satisfaction Rate</div>
-                </div>
-            </div>
-        </section>
-
-
-        
-
-        <section id="features" class="mx-auto max-w-6xl px-4 py-16 scroll-reveal">
-            <div class="text-center mb-16">
-                <h2
-                    class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-                    Powerful Features</h2>
-                <p class="text-black/70 max-w-2xl mx-auto">Discover the advanced capabilities that make NEXORA the
-                    leading AI prediction platform</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card-glass p-6 rounded-2xl feature-card">
-                    <div class="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
-                        <i class="fas fa-brain text-2xl text-purple-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Advanced AI Algorithms</h3>
-                    <p class="text-black/70">Our proprietary algorithms analyze patterns with unprecedented accuracy and
-                        speed.</p>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl feature-card">
-                    <div class="w-14 h-14 rounded-xl bg-pink-100 flex items-center justify-center mb-4">
-                        <i class="fas fa-chart-line text-2xl text-pink-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Real-time Predictions</h3>
-                    <p class="text-black/70">Get instant predictions that adapt to changing conditions in real-time.</p>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl feature-card">
-                    <div class="w-14 h-14 rounded-xl bg-yellow-100 flex items-center justify-center mb-4">
-                        <i class="fas fa-shield-alt text-2xl text-yellow-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Secure & Private</h3>
-                    <p class="text-black/70">Your data is encrypted and never shared with third parties.</p>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl feature-card">
-                    <div class="w-14 h-14 rounded-xl bg-indigo-100 flex items-center justify-center mb-4">
-                        <i class="fas fa-bolt text-2xl text-indigo-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
-                    <p class="text-black/70">Process millions of data points in milliseconds for instant insights.</p>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl feature-card">
-                    <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
-                        <i class="fas fa-mobile-alt text-2xl text-blue-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Mobile Optimized</h3>
-                    <p class="text-black/70">Access predictions on-the-go with our responsive mobile interface.</p>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl feature-card">
-                    <div class="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center mb-4">
-                        <i class="fas fa-users text-2xl text-green-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Multi-user Support</h3>
-                    <p class="text-black/70">Collaborate with your team and share insights seamlessly.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="pricing" class="mx-auto max-w-6xl px-4 py-16 bg-white/30 rounded-3xl mb-16 scroll-reveal">
-            <div class="text-center mb-16">
-                <h2
-                    class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-                    Flexible Pricing
-                </h2>
-                <p class="text-black/70 max-w-2xl mx-auto">Choose the plan that works best for your needs</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="card-glass p-8 rounded-2xl pricing-card flex flex-col">
-                    <h3 class="text-2xl font-bold mb-4">Basic</h3>
-                    <div class="mb-6">
-                        <span class="text-4xl font-extrabold">₹1,299</span>
-                        <span class="text-black/60">/Weekly</span>
-                    </div>
-                    <ul class="mb-8 flex-1 space-y-3">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>100
-                            predictions/Week</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Basic
-                            analytics</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Basic
-                            support</li>
-                        <li class="flex items-center text-black/40"><i class="fas fa-times-circle mr-2"></i>Advanced
-                            algorithms</li>
-                    </ul>
-                    <button id="payBasic"
-                        class="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 rounded-xl hover:opacity-90 transition">Pay
-                        Now</button>
-
-                    <div class="mt-6 text-sm text-black/70">⭐⭐⭐⭐☆ (128 Reviews)</div>
-                </div>
-
-                <div class="card-glass p-8 rounded-2xl pricing-card flex flex-col border-2 border-purple-300 relative">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <span
-                            class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-bold px-4 py-1 rounded-full">POPULAR</span>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Premium</h3>
-                    <div class="mb-6">
-                        <span class="text-4xl font-extrabold">₹1,899</span>
-                        <span class="text-black/60">/month</span>
-                    </div>
-                    <ul class="mb-8 flex-1 space-y-3">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>1,000
-                            predictions/month</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Advanced
-                            analytics</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Priority
-                            support</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Advanced
-                            algorithms</li>
-                    </ul>
-                    <button id="payPremium"
-                        class="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold py-3 rounded-xl hover:opacity-90 transition">Pay
-                        Now</button>
-
-                    <div class="mt-6 text-sm text-black/70">⭐⭐⭐⭐⭐ (312 Reviews)</div>
-                </div>
-
-                <div class="card-glass p-8 rounded-2xl pricing-card flex flex-col">
-                    <h3 class="text-2xl font-bold mb-4">Ultimate</h3>
-                    <div class="mb-6">
-                        <span class="text-4xl font-extrabold">₹3,499</span>
-                        <span class="text-black/60">/month</span>
-                    </div>
-                    <ul class="mb-8 flex-1 space-y-3">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Unlimited
-                            predictions</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Full
-                            analytics suite</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>24/7
-                            dedicated support</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Custom AI
-                            models</li>
-                    </ul>
-                    <button id="contactSales"
-                        class="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 rounded-xl hover:opacity-90 transition">Contact
-                        Sales</button>
-
-                    <div class="mt-6 text-sm text-black/70">⭐⭐⭐⭐⭐ (87 Reviews)</div>
-                </div>
-            </div>
-
-            <div id="paymentModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-                <div class="bg-white rounded-2xl p-6 w-96">
-                    <h3 id="planName" class="text-xl font-bold mb-2"></h3>
-                    <p id="planPrice" class="text-lg text-slate-600 mb-4"></p>
-                    <div class="space-y-3">
-                        <button class="w-full py-3 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600">Pay
-                            via UPI</button>
-                        <button class="w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600">Pay
-                            via Card</button>
-                    </div>
-                    <button onclick="closePayment()"
-                        class="mt-4 w-full py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="testimonials" class="mx-auto max-w-6xl px-4 py-16 scroll-reveal">
-            <div class="text-center mb-16">
-                <h2
-                    class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-                    What Our Users Say
-                </h2>
-                <p class="text-black/70 max-w-2xl mx-auto">
-                    Join thousands of satisfied users who transformed their decision-making with NEXORA
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card-glass p-6 rounded-2xl testimonial-card">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-purple-200 flex items-center justify-center mr-3">
-                            <span class="text-purple-600 font-bold">RS</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold">Rahul Sharma</h4>
-                            <p class="text-sm text-black/60">Data Scientist</p>
-                        </div>
-                    </div>
-                    <p class="text-black/70 mb-4">
-                        "The accuracy of predictions has improved our decision-making process by 68%. Absolutely
-                        game-changing!"
-                    </p>
-                    <div class="flex text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl testimonial-card">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-pink-200 flex items-center justify-center mr-3">
-                            <span class="text-pink-600 font-bold">PV</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold">Priya Verma</h4>
-                            <p class="text-sm text-black/60">Financial Analyst</p>
-                        </div>
-                    </div>
-                    <p class="text-black/70 mb-4">
-                        "I've tried many prediction tools, but NEXORA stands out with its intuitive interface and
-                        reliable forecasts."
-                    </p>
-                    <div class="flex text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl testimonial-card">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-yellow-200 flex items-center justify-center mr-3">
-                            <span class="text-yellow-600 font-bold">AK</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold">Arvind Kumar</h4>
-                            <p class="text-sm text-black/60">Startup Founder</p>
-                        </div>
-                    </div>
-                    <p class="text-black/70 mb-4">
-                        "The premium features are worth every penny. The AI insights helped us identify market trends
-                        before our competitors."
-                    </p>
-                    <div class="flex text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="faq" class="mx-auto max-w-4xl px-4 py-16 scroll-reveal">
-            <div class="text-center mb-16">
-                <h2
-                    class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-                    Frequently Asked Questions
-                </h2>
-                <p class="text-black/70 max-w-2xl mx-auto">Find answers to common questions about NEXORA</p>
-            </div>
-
-            <div class="space-y-4">
-                <div class="card-glass p-6 rounded-2xl faq-item">
-                    <h3 class="text-xl font-bold mb-2 flex items-center justify-between cursor-pointer">
-                        <span>How accurate are the predictions?</span>
-                        <i class="fas fa-chevron-down text-purple-500 chevron"></i>
-                    </h3>
-                    <p class="text-black/70 mt-2 answer">Our AI algorithms achieve an average accuracy of 92.7% across
-                        all prediction categories, with some specialized models reaching up to 98.3% accuracy in
-                        specific domains.</p>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl faq-item">
-                    <h3 class="text-xl font-bold mb-2 flex items-center justify-between cursor-pointer">
-                        <span>Can I cancel my subscription anytime?</span>
-                        <i class="fas fa-chevron-down text-purple-500 chevron"></i>
-                    </h3>
-                    <p class="text-black/70 mt-2 answer">Yes, you can cancel your subscription at any time. Your access
-                        will continue until the end of your current billing period.</p>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl faq-item">
-                    <h3 class="text-xl font-bold mb-2 flex items-center justify-between cursor-pointer">
-                        <span>How is my data protected?</span>
-                        <i class="fas fa-chevron-down text-purple-500 chevron"></i>
-                    </h3>
-                    <p class="text-black/70 mt-2 answer">We use end-to-end encryption and follow industry best practices
-                        for data security. Your data is never sold to third parties, and we comply with global privacy
-                        regulations including GDPR and CCPA.</p>
-                </div>
-
-                <div class="card-glass p-6 rounded-2xl faq-item">
-                    <h3 class="text-xl font-bold mb-2 flex items-center justify-between cursor-pointer">
-                        <span>What makes NEXORA different from other prediction tools?</span>
-                        <i class="fas fa-chevron-down text-purple-500 chevron"></i>
-                    </h3>
-                    <p class="text-black/70 mt-2 answer">NEXORA uses a proprietary blend of machine learning
-                        algorithms specifically designed for predictive accuracy. Our unique approach combines deep
-                        learning with expert systems for unparalleled results.</p>
-                </div>
-            </div>
-
-            <div class="text-center mt-12">
-                <p class="text-black/70 mb-6">Still have questions? We're here to help!</p>
-                <button id="contactSupport"
-                    class="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold px-8 py-3 rounded-xl hover:opacity-90 transition">
-                    Contact Support
-                </button>
-            </div>
-        </section>
-
-        <!-- Newsletter Section -->
-        <section id="newsletter" class="mx-auto max-w-4xl px-4 py-16 scroll-reveal">
-            <div class="newsletter-form">
-                <h2
-                    class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-                    Stay Updated
-                </h2>
-                <p class="text-black/70 mb-6 max-w-2xl mx-auto">
-                    Subscribe to our newsletter for the latest updates, tips, and exclusive offers from NEXORA
-                </p>
-                <form id="newsletterForm" class="max-w-md mx-auto">
-                    <input type="email" placeholder="Enter your email" class="newsletter-input" required>
-                    <button type="submit" class="newsletter-btn w-full">Subscribe</button>
-                </form>
-                <p class="text-black/60 text-sm mt-4">We respect your privacy. Unsubscribe at any time.</p>
-            </div>
-        </section>
-    </main>
-
-    <footer
-        class="frosted-bg py-6 px-6 flex flex-col md:flex-row justify-between items-center rounded-t-3xl gap-3 mt-8">
-        <div class="footer-wave" aria-hidden="true"></div>
-
-        <div class="footer-content w-full flex flex-col md:flex-row justify-between items-center gap-3">
-            <p class="flex items-center gap-2 text-sm font-semibold">
-                <span class="text-[#6A40C9]">Developed by</span>
-                <span class="h-1 w-1 rounded-full bg-[#6A40C9]/60"></span>
-                <span
-                    class="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500 font-semibold">
-                    NEXORA AI Pvt. Ltd.
-                </span>
-            </p>
-
-            <div class="flex flex-wrap justify-center md:justify-end gap-3 text-xs font-semibold">
-                <a href="/policy/privacy-policy.html" class="text-[#6A40C9] hover:text-[#BFA0FF]">Privacy Policy</a>
-                <span class="text-slate-400">|</span>
-                <a href="/policy/disclaimer.html" class="text-[#6A40C9] hover:text-[#BFA0FF]">Disclaimer</a>
-                <span class="text-slate-400">|</span>
-                <a href="/policy/refund-policy.html" class="text-[#6A40C9] hover:text-[#BFA0FF]">Refund Policy</a>
-                <span class="text-slate-400">|</span>
-                <a href="/policy/legal-notice.html" class="text-[#6A40C9] hover:text-[#BFA0FF]">Legal Notice</a>
-            </div>
+        <!-- Success Screen -->
+        <div id="successScreen" class="success-view">
+            <div class="success-icon">&#10003;</div>
+            <h3 class="success-title">Payment Verified!</h3>
+            <p class="subtitle" style="margin-bottom: 0;">The transaction was detected and verified successfully.</p>
+            
+            <button class="btn-action btn-back" onclick="resetClient()">CREATE NEW PAYMENT</button>
         </div>
-    </footer>
+    </div>
 
     <script>
+        const API_BASE = "https://kaelis.sh";
+        let pollInterval = null;
+        let currentUpiId = null;
+        let currentAmount = 0;
+        let currentOrderId = null;
 
+        async function generateQR() {
+            const amountInput = document.getElementById("amountInput");
+            const amount = parseFloat(amountInput.value);
 
-        
-        const mobileMenuButton = document.getElementById('mobileMenuButton');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.add('active');
-            mobileMenuOverlay.classList.add('active');
-        });
-
-        mobileMenuClose.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-        });
-
-        mobileMenuOverlay.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-        });
-
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                mobileMenuOverlay.classList.remove('active');
-            });
-        });
-
-        // Scroll progress bar
-        const progressBar = document.getElementById('progressBar');
-        window.addEventListener('scroll', () => {
-            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (window.scrollY / windowHeight) * 100;
-            progressBar.style.width = scrolled + '%';
-        });
-
-        // Back to top button
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('active');
-            } else {
-                backToTop.classList.remove('active');
-            }
-        });
-
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Stats counter animation
-
-
-        // Newsletter form submission
-        const newsletterForm = document.getElementById('newsletterForm');
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = newsletterForm.querySelector('input[type="email"]').value;
-            alert(`Thank you for subscribing with ${email}! You'll receive updates soon.`);
-            newsletterForm.reset();
-        });
-
-        // Scroll reveal functionality
-        function revealOnScroll() {
-            const reveals = document.querySelectorAll('.scroll-reveal');
-            reveals.forEach(element => {
-                const windowHeight = window.innerHeight;
-                const elementTop = element.getBoundingClientRect().top;
-                const revealPoint = 150;
-
-                if (elementTop < windowHeight - revealPoint) {
-                    element.classList.add('visible');
-
-                    // Animate counters when stats section is visible
-                    if (element.id === 'stats' && !element.classList.contains('counted')) {
-                        element.classList.add('counted');
-                        animateCounters();
-                    }
-                }
-            });
-        }
-
-        window.addEventListener('scroll', revealOnScroll);
-        window.addEventListener('load', revealOnScroll);
-
-        (function () {
-            const BASE_DURATION = 1800;
-            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-            function animateCount(el, target, duration, suffix) {
-                const start = performance.now();
-                const to = Number(target);
-
-                function frame(now) {
-                    const t = Math.min(1, (now - start) / duration);
-                    const eased = easeOutCubic(t);
-                    const current = Math.floor(to * eased);
-
-
-                    el.textContent = (to >= 1000 ? current.toLocaleString() : current) + (suffix || '');
-
-                    if (t < 1) {
-                        requestAnimationFrame(frame);
-                    } else {
-
-                        el.textContent = (to >= 1000 ? to.toLocaleString() : to) + (suffix || '');
-                    }
-                }
-                requestAnimationFrame(frame);
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount greater than 0.");
+                return;
             }
 
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const card = entry.target;
-                        card.classList.add("visible");
-                        const counter = card.querySelector(".stats-counter");
-                        if (!counter || counter.dataset.animated) return;
+            currentAmount = amount;
 
-                        const target = counter.dataset.count;
-                        const suffix = counter.dataset.suffix || '';
-                        animateCount(counter, target, BASE_DURATION, suffix);
+            // Hide Setup Screen, Show Payment Screen
+            document.getElementById("setupScreen").style.display = "none";
+            document.getElementById("paymentScreen").style.display = "block";
+            
+            document.getElementById("paymentMeta").innerText = "Order for Rs. " + amount.toFixed(2);
+            document.getElementById("statusText").innerText = "Generating QR Code...";
+            document.getElementById("statusSpinner").style.display = "block";
 
-                        counter.dataset.animated = "true";
-                        obs.unobserve(card);
-                    }
+            try {
+                const response = await fetch(API_BASE + "/autopay", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount: amount })
                 });
-            }, { threshold: 0.25 });
 
-            document.querySelectorAll(".stats-card").forEach(c => observer.observe(c));
-        })();
-
-        // FAQ functionality
-        document.querySelectorAll('.faq-item h3').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const answer = question.nextElementSibling;
-                const icon = question.querySelector('.chevron');
-
-                faqItem.classList.toggle('active');
-                if (faqItem.classList.contains('active')) {
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                    icon.classList.remove('fa-chevron-down');
-                    icon.classList.add('fa-chevron-up');
-                } else {
-                    answer.style.maxHeight = '0';
-                    icon.classList.remove('fa-chevron-up');
-                    icon.classList.add('fa-chevron-down');
+                if (!response.ok) {
+                    throw new Error("Failed to register order");
                 }
-            });
-        });
 
-        // Navigation and button functionality
-        const sections = ["landing"];
-        function show(id) {
-            sections.forEach(s => {
-                const el = document.getElementById(s);
-                if (el) el.classList.add('hidden-section');
-            });
-            const target = document.getElementById(id);
-            if (target) {
-                target.classList.remove('hidden-section');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                const order = await response.json();
+                currentOrderId = order.order_id;
+                currentUpiId = order.upi_id || "";
+
+                // Load direct raw QR image URL
+                document.getElementById("qrImage").src = order.qr_code_url;
+
+                // Generate UPI deep link
+                var upiLink = "upi://pay?pa=" + encodeURIComponent(currentUpiId) + 
+                    "&pn=" + encodeURIComponent("Wingo Signals") + 
+                    "&am=" + amount.toFixed(2) + 
+                    "&cu=INR" + 
+                    "&tn=" + encodeURIComponent("Wingo Signals - Order " + currentOrderId);
+                
+                document.getElementById("upiPayLink").href = upiLink;
+
+                document.getElementById("statusText").innerText = "Waiting for payment...";
+
+                // Start polling status
+                startPolling(order.order_id);
+            } catch (err) {
+                alert("Error connecting to server. Please try again.");
+                resetClient();
             }
         }
 
-        document.getElementById("toPredict").addEventListener("click", function () {
-            window.location.href = "/user/app.php";
-        });
+        function startPolling(orderId) {
+            if (pollInterval) clearInterval(pollInterval);
 
-        document.getElementById("toPremium").addEventListener("click", function () {
-            document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
-        });
+            pollInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(API_BASE + "/autopay/verify", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ order_id: orderId })
+                    });
 
-        document.getElementById("contactSupport").addEventListener("click", function () {
-            window.location.href = "https://t.me/enzosrs";
-        });
-
-        document.getElementById("payBasic").addEventListener("click", function () {
-            const message = "Hello, I am interested in purchasing the Basic version. Could you please provide more details?";
-            window.location.href = `https://t.me/enzosrs?text=${encodeURIComponent(message)}`;
-        });
-
-        document.getElementById("payPremium").addEventListener("click", function () {
-            const message = "Hello, I would like to purchase the Premium version. Kindly share the necessary steps.";
-            window.location.href = `https://t.me/enzosrs?text=${encodeURIComponent(message)}`;
-        });
-
-        document.getElementById("contactSales").addEventListener("click", function () {
-            const message = "Hello, I am interested in the Ultimate plan. Could you please connect me with the sales team?";
-            window.location.href = `https://t.me/enzosrs?text=${encodeURIComponent(message)}`;
-        });
-
-        // Typewriter effect
-        const typewriterElement = document.querySelector('.typewriter');
-        if (typewriterElement) {
-            setTimeout(() => {
-                typewriterElement.style.animation = 'none';
-                typewriterElement.style.borderRight = 'none';
+                    if (response.ok) {
+                        // Success!
+                        clearInterval(pollInterval);
+                        document.getElementById("paymentScreen").style.display = "none";
+                        document.getElementById("successScreen").style.display = "flex";
+                    }
+                } catch (err) {
+                    console.log("Error checking status, retrying...");
+                }
             }, 3000);
+        }
+
+        function resetClient() {
+            if (pollInterval) clearInterval(pollInterval);
+            currentUpiId = null;
+            currentAmount = 0;
+            currentOrderId = null;
+            document.getElementById("amountInput").value = "";
+            document.getElementById("qrImage").src = "";
+            document.getElementById("upiPayLink").href = "#";
+            
+            document.getElementById("paymentScreen").style.display = "none";
+            document.getElementById("successScreen").style.display = "none";
+            document.getElementById("setupScreen").style.display = "block";
         }
     </script>
 </body>

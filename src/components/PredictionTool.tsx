@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   ArrowLeft, 
   HelpCircle, 
@@ -11,19 +11,13 @@ import {
   Info, 
   History as HistoryIcon, 
   ChevronDown, 
-  ChevronUp, 
   CheckCircle, 
   X, 
   Send, 
-  Headset,
   UserPlus,
-  ShieldCheck,
-  Zap,
-  Award,
   AlertTriangle,
   BookOpen,
   Target,
-  BarChart3,
   Share2,
   MessageCircle,
   Link2
@@ -91,7 +85,7 @@ function calculatePeriod(mode: string) {
   let periodOffset, periodPrefix;
   if (mode === '30s') {
     periodPrefix = 50001;
-    let halfMinute = Math.floor(utcSeconds / 30);
+    const halfMinute = Math.floor(utcSeconds / 30);
     periodOffset = totalMinutes * 2 + halfMinute;
   } else if (mode === '1m') {
     periodPrefix = 10001;
@@ -127,36 +121,28 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
   const [timeLeft, setTimeLeft] = useState('00:00');
   const [isChecking, setIsChecking] = useState(false);
   const [result, setResult] = useState<{number: number, size: string, color: string, fourNumbers?: number[]} | null>(null);
-  const [history, setHistory] = useState<any[]>([]);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [history, setHistory] = useState<Array<{ period: string; number: number; size: string; color: string }>>([]);
   const [showHelp, setShowHelp] = useState(false);
-  const [showHowItWorks, setShowHowItWorks] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [onlineUsers, setOnlineUsers] = useState(11432);
   const [isSEOExpanded, setIsSEOExpanded] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const prevPeriodRef = useRef('');
 
-  useEffect(() => {
-    setOnlineUsers(Math.floor(Math.random() * (12900 - 8000 + 1)) + 8000);
-    const interval = setInterval(() => {
-      setOnlineUsers(prev => {
-        const change = Math.floor(Math.random() * 120) - 40;
-        let next = prev + change;
-        if (next < 8000) next = 8000 + Math.floor(Math.random() * 50);
-        if (next > 12900) next = 12900 - Math.floor(Math.random() * 50);
-        return next;
-      });
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const hasShown = sessionStorage.getItem('wingo_popup_shown');
-    if (!hasShown) {
-      setShowPopup(true);
-    }
-  }, []);
+  const generateNewResult = useCallback((p: string) => {
+    setIsChecking(true);
+    setTimeout(() => {
+      const num = generateSmartResult(mode);
+      const newResult = {
+        number: num,
+        size: getSize(num),
+        color: getColor(num),
+        fourNumbers: activeMode === 'number-only' ? generateFourDifferentNumbers() : undefined
+      };
+      setResult(newResult);
+      setIsChecking(false);
+      setHistory(prev => [{ period: p, number: newResult.number, size: newResult.size, color: newResult.color }, ...prev].slice(0, 10));
+    }, 1500);
+  }, [activeMode, mode]);
 
   useEffect(() => {
     const update = () => {
@@ -178,41 +164,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
     const timer = setInterval(update, 1000);
     update();
     return () => clearInterval(timer);
-  }, [mode]);
-
-  // Instant update when display mode switches
-  useEffect(() => {
-    if (result) {
-      if (activeMode === 'number-only' && !result.fourNumbers) {
-        setResult(prev => prev ? { ...prev, fourNumbers: generateFourDifferentNumbers() } : null);
-      }
-    }
-  }, [activeMode]);
-
-  const generateNewResult = (p: string) => {
-    setIsChecking(true);
-    setTimeout(() => {
-      const num = generateSmartResult(mode);
-      const newResult = {
-        number: num,
-        size: getSize(num),
-        color: getColor(num),
-        fourNumbers: activeMode === 'number-only' ? generateFourDifferentNumbers() : undefined
-      };
-      setResult(newResult);
-      setIsChecking(false);
-      
-      const historyItem = {
-        period: p,
-        ...newResult,
-        mode: mode,
-        displayMode: activeMode,
-        timestamp: new Date().toISOString()
-      };
-      // Keep only last 10 in history
-      setHistory(prev => [historyItem, ...prev].slice(0, 10));
-    }, 1500);
-  };
+  }, [generateNewResult, mode]);
 
   const gameLabel = {
     '30s': 'WinGo 30s',
@@ -233,7 +185,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
       guideParagraphs: [
         "The <strong>30 second Wingo prediction</strong> page is designed for quick reading on a small screen. It keeps recent history, period timing, and the current statistical signal together without requiring an APK.",
         "Because a new round starts every half minute, delayed history matters. Confirm that the displayed period matches the game you are viewing. If it does not, wait for the next refresh.",
-        "Short runs can look meaningful even when they are random. Use the history table as context, respect skipped signals, and do not increase a stake to recover a previous loss.",
+        "Short runs can look meaningful even when they are random. Use the history table as context and treat skipped signals as a sign that the available context is unclear.",
       ],
       faqTitle: "30s Wingo Signals FAQ",
       faqItems: [
@@ -244,7 +196,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
       ],
     },
     '1m': {
-      whyTitle: "Why 1 Minute Wingo Analysis Works",
+      whyTitle: "Understanding the 1 Minute View",
       whyDesc: "One-minute rounds provide a little more time to verify the period and compare recent size and colour distributions. The page focuses on readable context rather than promising a certain result.",
       features: [
         { title: "Recent distribution", desc: "Shows how big/small and colour results are distributed in the available history." },
@@ -254,7 +206,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
       guideParagraphs: [
         "The <strong>Wingo 1 minute prediction</strong> view combines the latest history with a single statistical big/small signal. It is browser-based and does not require a predictor APK or unofficial download.",
         "Use the full minute to check that the signal period matches your current round. Review nearby results for context instead of reading one output in isolation.",
-        "A repeating <strong>big small</strong> sequence can end at any time. The interface helps organize observations; it cannot turn an uncertain game into a guaranteed income source.",
+        "A repeating <strong>big small</strong> sequence can end at any time. The interface organizes recent observations without claiming certainty about what comes next.",
       ],
       faqTitle: "1 Min Wingo Signals FAQ",
       faqItems: [
@@ -265,7 +217,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
       ],
     },
     '3m': {
-      whyTitle: "Why 3 Minute Wingo Analysis is Optimal",
+      whyTitle: "Understanding the 3 Minute View",
       whyDesc: "Three-minute rounds give users more time to compare colour, number, and size history before the next period. The longer timer improves review time, not certainty.",
       features: [
         { title: "Multiple history fields", desc: "Review colour, size, and number context together instead of relying on one label." },
@@ -286,7 +238,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
       ],
     },
     '5m': {
-      whyTitle: "Why 5 Minute Wingo Analysis Allows More Review",
+      whyTitle: "Understanding the 5 Minute View",
       whyDesc: "Five-minute rounds provide the longest review window in this interface. Users can inspect recent colour, number, and size history carefully, while remembering that more time does not guarantee a future result.",
       features: [
         { title: "Calmer history review", desc: "Use the longer countdown to compare multiple recent rows without rushing." },
@@ -302,7 +254,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
       faqItems: [
         { q: "Does the five-minute timer guarantee a better result?", a: "No. It gives more time to review information, not certainty about the next outcome." },
         { q: "What if history is delayed?", a: "Wait for the period and recent rows to match before using the displayed context." },
-        { q: "Can this provide consistent profit?", a: "No service can promise consistent profit from an uncertain game." },
+        { q: "Can this predict every result correctly?", a: "No. Each signal is an estimate based on limited recent context and can be incorrect." },
         { q: "Do I need to download software?", a: "No. The tool is available through the official web interface." },
       ],
     },
@@ -313,69 +265,8 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="text-slate-900 pt-3 px-3 relative font-sans md:text-base text-sm"
+        className="text-slate-900 pt-3 px-3 pb-8 relative font-sans md:text-base text-sm"
     >
-      {/* Advanced Technical SEO Metadata */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": [
-              {
-                "@type": "SoftwareApplication",
-                "name": `Wingo ${gameLabel} Prediction Tool`,
-                "operatingSystem": "Web",
-                "applicationCategory": "GameTool",
-                "offers": {
-                  "@type": "Offer",
-                  "price": "0",
-                  "priceCurrency": "USD"
-                },
-                "description": `Browser-based statistical history and signal interface for Wingo ${gameLabel}. Signals are estimates and do not guarantee a result.`
-              },
-              {
-                "@type": "FAQPage",
-                "mainEntity": [
-                  {
-                    "@type": "Question",
-                    "name": "How does the Wingo prediction tool work?",
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": "Our AI analyst scans the last 100 game draws to identify neural patterns and provide high-probability outcomes for the next round."
-                    }
-                  },
-                  {
-                    "@type": "Question",
-                    "name": "Is the Wingo signal tool free?",
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": "Yes, we provide a free public version for educational pattern analysis. Official premium signals are also available for expert users."
-                    }
-                  }
-                ]
-              },
-              {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://wingosignals.com"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": `Wingo ${gameLabel} Prediction`,
-                    "item": `https://wingosignals.com/${MODE_TO_SLUG[mode]}`
-                  }
-                ]
-              }
-            ]
-          })
-        }}
-      />
       <h1 className="sr-only">Wingo Signal - Official {gameLabel} Prediction & AI Tool 2026</h1>
       
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -383,11 +274,11 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-[420px] mx-auto pt-14">
+      <div className="relative z-10 max-w-6xl mx-auto pt-14 px-3">
         {/* Navigation / Header */}
-        <div className="absolute top-0 left-0 right-0 flex justify-between p-3">
+        <div className="flex justify-between p-3">
           <Link href="/" className="flex items-center gap-1.5 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-sm text-xs font-bold hover:border-indigo-500 transition-all">
-            <ArrowLeft size={14} /> Premium
+            <ArrowLeft size={14} /> Home
           </Link>
           <button onClick={() => setShowHelp(true)} className="flex items-center gap-1.5 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-sm text-xs font-bold hover:border-indigo-500 transition-all">
             <HelpCircle size={14} /> Guide
@@ -413,34 +304,22 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
           </div>
         </motion.div>
 
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,.98fr)] gap-5 lg:gap-7 items-start">
+        <div className="flex flex-col h-full lg:sticky lg:top-20">
         {/* Prediction Main Card */}
         <motion.div 
           layout
-          className="bg-white border border-slate-200 rounded-3xl p-4 shadow-xl flex flex-col gap-3"
+          className="bg-white border border-slate-200 rounded-3xl p-4 shadow-xl flex flex-col gap-3 h-full"
         >
-          <div className="flex justify-between items-center border-b border-slate-100 pb-2">
-            <span className="text-xs font-bold text-slate-400 tracking-tighter">AI Signal Analyst</span>
-            <div className="text-xs font-black text-green-500 flex items-center gap-1 relative overflow-hidden h-4">
-              <span>Live:</span>
-              <AnimatePresence mode="popLayout">
-                <motion.span
-                  key={onlineUsers}
-                  initial={{ y: 15, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -15, opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="inline-block"
-                >
-                  {onlineUsers.toLocaleString()}
-                </motion.span>
-              </AnimatePresence>
-            </div>
+          <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+            <span className="text-sm font-semibold text-slate-500">Round overview</span>
+            <span className="text-xs font-semibold text-emerald-600 flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-500" />Auto refresh</span>
           </div>
 
-          <div className="flex flex-col items-center gap-1 text-center py-1">
+          <div className="flex items-center gap-3 py-1">
             <motion.div 
               whileHover={{ scale: 1.05 }}
-              className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden"
+              className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden"
             >
               <Image 
                 src="/logo/official-logo.png" 
@@ -451,33 +330,39 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
                 className="w-full h-full object-contain" 
               />
             </motion.div>
-            <h2 className="text-xl font-black text-slate-800 leading-tight mt-1">{mode} Prediction</h2>
-            <p className="text-xs font-bold text-slate-400 tracking-widest">Neural Pattern Detection</p>
+            <div className="min-w-0">
+              <h2 className="text-xl font-extrabold text-slate-900 leading-tight">{gameLabel} signal overview</h2>
+              <p className="mt-1 text-sm text-slate-500">Recent results and round details</p>
+            </div>
           </div>
 
           <div className="bg-indigo-50 rounded-xl overflow-hidden h-8 flex items-center border border-indigo-100/50">
             <div className="whitespace-nowrap px-4 text-[10px] font-bold text-indigo-600 animate-marquee flex items-center gap-2">
-              <span>1000% INDEXING SYSTEM ACTIVE - ALWAYS USE LEVEL 3-5 FUNDS - FOR 99.9% ACCURACY USE PREMIUM SERVER SIGNALS</span>
+              <span>Period, timer and recent results refresh automatically. Outputs are informational estimates and may differ from final results.</span>
             </div>
           </div>
 
-          {/* Mode Switcher */}
-          <div className="flex gap-1.5 bg-slate-100 p-1 rounded-2xl justify-between">
+          {/* Interval tags */}
+          <div className="flex gap-1.5 rounded-2xl bg-slate-100 p-1">
             {['30s', '1m', '3m', '5m'].map(g => (
               <Link 
                 key={g}
                 href={`/${MODE_TO_SLUG[g]}`}
-                className={`flex-1 h-16 rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all ${mode === g ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-200'}`}
+                className={`flex-1 rounded-xl px-2 py-2.5 flex items-center justify-center gap-1.5 transition-all text-xs font-bold ${mode === g ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-200'}`}
               >
-                {g === '30s' ? <Clock size={16} /> : <Timer size={16} />}
-                <span className="text-[10px] font-black text-center leading-none">{g}</span>
+                {g === '30s' ? <Clock size={14} /> : <Timer size={14} />}
+                <span>{g}</span>
               </Link>
             ))}
           </div>
 
-          <div className="flex gap-2">
-            <button onClick={() => setActiveMode('number-only')} className={`flex-1 py-3 rounded-xl text-xs font-black transition-all border flex items-center justify-center gap-1.5 ${activeMode === 'number-only' ? 'bg-slate-800 text-white border-slate-700' : 'bg-slate-50 text-slate-500 border-slate-200'}`}><Hash size={14} /> Number Only</button>
-            <button onClick={() => setActiveMode('show-all')} className={`flex-1 py-3 rounded-xl text-xs font-black transition-all border flex items-center justify-center gap-1.5 ${activeMode === 'show-all' ? 'bg-slate-800 text-white border-slate-700' : 'bg-slate-50 text-slate-500 border-slate-200'}`}><Eye size={14} /> Show All</button>
+          <div className="grid grid-cols-2 gap-2" role="group" aria-label="Signal display mode">
+            <button onClick={() => { setActiveMode('number-only'); setResult(prev => prev && !prev.fourNumbers ? { ...prev, fourNumbers: generateFourDifferentNumbers() } : prev); }} className={`rounded-2xl border p-3 text-left transition-all ${activeMode === 'number-only' ? 'border-slate-800 bg-slate-800 text-white shadow-md' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300'}`}>
+              <span className="flex items-center gap-2 text-sm font-bold"><Hash size={16} /> Number only</span><span className={`mt-1 block text-xs ${activeMode === 'number-only' ? 'text-slate-300' : 'text-slate-400'}`}>Four-number view</span>
+            </button>
+            <button onClick={() => setActiveMode('show-all')} className={`rounded-2xl border p-3 text-left transition-all ${activeMode === 'show-all' ? 'border-indigo-600 bg-indigo-600 text-white shadow-md' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-200'}`}>
+              <span className="flex items-center gap-2 text-sm font-bold"><Eye size={16} /> Big / Small</span><span className={`mt-1 block text-xs ${activeMode === 'show-all' ? 'text-indigo-100' : 'text-slate-400'}`}>Number, size and colour</span>
+            </button>
           </div>
 
           {/* Status Box */}
@@ -488,8 +373,8 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
             </div>
 
             {/* Result Zone */}
-            <div className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm min-h-[90px] flex flex-col items-center justify-center relative mt-1">
-               <div className="text-[10px] font-black text-slate-300 absolute top-2 tracking-widest">AI Pattern Result</div>
+            <div className="bg-white border border-slate-100 rounded-xl p-4 shadow-sm min-h-[116px] flex flex-col items-center justify-center relative mt-1">
+               <div className="text-xs font-semibold text-slate-400 absolute top-3">Current signal</div>
                <AnimatePresence mode="wait">
                  {isChecking ? (
                    <motion.div 
@@ -497,8 +382,11 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
                      initial={{ opacity: 0 }}
                      animate={{ opacity: 1 }}
                      exit={{ opacity: 0 }}
-                     className="w-6 h-6 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin" 
-                   />
+                     className="grid w-full grid-cols-[48px_1fr] items-center gap-3 px-2 pt-5"
+                   >
+                     <div className="h-12 w-12 rounded-full bg-slate-100 animate-pulse" />
+                     <div className="space-y-2"><div className="h-3 w-4/5 rounded-full bg-slate-100 animate-pulse" /><div className="h-3 w-3/5 rounded-full bg-indigo-100 animate-pulse" /></div>
+                   </motion.div>
                  ) : result ? (
                    <motion.div 
                      key={activeMode + result.number}
@@ -508,14 +396,14 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
                    >
                       {activeMode === 'number-only' && result.fourNumbers ? (
                         <div className="flex gap-1.5">
-                          {result.fourNumbers.map(n => <img key={n} src={`/svg/numbers/${n}.svg`} className="w-9 h-9 drop-shadow-sm" alt={n.toString()} />)}
+                          {result.fourNumbers.map(n => <Image key={n} src={`/svg/numbers/${n}.svg`} width={36} height={36} className="w-9 h-9 drop-shadow-sm" alt={`Number ${n}`} />)}
                         </div>
                       ) : (
-                        <div className="flex items-center gap-3">
-                           <img src={`/svg/numbers/${result.number}.svg`} alt={result.number.toString()} className="w-11 h-11" />
+                        <div className="flex w-full items-center justify-center gap-3 pt-2">
+                           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-50"><Image src={`/svg/numbers/${result.number}.svg`} width={40} height={40} alt={`Number ${result.number}`} className="h-10 w-10" /></div>
                            <div className="h-8 w-px bg-slate-100" />
-                           <div className={`px-3 py-1.5 rounded-lg text-[10px] font-black text-white shadow-sm ${result.size === 'Big' ? 'bg-purple-500' : 'bg-blue-500'}`}>{result.size}</div>
-                           <div className={`px-3 py-1.5 rounded-lg text-[10px] font-black text-white shadow-sm ${result.color === 'Green' ? 'bg-emerald-500' : 'bg-rose-500'}`}>{result.color}</div>
+                           <span className="min-w-20 rounded-lg px-3 py-2 text-center text-xs font-bold text-white shadow-sm" style={{ backgroundColor: getSize(result.number) === 'Big' ? '#f97316' : '#3b82f6' }}>{getSize(result.number)}</span>
+                           <span className={`min-w-20 rounded-lg px-3 py-2 text-center text-xs font-bold text-white shadow-sm ${result.color === 'Green' ? 'bg-emerald-500' : 'bg-rose-500'}`}>{result.color}</span>
                         </div>
                       )}
                    </motion.div>
@@ -526,10 +414,10 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
 
           {/* Action Buttons - Two per row */}
           <div className="flex gap-2">
-            <Link href="/" className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3 rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
-              <UserPlus size={14} /> Premium
+            <Link href="/subscribe" className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3 rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
+              <UserPlus size={14} /> Subscribe
             </Link>
-            <Link href={telegramLink} className="flex-1 bg-[#229ED9] text-white py-3 rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
+            <Link href={telegramLink} target="_blank" rel="noreferrer" className="flex-1 bg-[#229ED9] text-white py-3 rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
               <Send size={14} /> Telegram
             </Link>
           </div>
@@ -604,46 +492,82 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
                 </button>
              </div>
           </div>
-        </motion.div>
 
-        <div className="mt-4 bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden">
-          <button onClick={() => setIsHistoryOpen(!isHistoryOpen)} className="w-full flex items-center justify-between p-3 bg-slate-50 font-bold text-slate-700 text-xs tracking-wider">
-            <div className="flex items-center gap-2"><HistoryIcon size={14} className="text-indigo-500" /> Recent Signals</div>
-            {isHistoryOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-          </button>
-          
-          <AnimatePresence>
-            {isHistoryOpen && (
-              <motion.div 
-                initial={{ height: 0 }}
-                animate={{ height: 'auto' }}
-                exit={{ height: 0 }}
-                className="overflow-hidden border-t border-slate-100"
-              >
-                <div className="p-3 flex flex-col gap-2 overflow-y-auto max-h-[250px]">
+          <section className="mt-1 rounded-2xl border border-indigo-100 bg-indigo-50/60 p-4" aria-labelledby="reading-context-title">
+            <div className="flex items-start gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-indigo-600 shadow-sm"><BookOpen size={17} /></div>
+              <div>
+                <h3 id="reading-context-title" className="text-sm font-bold text-slate-800">Quick reading context</h3>
+                <p className="mt-1 text-xs leading-5 text-slate-600">Use the period, timer and recent table together. Each area describes the current page state and refreshes independently.</p>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {[
+                ['01', 'Period', 'Check the round ID'],
+                ['02', 'Timer', 'Note the refresh time'],
+                ['03', 'History', 'Review recent entries'],
+              ].map(([number, title, description]) => (
+                <div key={number} className="rounded-xl border border-white bg-white/80 p-2.5">
+                  <span className="text-[10px] font-bold text-indigo-500">{number}</span>
+                  <p className="mt-1 text-xs font-bold text-slate-800">{title}</p>
+                  <p className="mt-1 text-[11px] leading-4 text-slate-500">{description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <div className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-3.5">
+            <Info size={18} className="shrink-0 text-slate-400" />
+            <p className="text-xs leading-5 text-slate-600">If an entry looks delayed, wait for the next refresh before using this page as a reference.</p>
+          </div>
+
+          <section className="rounded-2xl border border-slate-200 bg-white p-4" aria-labelledby="page-details-title">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Page details</p>
+                <h3 id="page-details-title" className="mt-1 text-base font-bold text-slate-800">Built for a clear, steady view</h3>
+              </div>
+              <div className="rounded-xl bg-emerald-50 px-2.5 py-1.5 text-xs font-semibold text-emerald-700">Browser based</div>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-slate-100 pt-4">
+              <div><p className="text-xs font-bold text-slate-700">Current period</p><p className="mt-1 text-xs leading-5 text-slate-500">A visible round reference at the top of the card.</p></div>
+              <div><p className="text-xs font-bold text-slate-700">Recent entries</p><p className="mt-1 text-xs leading-5 text-slate-500">A compact record of the latest generated signals.</p></div>
+              <div><p className="text-xs font-bold text-slate-700">Responsive layout</p><p className="mt-1 text-xs leading-5 text-slate-500">Designed to remain readable on phone and desktop screens.</p></div>
+              <div><p className="text-xs font-bold text-slate-700">Refresh status</p><p className="mt-1 text-xs leading-5 text-slate-500">The countdown makes the next update easy to follow.</p></div>
+            </div>
+          </section>
+        </motion.div>
+        </div>{/* end left column */}
+
+        <div className="flex flex-col gap-4 md:gap-6 h-full">
+        <section className="bg-white border border-slate-200 rounded-3xl shadow-lg overflow-hidden flex flex-col" aria-labelledby="recent-signals-title">
+          <div className="flex items-center justify-between p-5 bg-slate-50 border-b border-slate-100">
+            <div><h2 id="recent-signals-title" className="flex items-center gap-2 text-base font-bold text-slate-800"><HistoryIcon size={17} className="text-indigo-500" /> Recent signals</h2><p className="mt-1 text-xs text-slate-500">The latest entries stay visible as new periods arrive.</p></div>
+            <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold text-indigo-700">{history.length}/10</span>
+          </div>
+          <div className="grid grid-cols-[1fr_auto_auto] gap-3 border-b border-slate-100 px-5 py-2.5 text-xs font-semibold text-slate-400">
+            <span>Period</span><span>Number</span><span>Size</span>
+          </div>
+          <div className="min-h-[164px] max-h-[318px] overflow-y-auto px-5 py-2">
+                  {history.length === 0 && <div className="flex min-h-[140px] items-center justify-center text-sm text-slate-400">Recent entries will appear after the first refresh.</div>}
                   {history.map((item, i) => (
                     <motion.div 
                       key={i} 
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.05 }}
-                      className="flex items-center justify-between py-1 border-b border-slate-50 last:border-0"
+                      className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-2.5 border-b border-slate-100 last:border-0"
                     >
-                      <span className="text-[10px] font-bold text-slate-500">{item.period}</span>
-                      <div className="flex gap-1.5 items-center">
-                        <img src={`/svg/numbers/${item.number}.svg`} className="w-6 h-6" alt={item.number.toString()} />
-                        <span className={`text-[8px] font-black px-2 py-0.5 rounded text-white ${item.size === 'Big' ? 'bg-purple-500' : 'bg-blue-500'}`}>{item.size}</span>
-                      </div>
+                      <span className="truncate text-xs font-medium text-slate-600">{item.period}</span>
+                      <Image src={`/svg/numbers/${item.number}.svg`} width={28} height={28} className="w-7 h-7" alt={`Number ${item.number}`} />
+                      <span className="min-w-14 rounded-lg px-2 py-1 text-center text-xs font-bold text-white" style={{ backgroundColor: getSize(item.number) === 'Big' ? '#f97316' : '#3b82f6' }}>{getSize(item.number)}</span>
                     </motion.div>
                   ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+          </div>
+        </section>
 
         {/* --- Advanced SEO Content Section --- */}
-        <section className="mt-8 mb-10 flex flex-col gap-6 px-1">
+        <section className="flex flex-col gap-4 md:gap-6">
           {/* Market Analysis Content for Indexing */}
           <div className="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm">
               <h2 className="text-sm font-black text-slate-800 flex items-center gap-2 mb-4">
@@ -665,28 +589,28 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
           {/* How to Use Section */}
           <div className="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm">
              <h2 className="text-sm font-black text-slate-800 flex items-center gap-2 mb-4">
-                <BookOpen size={16} className="text-indigo-500" /> Mastering {gameLabel} Prediction
+                <BookOpen size={16} className="text-indigo-500" /> How to read {gameLabel}
              </h2>
              <div className="flex flex-col gap-4">
                 <div className="flex gap-3">
                    <div className="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-black flex-shrink-0">1</div>
                    <div>
                       <h3 className="text-[11px] font-black text-slate-800">Select {gameLabel}</h3>
-                      <p className="text-[10px] text-slate-500">Choose the <strong>{gameLabel}</strong> mode to begin analyzing real-time pattern data and signal outputs.</p>
+                      <p className="text-xs leading-relaxed text-slate-500">Choose the <strong>{gameLabel}</strong> interval and confirm it matches the page you are viewing.</p>
                    </div>
                 </div>
                 <div className="flex gap-3">
                    <div className="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-black flex-shrink-0">2</div>
                    <div>
                       <h3 className="text-[11px] font-black text-slate-800">Review Signal</h3>
-                      <p className="text-[10px] text-slate-500">Let our <strong>wingo tool</strong> scan the latest trend and display the highest probability outcome for the next round.</p>
+                      <p className="text-xs leading-relaxed text-slate-500">Check the period, countdown and recent entries before reading the current estimate.</p>
                    </div>
                 </div>
                 <div className="flex gap-3">
                    <div className="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-black flex-shrink-0">3</div>
                    <div>
-                      <h3 className="text-[11px] font-black text-slate-800">Execute Trade</h3>
-                      <p className="text-[10px] text-slate-500">Apply the <strong>{gameLabel} prediction</strong> using a safe investment plan. Track results and adjust your strategy.</p>
+                      <h3 className="text-sm font-bold text-slate-800">Refresh the context</h3>
+                      <p className="text-xs leading-relaxed text-slate-500">Wait for the next refresh when the displayed period or recent entries appear out of date.</p>
                    </div>
                 </div>
              </div>
@@ -695,7 +619,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
          </section>
 
         {/* --- Collapsible SEO Section --- */}
-        <section className="mt-8 mb-4 px-1">
+        <section className="">
           <button 
             onClick={() => setIsSEOExpanded(!isSEOExpanded)}
             className="w-full flex items-center justify-between p-5 bg-white border border-slate-200 rounded-3xl shadow-sm hover:border-indigo-500 transition-all text-left"
@@ -706,7 +630,7 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
               </div>
               <div>
                 <h2 className="text-sm font-black text-slate-800">{MODE_CONTENT.guideTitle}</h2>
-                <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Accuracy & Signals</p>
+                <p className="text-xs text-slate-500">Reading guide and limitations</p>
               </div>
             </div>
             <motion.div
@@ -737,47 +661,28 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
         </section>
 
         {/* Technical FAQ Section */}
-        <section className="mt-8 mb-10 px-1">
+        <section className="">
           <div>
-             <h2 className="text-sm font-black text-slate-400 tracking-[3px] text-center mb-4">{MODE_CONTENT.faqTitle}</h2>
+             <h2 className="text-xl font-extrabold text-slate-900 mb-4">{MODE_CONTENT.faqTitle}</h2>
              <div className="flex flex-col gap-2">
                  {MODE_CONTENT.faqItems.map((faq, i) => (
-                  <div key={i} className="bg-white border border-slate-100 p-4 rounded-2xl">
-                    <span className="text-xs font-black text-indigo-600 block mb-1.5">Q: {faq.q}</span>
-                    <p className="text-xs text-slate-500 leading-relaxed">{faq.a}</p>
+                  <div key={i} className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+                    <button type="button" onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i} aria-controls={`faq-answer-${i}`} className="w-full flex items-center justify-between gap-4 p-4 text-left text-sm font-bold text-slate-800 hover:bg-slate-50">
+                      <span>{faq.q}</span><ChevronDown size={17} className={`shrink-0 text-indigo-500 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                    </button>
+                    <AnimatePresence initial={false}>{openFaq === i && <motion.div id={`faq-answer-${i}`} initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden"><p className="px-4 pb-4 text-sm text-slate-500 leading-6">{faq.a}</p></motion.div>}</AnimatePresence>
                   </div>
                 ))}
              </div>
           </div>
-        </section>
+         </section>
+      </div>{/* end right column */}
+      </div>{/* end grid */}
+
       </div>
 
       </motion.div>
-
       <SiteFooter />
-
-      {/* Modals */}
-      <AnimatePresence>
-        {showPopup && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/90 backdrop-blur-sm">
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white w-full max-w-sm rounded-[32px] p-8 relative"
-            >
-              <button onClick={() => { setShowPopup(false); sessionStorage.setItem('wingo_popup_shown', 'true'); }} className="absolute top-4 right-4 text-slate-400"><X size={20} /></button>
-              <div className="flex flex-col items-center gap-4 text-center">
-                <Zap size={32} className="text-amber-500" fill="currentColor" />
-                <h3 className="text-xl font-black">Free Mod Access</h3>
-                <p className="text-xs text-slate-500">You are using the <span className="font-bold text-amber-600">Free Analyst Version</span>. For 100% confirmed patterns, visit the Premium Site.</p>
-                <Link href="/subscribe" className="w-full bg-indigo-600 text-white py-3.5 rounded-2xl font-black shadow-lg">Go Premium</Link>
-                <button onClick={() => { setShowPopup(false); sessionStorage.setItem('wingo_popup_shown', 'true'); }} className="text-[10px] font-black text-slate-400 tracking-widest">Continue Free</button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       <AnimatePresence>
         {showHelp && (
@@ -796,8 +701,8 @@ export default function PredictionTool({ mode, telegramLink = "https://t.me/enzo
                   {[
                     "Select your game mode first.",
                     "Wait for the pattern scan (approx 1.5s).",
-                    "Use 3x investment strategy.",
-                    "Stop once you reach your daily target."
+                    "Compare the current estimate with the recent table.",
+                    "Refresh the page if the period appears out of date."
                   ].map((t, i) => (
                     <div key={i} className="flex gap-2 text-xs font-bold text-slate-600">
                       <CheckCircle size={14} className="text-emerald-500 mt-0.5" /> {t}

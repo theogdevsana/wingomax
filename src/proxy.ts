@@ -41,9 +41,11 @@ export async function proxy(request: NextRequest) {
   // 1. Route Blocking Rule: Prevent main domain from accessing admin, api-panel, or v1 routes directly
   if (isMainDomain) {
     if (
-      pathname.startsWith('/admin') ||
-      pathname.startsWith('/api-panel') ||
-      (!isDev && pathname.startsWith('/v1/'))
+      !isDev && (
+        pathname.startsWith('/admin') ||
+        pathname.startsWith('/api-panel') ||
+        pathname.startsWith('/v1/')
+      )
     ) {
       console.log(`[PROXY] Blocking direct route ${pathname} on main domain`);
       return NextResponse.rewrite(new URL('/404', request.url));
@@ -153,6 +155,14 @@ export async function proxy(request: NextRequest) {
       response.cookies.delete('auth_token');
       Object.entries(corsHeaders).forEach(([k, v]) => response.headers.set(k, v));
       return response;
+    }
+  }
+
+  // A valid payment-created access cookie makes the login page an automatic dashboard redirect.
+  if (resolvedPath === '/login') {
+    const userToken = request.cookies.get('auth_token')?.value;
+    if (userToken && await edgeVerifyToken(userToken)) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
     }
   }
 

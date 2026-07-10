@@ -4,25 +4,22 @@ import JsonLd from "@/components/JsonLd";
 import { query } from '@/lib/db';
 
 export const metadata: Metadata = {
-  title: "Wingo Prediction | Wingo Signal AI Colour Prediction Dashboard",
+  title: "Wingo Signal | Period Timer, Result History and Signal Context",
   description:
-    "Use Wingo Signal to check Wingo prediction, Wingo 1 minute prediction, colour prediction, AI signals, period timing, and recent result history.",
+    "A browser-based Wingo reference page for period timing, recent result history, colour context and statistical signal estimates across 30-second, 1-minute, 3-minute and 5-minute views.",
   keywords: [
-    "wingo prediction",
-    "wingo 1 minute prediction",
     "wingo signals",
-    "wingo colour prediction",
-    "wingo ai prediction",
     "wingo signal",
-    "wingo big small prediction",
-    "wingo 30 seconds prediction",
-    "wingo 3 minute prediction",
-    "wingo 5 minute prediction",
-    "91club wingo prediction",
-    "tiranga wingo prediction",
-    "bdg win wingo prediction",
-    "wingo prediction website",
-    "wingo history",
+    "winggo signals",
+    "wingo period timer",
+    "wingo 1 minute history",
+    "wingo colour context",
+    "wingo signal online",
+    "wingo big small patterns",
+    "wingo statistical estimates",
+    "wingo colour history",
+    "wingo result history",
+    "wingo round reference",
   ],
   alternates: {
     canonical: "https://wingosignals.com",
@@ -32,15 +29,15 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://wingosignals.com",
     siteName: "Wingo Signal",
-    title: "Wingo Prediction | Official Wingo Signal AI Dashboard",
+    title: "Wingo Signal | Period Timer and Recent Result Context",
     description:
-      "Official Wingo Signal website for Wingo prediction, 1 minute colour prediction, recent history, and AI signals.",
+      "Review Wingo period timing, recent result history, colour context and statistical estimates in a browser-based interface.",
     images: [
       {
         url: "https://wingosignals.com/logo/hero_main.png",
         width: 1200,
         height: 630,
-        alt: "Wingo Signal AI Color Prediction Tool Dashboard Preview",
+        alt: "Wingo Signal period timer and result-history dashboard",
       },
     ],
     countryName: "India",
@@ -48,9 +45,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wingo Prediction | Wingo Signal AI Dashboard",
+    title: "Wingo Signal | Period Timer and Result History",
     description:
-      "Check Wingo prediction, colour signals, 1 minute history, and AI signals on the official mobile-friendly website.",
+      "Review Wingo period timing, recent result history and statistical signal context in your browser.",
     images: ["https://wingosignals.com/logo/hero_main.png"],
     creator: "@enzosrs",
   },
@@ -69,7 +66,7 @@ export const metadata: Metadata = {
   creator: "Wingo Signal",
   publisher: "Wingo Signal",
   category: "Technology",
-  classification: "Statistical Wingo Prediction Dashboard",
+  classification: "Wingo period and result-history reference",
   other: {
     "application-name": "Wingo Signal",
     "apple-mobile-web-app-title": "Wingo Signal",
@@ -78,32 +75,32 @@ export const metadata: Metadata = {
 
 const faqData = [
   {
-    question: "Is Wingo Signal safe to use?",
-    answer: "Wingo Signal is browser based, so no APK is required. Use only the official site and keep your account credentials private."
+    question: "What is Wingo Signal?",
+    answer: "Wingo Signal is a browser-based reference interface that keeps period timing, recent history, colour context and statistical estimates together in one place."
   },
   {
-    question: "Which platforms does Wingo Signal support?",
-    answer: "We support 91Club, Tiranga Games, BDG Win, 82 Lottery, Jai Club, Yarr Win, Raja Game, Jalwa Game, GOA Game, Sikkim Games, and Tashan Win, with more platforms added regularly."
+    question: "How do Wingo signals work?",
+    answer: "The page presents the current period, countdown and recent entries as context. Any displayed signal is an estimate and does not determine a future result."
   },
   {
-    question: "What prediction intervals are available?",
-    answer: "Wingo Signal has pages for 30 second, Wingo 1 minute prediction, 3 minute, and 5 minute rounds."
+    question: "Do I need to download an APK to use Wingo Signal?",
+    answer: "No. The interface runs in a modern browser and does not require an APK download."
   },
   {
-    question: "Can Wingo signals be wrong?",
-    answer: "Signals are estimates based on history and patterns. They can be wrong, so no result is guaranteed."
+    question: "What game prediction intervals are available?",
+    answer: "The site provides dedicated views for 30-second, 1-minute, 3-minute and 5-minute intervals."
   },
   {
-    question: "Do I need to download an app?",
-    answer: "No download is needed. Wingo Signal runs entirely in your browser. Open wingosignals.com on any device, Android, iPhone, tablet, or desktop, and start immediately."
+    question: "Are Wingo signals guaranteed?",
+    answer: "No. Signals are limited statistical estimates and may differ from final results."
   },
   {
-    question: "How do I get a license key for Wingo Signal?",
-    answer: "Contact our support team on Telegram to purchase your license key. Once activated, your access works instantly across all devices — no installation or APK required."
+    question: "What should I check on the page?",
+    answer: "Check that the period, countdown and recent entries are current before using the page as a reference."
   },
   {
-    question: "Is Wingo Signal free to use?",
-    answer: "Yes, Wingo Signal offers a free tier that gives you access to live predictions with real time signals. Premium plans are available for users who want additional features, dedicated support, and higher priority access."
+    question: "What should I check before applying any signal?",
+    answer: "Review the current period, countdown and recent rows together. If the information looks delayed, wait for the next refresh."
   },
 ];
 
@@ -116,27 +113,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd faq={faqData} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "Wingo Signal",
-          "operatingSystem": "Web, Android, iOS",
-          "applicationCategory": "GameApplication",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-          "description": "Wingo Signal helps users check Wingo prediction, Wingo 1 minute prediction, colour prediction, recent history, and AI signals in a browser.",
-          "url": "https://wingosignals.com",
-          "sameAs": ["https://wingosignals.com"],
-          "featureList": [
-            "Wingo prediction",
-            "Wingo 1 minute prediction history",
-            "Wingo colour prediction",
-            "AI big small signal view",
-            "30 second, 1 minute, 3 minute, and 5 minute round pages"
-          ]
-        })
-      }} />
+      <JsonLd breadcrumbs={[{ name: "Home", item: "/" }]} faq={faqData} page={{ name: "Wingo Signal: Period Timer and Result History", description: "A browser-based Wingo reference page for period timing, recent result history, colour context and statistical signal estimates.", url: "https://wingosignals.com" }} />
       <DownloadClient telegramLink={telegramLink} />
     </>
   );

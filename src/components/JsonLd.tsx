@@ -54,11 +54,11 @@ export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { 
 
   return (
     <>
-      <script key="org-schema"
+      <script id="ldjson-org"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
       />
-      <script key="website-schema"
+      <script id="ldjson-website"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
       />
@@ -66,12 +66,20 @@ export function OrganizationSchema({ telegramLink = "https://t.me/enzosrs" }: { 
   );
 }
 
+interface PageSchema {
+  name: string;
+  description: string;
+  url: string;
+}
+
 export default function JsonLd({ 
   breadcrumbs, 
-  faq 
+  faq,
+  page
 }: { 
   breadcrumbs?: BreadcrumbItem[]; 
   faq?: FAQItem[];
+  page?: PageSchema;
 }) {
   const breadcrumbData = breadcrumbs ? {
     "@context": "https://schema.org",
@@ -97,18 +105,43 @@ export default function JsonLd({
     }))
   } : null;
 
+  const pageData = page ? {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": page.name,
+    "description": page.description,
+    "url": page.url,
+    "inLanguage": "en-IN",
+    "isPartOf": { "@type": "WebSite", "name": "Wingo Signal", "url": "https://wingosignals.com" },
+    "about": ["period timing", "recent result context", "statistical estimates"],
+    "mainEntity": {
+      "@type": "SoftwareApplication",
+      "name": page.name,
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web",
+      "description": page.description,
+      "isAccessibleForFree": true
+    }
+  } : null;
+
   return (
     <>
       {breadcrumbData && (
-        <script key="breadcrumb-schema"
+        <script id="ldjson-breadcrumb"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
         />
       )}
       {faqData && (
-        <script key="faq-schema"
+        <script id="ldjson-faq"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
+        />
+      )}
+      {pageData && (
+        <script id="ldjson-page"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageData) }}
         />
       )}
     </>

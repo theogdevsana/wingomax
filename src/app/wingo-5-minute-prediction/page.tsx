@@ -29,7 +29,10 @@ export default async function Wingo5mPage() {
 
   return (
     <>
-      <JsonLd breadcrumbs={breadcrumbs} />
+      <JsonLd breadcrumbs={breadcrumbs} faq={[
+        { question: "What does the 5-minute page show?", answer: "It presents the active period, countdown and recent signal context for a five-minute interval." },
+        { question: "Can the page predict every result correctly?", answer: "No. Each displayed signal is an informational estimate based on limited recent context." }
+      ]} page={{ name: "Wingo 5 Minute Signal Overview", description: "A browser-based view of the current Wingo five-minute period, countdown and recent signal context. Outputs are estimates, not guarantees.", url: "https://wingosignals.com/wingo-5-minute-prediction" }} />
       <PredictionTool mode="5m" telegramLink={telegramLink} />
     </>
   );
