@@ -1,39 +1,8 @@
 import PredictionTool from "@/components/PredictionTool";
 import { query } from '@/lib/db';
-import { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { createWingoMetadata } from '@/lib/wingo-page-metadata';
 
 export const dynamic = 'force-dynamic';
-
-export const metadata: Metadata = {
-  title: "Wingo 3 Minute Prediction | Trend and Result History",
-  description: "Use the Wingo 3-minute page to compare recent colour, number, and big-small history with current period timing and statistical context.",
-  keywords: ["wingo 3 minute prediction", "wingo 3 minute history", "wingo colour history", "wingo big small trend"],
-  alternates: {
-    canonical: "https://wingosignals.com/wingo-3-minute-prediction",
-  }
-};
-
-import JsonLd from "@/components/JsonLd";
-
-export default async function Wingo3mPage() {
-  let telegramLink = "https://t.me/enzosrs";
-  try {
-    const result = await query('SELECT telegram_link FROM settings LIMIT 1');
-    telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : "https://t.me/enzosrs";
-  } catch {}
-
-  const breadcrumbs = [
-    { name: "Home", item: "/" },
-    { name: "Wingo 3 Min Prediction", item: "/wingo-3-minute-prediction" }
-  ];
-
-  return (
-    <>
-      <JsonLd breadcrumbs={breadcrumbs} faq={[
-        { question: "What does the 3-minute page show?", answer: "It keeps the active period, remaining time and recent signal context together in one browser view." },
-        { question: "Does a longer timer guarantee a result?", answer: "No. More review time does not make an estimate certain." }
-      ]} page={{ name: "Wingo 3 Minute Signal Overview", description: "A browser-based view of the current Wingo three-minute period, countdown and recent signal context. Outputs are estimates, not guarantees.", url: "https://wingosignals.com/wingo-3-minute-prediction" }} />
-      <PredictionTool mode="3m" telegramLink={telegramLink} />
-    </>
-  );
-}
+export const metadata = createWingoMetadata({ title: 'Wingo 3 Minute Signal Overview | Period and History', description: 'Review the Wingo three-minute period, countdown and recent colour, number and size context in a browser-based interface. Signals are estimates, not guarantees.', path: '/wingo-3-minute-prediction', keywords: ['wingo 3 minute', 'wingo 3 minute period', 'wingo 3 minute history', 'wingo colour context'] });
+export default async function Wingo3mPage() { let telegramLink = 'https://t.me/enzosrs'; try { const result = await query('SELECT telegram_link FROM settings LIMIT 1'); telegramLink = result.rows.length > 0 ? result.rows[0].telegram_link : telegramLink; } catch {} const breadcrumbs = [{ name: 'Home', item: '/' }, { name: 'Wingo 3 Minute Signal Overview', item: '/wingo-3-minute-prediction' }]; const faq = [{ question: 'What does the 3-minute page show?', answer: 'It keeps the active period, remaining time and recent signal context together in one browser view.' }, { question: 'Does a longer timer guarantee a result?', answer: 'No. More review time does not make an estimate certain.' }, { question: 'What should I check first?', answer: 'Confirm that the period, timer and recent entries have refreshed.' }]; return <><JsonLd breadcrumbs={breadcrumbs} faq={faq} page={{ name: 'Wingo 3 Minute Signal Overview', description: 'A browser-based view of the current Wingo three-minute period, countdown and recent signal context. Outputs are estimates, not guarantees.', url: 'https://wingosignals.com/wingo-3-minute-prediction' }} /><PredictionTool mode="3m" telegramLink={telegramLink} /></>; }

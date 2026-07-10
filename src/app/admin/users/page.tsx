@@ -79,20 +79,20 @@ export default function UsersPage() {
               const isBanned = user.status === 'banned';
               const isUsed = !!user.deviceId;
 
-              let borderClass = "border-[#E0E7FF]";
+              let borderClass = "bg-blue-50/70";
               let badgeClass = "bg-[var(--admin-primary)] text-white";
               let badgeText = "Active";
               let accentStyle = { background: 'var(--admin-primary)' };
               let usedBadgeClass = "text-[var(--admin-blue)] bg-[var(--admin-blue)]/10 border-[var(--admin-blue)]/10";
 
               if (isBanned) {
-                borderClass = "border-[#FFE4CC]";
+                borderClass = "bg-orange-50/80";
                 badgeClass = "bg-amber-500 text-white";
                 badgeText = "Banned";
                 accentStyle = { background: '#d97706' };
                 usedBadgeClass = "text-amber-600 bg-amber-50 border-amber-100";
               } else if (isExpired) {
-                borderClass = "border-[#FEE2E2]";
+                borderClass = "bg-rose-50/80";
                 badgeClass = "bg-rose-500 text-white";
                 badgeText = "Expired";
                 accentStyle = { background: '#dc2626' };
@@ -100,7 +100,7 @@ export default function UsersPage() {
               }
 
               return (
-                <div key={user._id} className={`admin-card aspect-video rounded-2xl border flex flex-col justify-between relative overflow-hidden ${borderClass}`}>
+                <div key={user._id} className={`admin-card min-h-[220px] lg:min-h-[280px] xl:min-h-[320px] rounded-2xl border flex flex-col justify-between relative overflow-hidden ${borderClass}`}>
                   <div className="absolute inset-x-0 top-0 h-1" style={accentStyle} />
 
                   <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[9px] sm:text-[10px] font-black shadow-sm z-10 ${badgeClass}`}>

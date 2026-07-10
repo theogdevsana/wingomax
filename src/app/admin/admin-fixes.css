@@ -8,10 +8,10 @@
   --admin-border-strong: #cbd5e1;
   --admin-text: #0f172a;
   --admin-muted: #64748b;
-  --admin-primary: #18181b;
-  --admin-primary-2: #3f3f46;
-  --admin-primary-soft: #f4f4f5;
-  --admin-primary-glow: rgba(24, 24, 27, 0.16);
+  --admin-primary: #007aff;
+  --admin-primary-2: #0a84ff;
+  --admin-primary-soft: #eaf4ff;
+  --admin-primary-glow: rgba(0, 122, 255, 0.2);
   --admin-blue: #007aff;
   --admin-green: #34c759;
   --admin-orange: #ff9f0a;
@@ -677,3 +677,74 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ── Calmer admin typography and borderless surfaces ── */
+:root {
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+}
+
+.admin-shell h1,
+.admin-shell h2,
+.admin-shell h3,
+.admin-shell .admin-title,
+.admin-shell .admin-stat-value,
+.admin-shell .font-black,
+.admin-shell .font-extrabold,
+.admin-shell .font-bold {
+  font-weight: 500 !important;
+}
+
+.admin-shell .admin-eyebrow,
+.admin-shell .admin-label,
+.admin-shell .admin-stat-label,
+.admin-shell .admin-badge,
+.admin-shell .admin-btn {
+  font-weight: 500 !important;
+}
+
+.admin-shell .admin-panel,
+.admin-shell .admin-card,
+.admin-shell .admin-stat,
+.admin-shell .admin-table-wrap,
+.admin-shell .admin-input,
+.admin-shell .border,
+.admin-shell [class*="border-"] {
+  border-color: transparent !important;
+}
+
+.admin-shell .admin-panel,
+.admin-shell .admin-card,
+.admin-shell .admin-stat,
+.admin-shell .admin-table-wrap {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045) !important;
+}
+
+.admin-sidebar-nav > a:nth-child(1) .admin-nav-icon { color: #2563eb; }
+.admin-sidebar-nav > a:nth-child(2) .admin-nav-icon { color: #8b5cf6; }
+.admin-sidebar-nav > a:nth-child(3) .admin-nav-icon { color: #ec4899; }
+.admin-sidebar-nav > a:nth-child(4) .admin-nav-icon { color: #16a34a; }
+.admin-sidebar-nav > a:nth-child(5) .admin-nav-icon { color: #f97316; }
+.admin-sidebar-nav > a:nth-child(6) .admin-nav-icon { color: #0ea5e9; }
+.admin-sidebar-nav > a:nth-child(7) .admin-nav-icon { color: #ef4444; }
+.admin-sidebar-nav > a:nth-child(8) .admin-nav-icon { color: #64748b; }
+
+.admin-stat:nth-child(1) .admin-stat-icon { color: #2563eb !important; background: #eff6ff; }
+.admin-stat:nth-child(2) .admin-stat-icon { color: #16a34a !important; background: #f0fdf4; }
+.admin-stat:nth-child(3) .admin-stat-icon { color: #f97316 !important; background: #fff7ed; }
+.admin-stat:nth-child(4) .admin-stat-icon { color: #ec4899 !important; background: #fdf2f8; }
+
+@media (max-width: 767px) {
+  .admin-title { font-size: 1.875rem; }
+  .admin-shell h2 { font-size: 1.25rem; }
+  .admin-shell h3 { font-size: 1.125rem; }
+}
+.admin-shell .admin-btn-primary { background: #007aff !important; color: #fff !important; }
+.admin-shell .admin-btn-secondary { background: #eaf4ff !important; color: #007aff !important; }
+.admin-shell .admin-btn-primary:hover { background: #006ee6 !important; }
