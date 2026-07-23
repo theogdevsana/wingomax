@@ -159,44 +159,44 @@ const FEATURES = [
   {
     Icon: Icons.Target,
     color: "#007AFF",
-    title: "Clear round overview",
+    title: "Wingo Colour Prediction Signal",
     description:
-      "Keep the current period, recent entries, colour context and size labels together in one interface.",
+      "Get a colour signal (Red, Green, Violet) for the current Wingo period based on recent result history and statistical pattern analysis.",
   },
   {
     Icon: Icons.Zap,
     color: "#FF9500",
-    title: "Period timing",
+    title: "Big Small Prediction",
     description:
-      "Review the countdown and period reference for 30-second, 1-minute, 3-minute and 5-minute views.",
+      "See the Big (5–9) or Small (0–4) prediction estimate for each Wingo period alongside the colour signal — all in one view.",
   },
   {
     Icon: Icons.Shield,
     color: "#34C759",
-    title: "Browser based",
+    title: "No APK Download Needed",
     description:
-      "Open the page directly in a modern browser; no APK installation is required.",
+      "Use the Wingo prediction tool directly in any mobile browser. No APK installation, no sign-up required to view signals.",
   },
   {
     Icon: Icons.Mobile,
     color: "#00B0FF",
-    title: "Responsive layout",
+    title: "All Intervals Covered",
     description:
-      "The layout adapts to phone, tablet and desktop screen sizes.",
+      "Dedicated Wingo prediction views for 30-second, 1-minute, 3-minute and 5-minute game intervals.",
   },
   {
     Icon: Icons.Brain,
     color: "#AF52DE",
-    title: "Recent-history context",
+    title: "AI-Assisted Wingo Signal",
     description:
-      "Compare recent colour, number and size entries without treating past rows as a guarantee of what follows.",
+      "Statistical AI signal analysis displays colour and size estimates based on period history — helping you read the pattern, not guaranteeing the result.",
   },
   {
     Icon: Icons.Users,
     color: "#1B7A2B",
-    title: "Readable on mobile",
+    title: "Works on 91Club & Tiranga",
     description:
-      "A compact presentation designed to keep the main period and history details easy to read on smaller screens.",
+      "Compatible as a reference tool for Wingo games on 91Club, Tiranga Games, BDG Win, 82 Lottery and other major Wingo platforms.",
   },
 ];
 
@@ -210,26 +210,26 @@ const PLATFORMS = [
 ];
 
 const STEPS = [
-  { n: "01", title: "Visit Wingo Signal", body: "Go to the official wingosignals.com website on any mobile browser. No APK installations required." },
-  { n: "02", title: "Choose an interval", body: "Select the 30-second, 1-minute, 3-minute or 5-minute page that matches your current view." },
-  { n: "03", title: "Read the context", body: "Check the period, countdown and recent entries together." },
-  { n: "04", title: "Wait for refresh", body: "If an entry looks delayed, wait for the next page update before using it as a reference." },
+  { n: "01", title: "Open the Wingo Prediction Tool", body: "Visit wingosignals.com on any mobile or desktop browser. No APK download or app installation required." },
+  { n: "02", title: "Select Your Wingo Interval", body: "Choose 30 seconds, 1 minute, 3 minutes or 5 minutes — the interval that matches the Wingo game you are playing." },
+  { n: "03", title: "Read the Colour & Big Small Signal", body: "Check the current period's colour prediction (Red/Green/Violet) and big/small estimate alongside recent result history." },
+  { n: "04", title: "Verify & Apply", body: "Confirm that the displayed period matches your live game. Signals are statistical estimates — always verify before acting." },
 ];
 
 const FAQS = [
-  { q: "What is Wingo Signal?", a: "Wingo Signal is a browser-based reference interface that keeps period timing, recent history, colour context and statistical estimates together." },
-  { q: "How should I read the page?", a: "Read the current period, countdown and recent entries together. A displayed signal is an estimate, not a guarantee." },
-  { q: "Do I need to download an APK?", a: "No. The site runs in a modern browser without an APK download." },
-  { q: "Which intervals are available?", a: "Dedicated views are available for 30 seconds, 1 minute, 3 minutes and 5 minutes." },
-  { q: "Can a signal be incorrect?", a: "Yes. Recent patterns do not determine a future result, so the page should be treated as context only." },
-  { q: "What should I do if history is delayed?", a: "Wait for the next refresh and make sure the displayed period matches your current view." },
+  { q: "What is Wingo Prediction?", a: "Wingo Prediction uses recent colour results, size patterns and period timing to estimate the next Wingo outcome. Wingo Signal displays these statistical signals for 30-second, 1-minute, 3-minute and 5-minute intervals." },
+  { q: "How does Wingo colour prediction work?", a: "The tool analyses the last 10 colour results (Red, Green, Violet) and size entries (Big/Small) to generate a signal for the current period. It is a statistical estimate, not a guaranteed outcome." },
+  { q: "What is the best free Wingo prediction site?", a: "Wingo Signal (wingosignals.com) is a free, browser-based Wingo prediction tool with colour signals, big/small estimates, period tracking and result history — no APK needed." },
+  { q: "Does Wingo Signal work for 91Club and Tiranga?", a: "Yes. Wingo Signal works alongside Wingo games on 91Club, Tiranga, BDG Win, 82 Lottery, Jai Club and Yarr Win as a prediction reference companion." },
+  { q: "What is Wingo big small prediction?", a: "Big Small prediction estimates whether the next Wingo number will be Big (5–9) or Small (0–4) based on the current period pattern." },
+  { q: "Is Wingo prediction accurate?", a: "Wingo prediction signals are statistical estimates — not guaranteed results. Always verify the current period before using any signal as a reference." },
 ];
 
 const TRUST_BADGES = [
-  "Browser-based reference",
-  "Supports all web browsers",
+  "Free Wingo prediction tool",
+  "Colour & big small signals",
   "Zero APK installations",
-  "Clear period labels",
+  "All 4 intervals covered",
   "Mobile-friendly design",
 ];
 
@@ -256,8 +256,6 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
 
   return (
     <>
-
-
       <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text1)", fontFamily: "var(--font-nunito), system-ui, sans-serif", overflowX: "hidden" }}>
 
         {/* ── HEADER ──────────────────────────────────────────────────────── */}
@@ -425,16 +423,16 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             <div className={styles.heroTextCol} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", textAlign: "left" }}>
               <div className={styles.pill} style={{ marginBottom: "20px" }}>
                 <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34C759", position: "relative", flexShrink: 0 }} className={styles.liveDot} />
-                Wingo period and history reference
+                Free Wingo Prediction Tool — No APK Needed
               </div>
 
               <h1 style={{ fontSize: "clamp(28px, 3.8vw, 48px)", fontWeight: 900, color: "var(--text1)", lineHeight: 1.15, letterSpacing: "-0.8px", marginBottom: "14px" }}>
-                Read Wingo periods{" "}
-                <span style={{ color: "#007AFF", fontWeight: 900 }}>with clear context</span>
+                Wingo Prediction —{" "}
+                <span style={{ color: "#007AFF", fontWeight: 900 }}>Colour, Big Small & AI Signal</span>
               </h1>
 
               <p style={{ fontSize: "14px", color: "var(--text2)", lineHeight: 1.7, marginBottom: "28px", maxWidth: "520px" }}>
-                Review the current period, timer, recent history and colour context in one browser-based view. The interface presents statistical estimates, not guaranteed outcomes.
+                Get Wingo colour prediction, big small signals and AI-assisted period estimates — all in one free browser-based tool. No APK download needed. Covers 30 sec, 1 min, 3 min and 5 min Wingo intervals on 91Club, Tiranga and more.
               </p>
 
               {/* CTA row */}
@@ -479,33 +477,32 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 style={{ position: "relative", width: "100%", maxWidth: "480px", aspectRatio: "1.3" }}
               >
-                <Image src="/logo/hero.png" alt="Wingo Signal dashboard showing period timing and recent result context" fill sizes="(max-width: 768px) 100vw, 480px" style={{ objectFit: "contain" }} priority />
+                <Image src="/logo/hero.png" alt="Wingo Prediction dashboard showing colour signal, period timing and result history" fill sizes="(max-width: 768px) 100vw, 480px" style={{ objectFit: "contain" }} priority />
               </motion.div>
             </div>
 
           </div>
         </section>
 
-        {/* ── SIGNALS COUNTER ────────────────────────────────────────────── */}
         {/* ── GAME MODES ──────────────────────────────────────────────────── */}
         <section style={{ padding: "48px 24px", background: "var(--bg)" }}>
           <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: "32px" }}>
-              <div className={styles.pill} style={{ marginBottom: "14px" }}>Dashboards</div>
+              <div className={styles.pill} style={{ marginBottom: "14px" }}>Wingo Prediction Intervals</div>
               <h2 style={{ fontSize: "clamp(22px, 3vw, 36px)", fontWeight: 900, color: "var(--text1)", letterSpacing: "-0.8px" }}>
-                Select Your{" "}
-                <span className={styles.gradText}>Interval Speed</span>
+                Choose Your{" "}
+                <span className={styles.gradText}>Wingo Prediction View</span>
               </h2>
               <p style={{ fontSize: "13px", color: "var(--text2)", marginTop: "10px", maxWidth: "400px", marginLeft: "auto", marginRight: "auto", lineHeight: 1.6 }}>
-                Choose the interval that matches the period you want to review.
+                Select the Wingo prediction interval that matches your live game — colour and big/small signals included.
               </p>
             </div>
             <div className={styles.gameModesGrid}>
               {[
-                { label: "30 Seconds", sub: "A compact view for short intervals", href: "/wingo-30-seconds-prediction", grad: "linear-gradient(135deg, #007AFF 0%, #00C6FF 100%)" },
-                { label: "1 Minute", sub: "Period, timer and recent context", href: "/wingo-1-minute-prediction", grad: "linear-gradient(135deg, #AF52DE 0%, #FF6BCB 100%)" },
-                { label: "3 Minutes", sub: "More time to review recent rows", href: "/wingo-3-minute-prediction", grad: "linear-gradient(135deg, #FF9500 0%, #FFD60A 100%)" },
-                { label: "5 Minutes", sub: "A longer period-reference view", href: "/wingo-5-minute-prediction", grad: "linear-gradient(135deg, #34C759 0%, #30D158 100%)" },
+                { label: "30 Seconds", sub: "Wingo 30 sec colour & big/small signal", href: "/wingo-30-seconds-prediction", grad: "linear-gradient(135deg, #007AFF 0%, #00C6FF 100%)" },
+                { label: "1 Minute", sub: "Wingo 1 minute colour prediction view", href: "/wingo-1-minute-prediction", grad: "linear-gradient(135deg, #AF52DE 0%, #FF6BCB 100%)" },
+                { label: "3 Minutes", sub: "Wingo 3 minute period signal & history", href: "/wingo-3-minute-prediction", grad: "linear-gradient(135deg, #FF9500 0%, #FFD60A 100%)" },
+                { label: "5 Minutes", sub: "Wingo 5 minute big small prediction", href: "/wingo-5-minute-prediction", grad: "linear-gradient(135deg, #34C759 0%, #30D158 100%)" },
               ].map((item) => (
                 <a key={item.href} href={item.href} style={{
                   borderRadius: "20px", padding: "0",
@@ -550,23 +547,23 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
         <section id="wingo-prediction-guide" style={{ padding: "72px 24px", background: "#ffffff", borderTop: "1px solid var(--border)" }}>
           <div style={{ maxWidth: "1080px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "22px", alignItems: "start" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <div className={styles.pill}>Period and history reference</div>
+              <div className={styles.pill}>What is Wingo Prediction?</div>
               <h2 style={{ fontSize: "clamp(24px, 3.2vw, 38px)", fontWeight: 900, color: "var(--text1)", lineHeight: 1.18, margin: 0 }}>
-                Wingo period and history, made easier to read
+                Wingo Prediction: Colour, Big Small & AI Signal Explained
               </h2>
               <p style={{ fontSize: "14px", color: "var(--text2)", lineHeight: 1.8, margin: 0 }}>
-                Wingo Signal organizes period timing, recent result history, colour context and size labels across four interval views. It is designed to make the current page state easier to read.
+                <strong>Wingo Prediction</strong> is the process of using recent result history — colour patterns (Red, Green, Violet) and size outcomes (Big 5–9 / Small 0–4) — to estimate the likely outcome of the next Wingo period. Wingo Signal provides a free, browser-based dashboard that displays these statistical signal estimates across four interval views: 30 seconds, 1 minute, 3 minutes and 5 minutes.
               </p>
               <p style={{ fontSize: "14px", color: "var(--text2)", lineHeight: 1.8, margin: 0 }}>
-                Check that the displayed period matches your current view. Recent entries are useful context, but they do not determine a future result.
+                The Wingo colour prediction signal and the big/small estimate are both visible for the active period. These are <em>statistical estimates</em> derived from recent patterns — not guaranteed outcomes. Always verify that the displayed period matches your live game before using any signal.
               </p>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "12px" }}>
               {[
-                { title: "Wingo 1 Minute View", body: "Review the active period, countdown and recent size and colour entries.", href: "/wingo-1-minute-prediction" },
-                { title: "Colour context", body: "See recent colour labels together with the active period reference.", href: "/wingo-30-seconds-prediction" },
-                { title: "How to use the page", body: "Learn why signals are estimates and why period checks matter.", href: "/blog/how-to-use-wingo-signal" },
+                { title: "Wingo 1 Minute Colour Prediction", body: "Get the colour signal and big/small estimate for the active 1-minute Wingo period alongside recent result history.", href: "/wingo-1-minute-prediction" },
+                { title: "How Does Wingo Colour Prediction Work?", body: "Colour prediction analyses recent Red, Green and Violet entries to generate a signal estimate for the next period.", href: "/wingo-30-seconds-prediction" },
+                { title: "Wingo Prediction Guide: How to Read Signals", body: "Learn how to read colour and big/small signals, understand period timing and use Wingo Signal as a reference tool.", href: "/blog/how-to-use-wingo-signal" },
               ].map((item) => (
                 <Link key={item.title} href={item.href} className={styles.glass} style={{ display: "block", padding: "18px", borderRadius: "12px", textDecoration: "none", border: "1px solid var(--border)", background: "#fbfcff" }}>
                   <h3 style={{ margin: "0 0 8px", color: "var(--text1)", fontSize: "16px", fontWeight: 900 }}>{item.title}</h3>
@@ -614,13 +611,13 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
           <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             {/* Section heading */}
             <div style={{ textAlign: "center", marginBottom: "60px" }}>
-              <div className={styles.pill} style={{ marginBottom: "18px" }}>Platform Highlights</div>
+              <div className={styles.pill} style={{ marginBottom: "18px" }}>Why Use Wingo Signal for Prediction?</div>
               <h2 style={{ fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 900, color: "var(--text1)", letterSpacing: "-0.8px", marginBottom: "14px" }}>
-                What the Wingo Signal{" "}
-                <span style={{ color: "#007AFF" }} className="font-black">page includes</span>
+                Everything Your Wingo Prediction{" "}
+                <span style={{ color: "#007AFF" }} className="font-black">Tool Needs</span>
               </h2>
               <p style={{ fontSize: "14px", color: "var(--text2)", maxWidth: "460px", margin: "0 auto", lineHeight: 1.7 }}>
-                Wingo Signal brings period timing, recent history and descriptive labels into one clear mobile-friendly interface.
+                Wingo Signal combines colour prediction signals, big/small estimates, period timing and result history in one mobile-friendly interface — free, no APK needed.
               </p>
             </div>
 
@@ -643,13 +640,13 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
         <section id="how-it-works" style={{ padding: "100px 24px", background: "var(--bg2)", borderTop: "1px solid var(--border)" }}>
           <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: "60px" }}>
-              <div className={styles.pill} style={{ marginBottom: "18px" }}>Quick Start</div>
+              <div className={styles.pill} style={{ marginBottom: "18px" }}>How to Use Wingo Prediction</div>
               <h2 style={{ fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 900, color: "var(--text1)", letterSpacing: "-0.8px", marginBottom: "14px" }}>
-                Review Wingo intervals in{" "}
+                How to Predict Wingo Colour in{" "}
                 <span className={styles.gradText}>4 Easy Steps</span>
               </h2>
               <p style={{ fontSize: "14px", color: "var(--text2)", maxWidth: "420px", margin: "0 auto", lineHeight: 1.7 }}>
-                Get up and running in under a minute. No registration, no downloads, and no credit card required.
+                Start using the Wingo prediction tool in under a minute. Free, browser-based, no APK or registration required.
               </p>
             </div>
 
@@ -671,13 +668,13 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             <div style={{ textAlign: "center", marginTop: "52px" }}>
               <Link href="/wingo-1-minute-prediction" id="steps-cta" className="relative inline-flex items-center overflow-hidden font-medium transition-all rounded-md group" style={{ padding: "14px 32px", fontSize: "14px", background: "#C6FF33", color: "#1a202c", textDecoration: "none", fontWeight: 800, letterSpacing: "0.5px" }}>
                 <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out rounded" style={{ background: "#b8f020" }}>
-                <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#8cba20" }}></span>
-              </span>
-              <span className="absolute bottom-0 rotate-180 left-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out rounded" style={{ background: "#b8f020" }}>
-                <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#8cba20" }}></span>
-              </span>
-              <span className="absolute bottom-0 left-0 w-full h-full transition-all duration-500 ease-in-out delay-200 -translate-x-full rounded-md group-hover:translate-x-0" style={{ background: "#a8e020" }}></span>
-              <span className="relative w-full text-center transition-colors duration-200 ease-in-out group-hover:text-white" style={{ fontWeight: 800 }}>Explore interval views</span>
+                  <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#8cba20" }}></span>
+                </span>
+                <span className="absolute bottom-0 rotate-180 left-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out rounded" style={{ background: "#b8f020" }}>
+                  <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#8cba20" }}></span>
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-full transition-all duration-500 ease-in-out delay-200 -translate-x-full rounded-md group-hover:translate-x-0" style={{ background: "#a8e020" }}></span>
+                <span className="relative w-full text-center transition-colors duration-200 ease-in-out group-hover:text-white" style={{ fontWeight: 800 }}>Explore interval views</span>
               </Link>
             </div>
           </div>
@@ -688,10 +685,10 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
           <div style={{ maxWidth: "900px", margin: "0 auto" }}>
             <div className={styles.statsGrid} style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "40px", textAlign: "center" }}>
               {[
-                { val: "4", label: "Timing Formats", sub: "30 seconds to 5 mins" },
-                { val: "10", label: "History rows", sub: "visible recent context" },
-                { val: "4", label: "Interval views", sub: "30 seconds to 5 minutes" },
-                { val: "1", label: "Browser interface", sub: "no APK installation" },
+                { val: "4", label: "Prediction Intervals", sub: "30 sec · 1 min · 3 min · 5 min" },
+                { val: "10", label: "Result History Rows", sub: "colour & size context per period" },
+                { val: "2", label: "Signal Types", sub: "colour prediction + big/small" },
+                { val: "6+", label: "Wingo Platforms", sub: "91Club, Tiranga, BDG & more" },
               ].map((s, idx) => (
                 <div key={s.label} style={{ borderRight: idx < 3 ? "1px solid var(--border)" : "none", paddingRight: "20px" }}>
                   <div style={{ fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 900, color: "#7D39EB", lineHeight: 1, letterSpacing: "-1px" }}>{s.val}</div>
@@ -707,13 +704,13 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
         <section id="blog" style={{ padding: "80px 24px", background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
           <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: "40px" }}>
-              <div className={styles.pill} style={{ marginBottom: "18px" }}>Insights & Guides</div>
+              <div className={styles.pill} style={{ marginBottom: "18px" }}>Wingo Prediction Guides & Articles</div>
               <h2 style={{ fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 900, color: "var(--text1)", letterSpacing: "-0.8px", marginBottom: "14px" }}>
-                Read Our Latest{" "}
-                <span className={styles.gradText}>Wingo Articles</span>
+                Learn Wingo Prediction with Our{" "}
+                <span className={styles.gradText}>Expert Guides</span>
               </h2>
               <p style={{ fontSize: "14px", color: "var(--text2)", maxWidth: "420px", margin: "0 auto", lineHeight: 1.7 }}>
-                Read plain-language guides about period timing, recent history and how to interpret the page responsibly.
+                Read plain-language guides about Wingo colour prediction, big/small signals, period timing and how to use the tool responsibly.
               </p>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
@@ -756,13 +753,13 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
         <section id="faq" style={{ padding: "100px 24px", background: "var(--bg2)", borderTop: "1px solid var(--border)" }}>
           <div style={{ maxWidth: "720px", margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: "56px" }}>
-              <div className={styles.pill} style={{ marginBottom: "18px" }}>Questions?</div>
+              <div className={styles.pill} style={{ marginBottom: "18px" }}>Wingo Prediction FAQ</div>
               <h2 style={{ fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 900, color: "var(--text1)", letterSpacing: "-0.8px", marginBottom: "14px" }}>
-                Wingo Signal <span className={styles.gradText}>FAQ</span>
+                Wingo Prediction <span className={styles.gradText}>Questions Answered</span>
               </h2>
               <p style={{ fontSize: "14px", color: "var(--text2)", lineHeight: 1.7 }}>
-                Got questions?{" "}
-                <Link href="/faq" style={{ color: "var(--accent2)", fontWeight: 600, textDecoration: "none" }}>Find quick answers below or explore our full documentation page</Link>.
+                Common questions about Wingo colour prediction, big/small signals and how the tool works.{" "}
+                <Link href="/faq" style={{ color: "var(--accent2)", fontWeight: 600, textDecoration: "none" }}>See full FAQ page</Link>.
               </p>
             </div>
 
@@ -803,23 +800,23 @@ export default function DownloadClient({ telegramLink = "https://t.me/enzosrs" }
             </div>
 
             <h2 style={{ fontSize: "clamp(26px, 4vw, 44px)", fontWeight: 900, color: "var(--text1)", letterSpacing: "-1px", lineHeight: 1.15, marginBottom: "16px" }}>
-              Ready to review{" "}
-              <span className={styles.gradText}>Wingo period context?</span>
+              Get Your Free{" "}
+              <span className={styles.gradText}>Wingo Prediction Signal Today</span>
             </h2>
             <p style={{ fontSize: "15px", color: "var(--text2)", lineHeight: 1.75, maxWidth: "440px", margin: "0 auto 36px" }}>
-              Open an interval view to check the current period, countdown and recent result context.
+              Open a Wingo prediction view to see today&apos;s colour signal, big/small estimate and recent result history — free, no APK needed.
             </p>
 
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link href="/login" id="cta-access" className="relative inline-flex items-center overflow-hidden font-medium transition-all rounded-md group" style={{ padding: "14px 32px", fontSize: "14px", background: "#C6FF33", color: "#1a202c", textDecoration: "none", fontWeight: 800, letterSpacing: "0.5px" }}>
                 <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out rounded" style={{ background: "#b8f020" }}>
-                <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#8cba20" }}></span>
-              </span>
-              <span className="absolute bottom-0 rotate-180 left-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out rounded" style={{ background: "#b8f020" }}>
-                <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#8cba20" }}></span>
-              </span>
-              <span className="absolute bottom-0 left-0 w-full h-full transition-all duration-500 ease-in-out delay-200 -translate-x-full rounded-md group-hover:translate-x-0" style={{ background: "#a8e020" }}></span>
-              <span className="relative w-full text-center transition-colors duration-200 ease-in-out group-hover:text-white" style={{ fontWeight: 800 }}>Open dashboard</span>
+                  <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#8cba20" }}></span>
+                </span>
+                <span className="absolute bottom-0 rotate-180 left-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out rounded" style={{ background: "#b8f020" }}>
+                  <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2" style={{ background: "#8cba20" }}></span>
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-full transition-all duration-500 ease-in-out delay-200 -translate-x-full rounded-md group-hover:translate-x-0" style={{ background: "#a8e020" }}></span>
+                <span className="relative w-full text-center transition-colors duration-200 ease-in-out group-hover:text-white" style={{ fontWeight: 800 }}>Open dashboard</span>
               </Link>
               <a href={telegramLink} target="_blank" rel="noopener noreferrer" id="cta-telegram" className="relative inline-flex items-center overflow-hidden font-medium transition-all rounded-md group" style={{ padding: "14px 32px", fontSize: "14px", background: "#f5f0ff", color: "#7D39EB", textDecoration: "none", fontWeight: 700, letterSpacing: "0.3px" }}>
                 <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out rounded" style={{ background: "#ede5ff" }}>

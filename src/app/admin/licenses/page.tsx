@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Key, Clock, Copy, Plus, AlertCircle, CheckCircle2, ShieldBan, ShieldCheck, Trash2, Smartphone } from "lucide-react";
+import { Key, Clock, Copy, Plus, AlertCircle, CheckCircle2, ShieldBan, ShieldCheck, Trash2, Smartphone, Search, RefreshCw } from "lucide-react";
 import { getApiUrl } from "@/lib/api-utils";
 
 export default function CreateLicense() {
@@ -13,6 +13,8 @@ export default function CreateLicense() {
 
   const [licenses, setLicenses] = useState<any[]>([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const fetchLicenses = async () => {
     setIsFetching(true);
@@ -40,7 +42,8 @@ export default function CreateLicense() {
     setCopied(false);
 
     try {
-      const res = await fetch(getApiUrl("/v1/admin/license"), { credentials: 'include', 
+      const res = await fetch(getApiUrl("/v1/admin/license"), {
+        credentials: 'include',
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ durationDays: duration }),
@@ -66,6 +69,9 @@ export default function CreateLicense() {
     if (isMain) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } else {
+      setCopiedId(text);
+      setTimeout(() => setCopiedId(null), 2000);
     }
   };
 
@@ -74,12 +80,13 @@ export default function CreateLicense() {
       if (action === 'delete') {
         const confirmDelete = confirm("Are you sure you want to delete this key?");
         if (!confirmDelete) return;
-        await fetch(getApiUrl(`/v1/admin/license?id=${id}`), { credentials: 'include',  method: 'DELETE' });
+        await fetch(getApiUrl(`/v1/admin/license?id=${id}`), { credentials: 'include', method: 'DELETE' });
       } else {
-        await fetch(getApiUrl('/v1/admin/license'), { credentials: 'include', 
+        await fetch(getApiUrl('/v1/admin/license'), {
+          credentials: 'include',
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, action })
+          body: JSON.stringify({ id, action }),
         });
       }
       fetchLicenses();
@@ -88,8 +95,13 @@ export default function CreateLicense() {
     }
   };
 
+  const filteredLicenses = licenses.filter((lic) =>
+    searchTerm.trim() === "" ? true : lic.key?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="admin-page space-y-6 md:space-y-8">
+      {/* Header */}
       <div className="admin-page-header">
         <div>
           <p className="admin-eyebrow">Access control</p>
@@ -98,286 +110,239 @@ export default function CreateLicense() {
         </div>
       </div>
 
-      <div className="admin-panel p-5 md:p-7">
-        <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-          <Key className="text-[var(--admin-primary)]" /> Generate new key
-        </h3>
-
-        <div className="space-y-6" style={{ maxWidth: "min(100%, 36rem)" }}>
-          <div>
-            <label className="admin-label mb-2">Subscription plan</label>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-              {[
-                { days: "7 Days", tier: "Starter", value: 7 },
-                { days: "10 Days", tier: "Elite", value: 10 },
-                { days: "30 Days", tier: "Max Pro", value: 30, popular: true },
-                { days: "45 Days", tier: "Smart AI", value: 45 },
-                { days: "90 Days", tier: "Neural", value: 90 },
-                { days: "Lifetime", tier: "Quantum", value: 36500 },
-              ].map((opt) => (
-                <button
-                  key={opt.value}
-                  onClick={() => setDuration(opt.value)}
-                  className={`admin-action relative p-3 rounded-2xl border text-left transition-all duration-300 overflow-hidden flex flex-col justify-center min-h-[72px] group ${
-                    duration === opt.value
-                      ? "border-[var(--admin-primary)] bg-[var(--admin-primary-soft)] shadow-md"
-                      : "border-[var(--admin-border)] bg-white hover:border-[var(--admin-border-strong)] hover:bg-[var(--admin-surface-soft)] hover:shadow-sm"
-                  }`}
-                >
-                    {opt.popular && (
-                    <div className="absolute top-0 right-0 bg-[var(--admin-primary)] text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg">
-                      Popular
-                    </div>
-                  )}
-                  <div className={`text-[10px] font-black tracking-widest mb-0.5 ${duration === opt.value ? 'text-[var(--admin-primary)]' : 'text-slate-400 group-hover:text-slate-500'}`}>
-                    {opt.tier}
-                  </div>
-                  <div className={`text-base font-black tracking-tight ${duration === opt.value ? 'text-slate-900' : 'text-slate-700'}`}>
-                    {opt.days}
-                  </div>
-                  {duration === opt.value && (
-                    <div className="absolute bottom-2.5 right-2.5 text-[var(--admin-primary)]">
-                      <CheckCircle2 size={16} />
-                    </div>
-                  )}
-                </button>
-              ))}
+      {/* YouTube Thumbnail Box Container (16:9 Aspect Ratio on Desktop) */}
+      <div className="w-full max-w-[760px] mx-auto bg-white rounded-3xl border border-slate-200/80 shadow-md overflow-hidden transition-all md:aspect-[16/9] flex flex-col justify-between p-5 md:p-7 relative">
+        {/* Top bar inside box */}
+        <div className="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-blue-50 text-[var(--admin-primary)] flex items-center justify-center font-bold">
+              <Key size={18} />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-slate-900 leading-none">Generate new key</h3>
+              <p className="text-[11px] text-slate-500 font-medium mt-1">Select duration and click generate</p>
             </div>
           </div>
+        </div>
 
+        {/* Center content: Plan selector grid */}
+        <div className="my-3">
+          <label className="text-xs font-semibold text-slate-600 block mb-2">Subscription plan</label>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+            {[
+              { days: "7 Days", tier: "Starter", value: 7 },
+              { days: "10 Days", tier: "Elite", value: 10 },
+              { days: "30 Days", tier: "Max Pro", value: 30, popular: true },
+              { days: "45 Days", tier: "Smart AI", value: 45 },
+              { days: "90 Days", tier: "Neural", value: 90 },
+              { days: "Lifetime", tier: "Quantum", value: 36500 },
+            ].map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => setDuration(opt.value)}
+                className={`relative p-2.5 rounded-xl text-center transition-all duration-200 flex flex-col items-center justify-center min-h-[64px] border ${
+                  duration === opt.value
+                    ? "border-[var(--admin-primary)] bg-blue-50/70 text-[var(--admin-primary)] shadow-sm font-bold"
+                    : "border-slate-100 bg-slate-50/60 text-slate-700 hover:bg-slate-100/80 hover:border-slate-200"
+                }`}
+              >
+                {opt.popular && (
+                  <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-[8px] font-bold px-1.5 py-0.2 rounded-full">
+                    Popular
+                  </span>
+                )}
+                <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">{opt.tier}</span>
+                <span className="text-xs font-extrabold block">{opt.days}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Generated Key Result Container if available */}
+        {generatedLicense ? (
+          <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/60 my-2 animate-in fade-in">
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <span className="text-[11px] font-semibold text-emerald-700 flex items-center gap-1">
+                <CheckCircle2 size={13} /> Key created successfully!
+              </span>
+              <span className="text-[10px] font-mono text-slate-500">
+                Expires: {new Date(generatedLicense.expiresAt).toLocaleDateString()}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 bg-white px-3 py-2 rounded-xl border border-slate-200 font-mono text-sm sm:text-base text-slate-900 font-extrabold tracking-wider text-center select-all">
+                {generatedLicense.key}
+              </code>
+              <button
+                onClick={() => copyToClipboard(generatedLicense.key)}
+                className="px-3 py-2 bg-[var(--admin-primary)] text-white rounded-xl text-xs font-bold hover:bg-blue-700 transition-colors flex items-center gap-1 shrink-0"
+              >
+                {copied ? <CheckCircle2 size={14} /> : <Copy size={14} />}
+                <span>{copied ? "Copied!" : "Copy"}</span>
+              </button>
+            </div>
+          </div>
+        ) : error ? (
+          <div className="p-2.5 bg-rose-50 text-rose-600 rounded-xl text-xs font-semibold flex items-center gap-2 my-2">
+            <AlertCircle size={14} /> {error}
+          </div>
+        ) : null}
+
+        {/* Bottom CTA action button inside YouTube box */}
+        <div className="pt-2">
           <button
             onClick={handleCreate}
             disabled={isLoading}
-            className="admin-btn admin-btn-primary w-full py-3.5 md:py-4 text-base md:text-lg flex items-center justify-center gap-2"
+            className="w-full py-3 bg-[var(--admin-primary)] hover:bg-blue-600 active:scale-[0.99] text-white rounded-2xl text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
           >
             {isLoading ? (
-              <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <Plus size={24} /> Create license key
+                <Plus size={18} /> Generate license key
               </>
             )}
           </button>
         </div>
-
-        {error && (
-          <div className="mt-6 p-4 bg-red-50 text-red-600 rounded-xl flex items-center gap-3 font-medium">
-            <AlertCircle /> {error}
-          </div>
-        )}
-
-        {generatedLicense && (
-          <div className="mt-8 p-5 sm:p-6 bg-slate-50 rounded-2xl border border-slate-200 animate-in fade-in slide-in-from-bottom-4">
-            <h4 className="text-sm font-bold text-slate-500 mb-4">
-              Success! Key generated
-            </h4>
-
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6">
-              <div className="flex-1 bg-white p-4 rounded-xl border border-slate-200 font-mono text-base sm:text-xl text-center tracking-widest text-slate-800 font-bold shadow-inner break-all">
-                {generatedLicense.key}
-              </div>
-              <button
-                onClick={() => copyToClipboard(generatedLicense.key)}
-                className="admin-btn admin-btn-secondary justify-center"
-                title="Copy to clipboard"
-              >
-                {copied ? <CheckCircle2 className="text-[var(--admin-primary)]" /> : <Copy />}
-              </button>
-            </div>
-
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-600 bg-white p-3 rounded-lg border border-slate-100 inline-flex">
-              <Clock size={16} className="text-orange-500" />
-              Expires on: {new Date(generatedLicense.expiresAt).toLocaleDateString(undefined, {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-              })}
-            </div>
-          </div>
-        )}
       </div>
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h2 className="text-xl font-bold text-slate-800">Existing licenses</h2>
-        <div className="flex gap-4">
-          <input 
-            type="text" 
-            placeholder="Search by key..." 
-            className="admin-input w-full md:w-auto"
-            onChange={(e) => {
-              const term = e.target.value.toLowerCase();
-            }}
-          />
-          <button 
-            onClick={fetchLicenses}
-            className="admin-btn admin-btn-secondary p-2"
-            title="Refresh List"
-          >
-            <Clock size={20} />
-          </button>
+      {/* Existing Licenses Section */}
+      <div className="pt-4 space-y-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <h2 className="text-lg font-bold text-slate-900">Existing licenses ({licenses.length})</h2>
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1 sm:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+              <input
+                type="text"
+                placeholder="Search key..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-3 py-1.5 bg-white text-slate-800 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[var(--admin-primary)]/20"
+              />
+            </div>
+            <button
+              onClick={fetchLicenses}
+              className="p-2 bg-white text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+              title="Refresh list"
+            >
+              <RefreshCw size={15} className={isFetching ? "animate-spin" : ""} />
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="admin-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>License key</th>
-              <th>Status</th>
-              <th>Device</th>
-              <th>Expires at</th>
-              <th className="text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[var(--admin-border)]">
-            {isFetching ? (
+        {/* Table */}
+        <div className="admin-table-wrap">
+          <table>
+            <thead>
               <tr>
-                <td colSpan={5} className="text-center text-[var(--admin-muted)] font-medium italic py-12">
-                  Fetching keys...
-                </td>
+                <th>License key</th>
+                <th>Status</th>
+                <th>Device</th>
+                <th>Expires at</th>
+                <th className="text-right">Actions</th>
               </tr>
-            ) : licenses.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="text-center text-[var(--admin-muted)] font-medium italic py-12">
-                  No keys found. Generate one above!
-                </td>
-              </tr>
-            ) : (
-              licenses.map((lic) => (
-                <tr key={lic._id}>
-                  <td>
-                    <div className="flex items-center gap-2">
-                      <code className="text-sm font-black text-slate-700 bg-[var(--admin-surface-soft)] px-2 py-1 rounded border border-[var(--admin-border)]">
-                        {lic.key}
-                      </code>
-                      <button 
-                        onClick={() => copyToClipboard(lic.key, false)}
-                        className="p-1.5 text-slate-400 hover:text-[var(--admin-primary)] transition-colors"
-                      >
-                        <Copy size={14} />
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <div className={`admin-badge ${
-                      lic.status === 'active' ? 'admin-badge-active' :
-                      lic.status === 'expired' ? 'admin-badge-expired' :
-                      'admin-badge-banned'
-                    }`}>
-                      {lic.status === 'active' ? <ShieldCheck size={12} /> : <ShieldBan size={12} />}
-                      {lic.status.charAt(0).toUpperCase() + lic.status.slice(1)}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="flex items-center gap-2 text-sm text-slate-600 font-bold">
-                      <Smartphone size={14} className={lic.deviceId ? "text-[var(--admin-blue)]" : "text-slate-300"} />
-                      <span className="truncate" style={{ maxWidth: '6rem' }}>{lic.deviceId || "Unused"}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="text-xs font-bold text-slate-500">
-                      {new Date(lic.expiresAt).toLocaleDateString()}
-                    </div>
-                  </td>
-                  <td className="text-right">
-                    <div className="flex justify-end gap-1">
-                      {lic.status === 'banned' ? (
-                        <button 
-                          onClick={() => handleAction(lic._id, 'unban')}
-                          className="p-2 text-[var(--admin-green)] hover:bg-green-50 rounded-lg transition-all"
-                          title="Unban Key"
-                        >
-                          <ShieldCheck size={18} />
-                        </button>
-                      ) : (
-                        <button 
-                          onClick={() => handleAction(lic._id, 'ban')}
-                          className="p-2 text-[var(--admin-orange)] hover:bg-orange-50 rounded-lg transition-all"
-                          title="Ban Key"
-                        >
-                          <ShieldBan size={18} />
-                        </button>
-                      )}
-                      <button 
-                        onClick={() => handleAction(lic._id, 'delete')}
-                        className="p-2 text-[var(--admin-red)] hover:bg-red-50 rounded-lg transition-all"
-                        title="Delete Key"
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </div>
+            </thead>
+            <tbody>
+              {isFetching ? (
+                <tr>
+                  <td colSpan={5} className="text-center text-slate-400 font-medium py-10">
+                    Loading keys...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ) : filteredLicenses.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="text-center text-slate-400 font-medium py-10">
+                    No keys found. Generate one above!
+                  </td>
+                </tr>
+              ) : (
+                filteredLicenses.map((lic) => {
+                  const isBanned = lic.status === 'banned';
+                  const isExpired = lic.status === 'expired' || (lic.expiresAt && new Date(lic.expiresAt) < new Date());
+                  const isActive = !isBanned && !isExpired;
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-        <PlanGuide 
-          days={7} 
-          price="499" 
-          title="Weekly access" 
-          icon={<Clock className="text-[var(--admin-blue)]" size={24} />}
-          accent="var(--admin-blue)"
-        />
-        <PlanGuide 
-          days={15} 
-          price="1,499" 
-          title="Fortnightly access" 
-          icon={<Clock className="text-purple-600" size={24} />}
-          accent="purple"
-        />
-        <PlanGuide 
-          days={30} 
-          price="1,999" 
-          title="Monthly premium" 
-          icon={<Clock className="text-[var(--admin-primary)]" size={24} />}
-          accent="var(--admin-primary)"
-        />
-      </div>
-    </div>
-  );
-}
-
-function PlanGuide({ days, price, title, icon, accent }: { days: number, price: string, title: string, icon: React.ReactNode, accent: string }) {
-  return (
-    <div className="admin-card p-5 md:p-6 flex flex-col relative overflow-hidden group">
-      <div className="admin-stat-accent" style={{ background: accent }} />
-
-      <div className="flex justify-between items-start mb-6">
-        <div className="p-3 bg-[var(--admin-surface-soft)] rounded-2xl group-hover:scale-110 transition-transform">
-          {icon}
+                  return (
+                    <tr key={lic._id || lic.key} className="hover:bg-slate-50/80 transition-colors">
+                      <td>
+                        <div className="flex items-center gap-2">
+                          <code className="text-xs font-bold font-mono text-slate-900 select-all tracking-wider">
+                            {lic.key}
+                          </code>
+                          <button
+                            onClick={() => copyToClipboard(lic.key, false)}
+                            className="p-1 text-slate-400 hover:text-slate-700 transition-colors"
+                            title="Copy key"
+                          >
+                            {copiedId === lic.key ? (
+                              <CheckCircle2 size={13} className="text-emerald-600" />
+                            ) : (
+                              <Copy size={13} />
+                            )}
+                          </button>
+                        </div>
+                      </td>
+                      <td>
+                        {isActive ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <ShieldCheck size={12} /> Active
+                          </span>
+                        ) : isExpired ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                            <Clock size={12} /> Expired
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                            <ShieldBan size={12} /> Banned
+                          </span>
+                        )}
+                      </td>
+                      <td>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-600 font-medium">
+                          <Smartphone size={13} className={lic.deviceId ? "text-blue-500" : "text-slate-300"} />
+                          <span className="truncate max-w-[100px]">{lic.deviceId || "Unused"}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="text-xs text-slate-500 font-medium">
+                          {lic.expiresAt ? new Date(lic.expiresAt).toLocaleDateString() : '—'}
+                        </span>
+                      </td>
+                      <td className="text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          {isBanned ? (
+                            <button
+                              onClick={() => handleAction(lic._id, 'unban')}
+                              className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                              title="Unban Key"
+                            >
+                              <ShieldCheck size={16} />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleAction(lic._id, 'ban')}
+                              className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
+                              title="Ban Key"
+                            >
+                              <ShieldBan size={16} />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleAction(lic._id, 'delete')}
+                            className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                            title="Delete Key"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
         </div>
-        <div className="px-3 py-1 rounded-full text-[10px] font-black tracking-tighter text-white" style={{ background: accent }}>
-          {days === 30 ? "Best value" : "Plan"}
-        </div>
-      </div>
-
-      <div className="space-y-1 mb-6">
-        <h4 className="font-black text-slate-900 text-xl tracking-tight">{title}</h4>
-        <p className="text-sm font-bold text-slate-400">{days} Days Duration</p>
-      </div>
-
-      <div className="flex items-baseline gap-1 mb-6">
-        <span className="text-3xl font-black text-slate-900">₹{price}</span>
-        <span className="text-slate-400 text-sm font-bold">/ plan</span>
-      </div>
-
-      <div className="space-y-3 pt-6 border-t border-[var(--admin-border)]">
-        {[
-          "Single device access",
-          "All premium features",
-          "24/7 Priority Support"
-        ].map((feat, i) => (
-          <div key={i} className="flex items-center gap-2 text-xs font-bold text-slate-600">
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />
-            {feat}
-          </div>
-        ))}
       </div>
     </div>
   );
